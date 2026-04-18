@@ -35,10 +35,10 @@ class GameScene extends Scene implements MessageListener {
         MessageManager.addListener(this);
 
         var o = new Oscilloscope(this);
-        o.x = -500;
+        o.x = -300;
 
         var target = new TargetOscilloscope(this);
-        target.x = 500;
+        target.x = 300;
 
         updateables.push(o);
         updateables.push(target);

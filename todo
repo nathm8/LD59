@@ -32,6 +32,9 @@ have cables to plug into\out of generators and modifiers
 
 drag the gens\mods around. Give them physics if time.
 
+do masking on the drawn waveforms
+    do glow\afterglow
+
 Sounds
 -----------------------------------
 try to play the dynamically generated waveforms using Heaps
