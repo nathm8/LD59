@@ -25,7 +25,6 @@ class CableHead extends Object implements MessageListener implements Updateable 
     public var connection: Connectable;
     var cable: Cable;
 
-    var connectionPromise: () -> {pos: Vector2D, object: Object};
     var snapImmunity = 0.0;
 
     public function new(c: Cable, ?p: Object) {
@@ -46,7 +45,6 @@ class CableHead extends Object implements MessageListener implements Updateable 
             isSelected = true;
         }
         interactive.onRelease = (e:Event) -> {
-            if (isSelected) reparent();
             isSelected = false;
         }
 
@@ -67,21 +65,16 @@ class CableHead extends Object implements MessageListener implements Updateable 
         return false;
     }
 
-    public function snapTo(p: Vector2D, conn:Connectable, promise: () -> {pos: Vector2D, object: Object}) {
+    public function snapTo(pos: Vector2D, conn:Connectable, new_parent: Object) {
         if (snapImmunity > 0) return;
-        x = p.x; y = p.y; rotation = conn.isOutput ? -Math.PI/2 : Math.PI/2;
-        connectionPromise = promise;
+        rotation = conn.isOutput ? -Math.PI/2 : Math.PI/2;
         connection = conn;
         cable.newConnection();
-    }
-    
-    public function reparent() {
-        if (connectionPromise == null) return;
-        var p = connectionPromise().pos;
-        var o = connectionPromise().object;
+        isSelected = false;
         remove();
-        o.addChildAt(this, 0);
-        x = p.x; y = p.y; rotation = connection.isOutput ? -Math.PI/2 : Math.PI/2;
+        new_parent.addChildAt(this, 0);
+        x = pos.x; y = pos.y;
+        rotation = connection.isOutput ? -Math.PI/2 : Math.PI/2;
     }
 
     public function getTail(): Vector2D {
@@ -92,7 +85,6 @@ class CableHead extends Object implements MessageListener implements Updateable 
 
     function disconnect() {
         snapImmunity = 0.1;
-        connectionPromise = null;
         cable.disconnect();
         connection = null;
         var s = getScene();

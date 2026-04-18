@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="171.11984"
-     inkscape:cy="134.35029"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="1463.0039"
+     inkscape:cy="400.92954"
      inkscape:window-width="1920"
      inkscape:window-height="1080"
      inkscape:window-x="3000"
@@ -1286,8 +1286,8 @@
        id="rect447"
        width="120.18936"
        height="74.877693"
-       x="80.524948"
-       y="-307.26804"
+       x="58.822662"
+       y="-298.66196"
        ry="4.5275049"
        transform="rotate(90)"
        inkscape:export-filename="res/img/Oscillo.png"
@@ -1298,12 +1298,12 @@
        id="rect448"
        width="67.768692"
        height="39.24226"
-       x="235.94484"
-       y="87.549133"
+       x="227.33876"
+       y="65.846848"
        ry="2.3727963" />
     <g
        id="g464"
-       transform="matrix(1,0,0,0.99328472,205.6554,52.430125)">
+       transform="matrix(1,0,0,0.99328472,197.04932,30.727839)">
       <rect
          style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.187217;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
          id="rect457"
@@ -1407,12 +1407,12 @@
        id="rect473"
        width="41.010418"
        height="3.1536789"
-       x="249.32397"
-       y="82.390076"
+       x="240.7179"
+       y="60.68779"
        ry="1.5768394" />
     <g
        id="g475"
-       transform="matrix(1,0,0,0.99328472,234.41643,110.23884)"
+       transform="matrix(1,0,0,0.99328472,225.81035,88.536554)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286">
@@ -1431,7 +1431,7 @@
     </g>
     <g
        id="g477"
-       transform="matrix(1,0,0,0.99328472,310.56152,160.00443)"
+       transform="matrix(1,0,0,0.99328472,301.95544,138.30214)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286">
@@ -1453,12 +1453,12 @@
        id="rect477"
        width="67.768692"
        height="39.24226"
-       x="235.94484"
-       y="156.02359"
+       x="227.33876"
+       y="134.3213"
        ry="2.3727963" />
     <g
        id="g479"
-       transform="matrix(1,0,0,0.99328472,234.41643,205.84115)"
+       transform="matrix(1,0,0,0.99328472,225.81035,184.13886)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286">
@@ -1480,10 +1480,10 @@
        id="rect479"
        width="50.339363"
        height="74.877693"
-       x="14.379115"
-       y="-408.86801"
+       x="-64.718475"
+       y="333.10938"
        ry="4.5275049"
-       transform="rotate(90)"
+       transform="rotate(-90)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286" />
@@ -1492,20 +1492,22 @@
        id="rect480"
        width="67.768692"
        height="39.24226"
-       x="337.54483"
-       y="21.403299"
-       ry="2.3727963" />
+       x="-404.43256"
+       y="-57.694294"
+       ry="2.3727963"
+       transform="scale(-1)" />
     <rect
        style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.199327;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
        id="rect489"
        width="41.010418"
        height="3.1536789"
-       x="350.92395"
-       y="16.244242"
-       ry="1.5768394" />
+       x="-391.05344"
+       y="-62.853352"
+       ry="1.5768394"
+       transform="scale(-1)" />
     <g
        id="g491"
-       transform="matrix(1,0,0,0.99328472,336.01643,44.093007)"
+       transform="matrix(-1,0,0,-0.99328472,405.96095,35.004586)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286">
@@ -1524,7 +1526,7 @@
     </g>
     <g
        id="g493"
-       transform="matrix(1,0,0,0.99328472,412.16152,44.116927)"
+       transform="matrix(-1,0,0,-0.99328472,329.81586,34.980666)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286">
@@ -1542,13 +1544,13 @@
       </g>
     </g>
     <rect
-       style="fill:#dadb9b;fill-opacity:1;stroke-width:3.56427;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+       style="fill:#dadb9b;fill-opacity:1;stroke-width:3.12076;stroke-miterlimit:3.3;paint-order:markers stroke fill"
        id="rect495"
-       width="77.572639"
-       height="150.54852"
+       width="51.114307"
+       height="175.15477"
        x="72.058281"
-       y="-521.05133"
-       ry="9.1029673"
+       y="-545.65753"
+       ry="10.590793"
        transform="rotate(90)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
@@ -1563,7 +1565,7 @@
        ry="2.3727963" />
     <g
        id="g504"
-       transform="matrix(1,0,0,0.99328472,380.81146,44.337635)">
+       transform="matrix(1,0,0,0.99328472,393.90636,10.735552)">
       <rect
          style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.187217;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
          id="rect497"
@@ -1667,7 +1669,7 @@
        id="rect505"
        width="41.010418"
        height="3.1536789"
-       x="423.94897"
+       x="437.57495"
        y="73.923409"
        ry="1.5768394" />
     <g
@@ -1694,12 +1696,12 @@
        id="rect509"
        width="67.768692"
        height="39.24226"
-       x="448.33786"
+       x="473.20908"
        y="79.791496"
        ry="2.3727963" />
     <g
        id="g511"
-       transform="matrix(1,0,0,0.99328472,372.52893,156.09948)"
+       transform="matrix(1,0,0,0.99328472,372.52893,129.64115)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286">
@@ -1724,7 +1726,7 @@
        inkscape:export-ydpi="86.840286">
       <g
          id="g512"
-         transform="translate(-34.285522,-68.867139)">
+         transform="translate(-9.4146887,-99.233558)">
         <rect
            style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
            id="rect511"

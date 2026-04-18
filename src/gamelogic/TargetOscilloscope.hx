@@ -195,7 +195,7 @@ class TargetOscilloscope extends Object implements Updateable
             var p: Vector2D = port.getAbsPos().getPosition();
             var c = new Circle(p.x, p.y, 30);
             if (cable_bounds.collideCircle(c)) {
-                cable_head.snapTo(p, this, () -> {pos: new Vector2D(port.x, port.y), object: this});
+                cable_head.snapTo(new Vector2D(port.x, port.y), this, this);
             }
         }
         if (Std.isOfType(msg, MouseMove)) {

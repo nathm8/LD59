@@ -10,5 +10,5 @@ buildjs:
 push: clean buildjs
 	rm -f LD59.zip
 	zip -r LD59.zip index.html bin/game.js bin/game.js.map
-	butler push LD59.zip nathmate/finnicky-fourier-trap:HTML
+	butler push LD59.zip nathmate/finnicky-fourier-toy:HTML
 	git push
