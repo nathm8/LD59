@@ -138,9 +138,9 @@ class TargetOscilloscope extends Object implements Updateable
         targetWaveformGraphics.clear();
         inputWaveformGraphics.clear();
         combinedWaveformGraphics.clear();
-        targetWaveform.draw(targetWaveformGraphics, targetTotalTime);
+        targetWaveform.draw(targetWaveformGraphics, targetTotalTime, 0x0000DD);
         inputWaveform?.draw(inputWaveformGraphics, inputTotalTime);
-        targetWaveform.draw(combinedWaveformGraphics, combinedTotalTime);
+        targetWaveform.draw(combinedWaveformGraphics, combinedTotalTime, 0x0000DD);
         inputWaveform?.draw(combinedWaveformGraphics, combinedTotalTime);
         return false;
     }

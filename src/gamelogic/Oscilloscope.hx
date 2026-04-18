@@ -19,13 +19,14 @@ import h2d.Object;
 import h2d.Bitmap;
 import hxd.Res;
 
-class Dial extends Object implements MessageListener{
+class Dial extends Object implements MessageListener implements Updateable {
     // between 1 and 8
     public var value = 8;
 
     var sprite: Bitmap;
     var interactive: Interactive;
     var isSelected = false;
+    var moveImmune = 0.25;
     var callback: () -> Void;
 
     public function new(f: () -> Void, p: Object) {
@@ -42,6 +43,7 @@ class Dial extends Object implements MessageListener{
         }
         interactive.onPush = (e:Event) -> {
             isSelected = true;
+            moveImmune = 0.25;
         }
         interactive.onClick = (e:Event) -> {
             if (e.button == 0)
@@ -59,6 +61,7 @@ class Dial extends Object implements MessageListener{
     public function receive(msg:Message):Bool {
         if (Std.isOfType(msg, MouseMove)) {
             if (!isSelected) return false;
+            if (moveImmune > 0) return false;
             var params = cast(msg, MouseMove);
             var v = new Vector2D(x, y);
             var p = sprite.getAbsPos().getPosition();
@@ -69,6 +72,11 @@ class Dial extends Object implements MessageListener{
             rotation = value*2*Math.PI/8;
             callback();
         }
+        return false;
+    }
+
+    public function update(dt:Float):Bool {
+        if (moveImmune > 0 && isSelected) moveImmune -= dt;
         return false;
     }
 }
@@ -100,13 +108,13 @@ class Oscilloscope extends Object implements Updateable
     public function new(p: Object) {
         super(p);
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
-        ampDial = new Dial(() -> {waveform.amplitude = ampDial.value/8;}, sprite);
+        ampDial = new Dial(() -> {waveform.backup(); waveform.amplitude = ampDial.value/8;}, sprite);
         var size = sprite.getSize();
         ampDial.x = -size.width/4 - 17; // 0.0664*width
         ampDial.y = size.height/4 + 20; // 0.0781*height
-        freqDial = new Dial(() -> {waveform.frequency = freqDial.value/8;}, sprite);
+        freqDial = new Dial(() -> {waveform.backup(); waveform.frequency = freqDial.value/8;}, sprite);
         freqDial.y = size.height/4 + 20;
-        phaseDial = new Dial(() -> {waveform.phase = phaseDial.value/8;}, sprite);
+        phaseDial = new Dial(() -> {waveform.backup(); waveform.phase = phaseDial.value/8;}, sprite);
         phaseDial.x = size.width/4 + 17;
         phaseDial.y = size.height/4 + 20;
 
@@ -134,6 +142,10 @@ class Oscilloscope extends Object implements Updateable
         totalTime += dt*0.5 + RNGManager.srand(0.01);
         waveformGraphics.clear();
         waveform.draw(waveformGraphics, totalTime);
+
+        ampDial.update(dt);
+        freqDial.update(dt);
+        phaseDial.update(dt);
         return false;
     }
 
