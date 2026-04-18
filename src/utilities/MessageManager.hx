@@ -6,6 +6,7 @@ import utilities.Vector2D;
 
 class Message {public function new(){}}
 
+class Victory extends Message {}
 class Restart extends Message {}
 class MousePush extends Message {
     public var event: Event;

@@ -22,7 +22,8 @@ class GameScene extends Scene implements MessageListener {
     var prevY = 0.0;
 
     var cameraMinScale = 0.1;
-    var cameraMaxScale = 10.0;
+    var cameraMaxScale = 1.0;
+    var cameraBounds = 5000.0;
 
     public function new() {
         super();
@@ -38,6 +39,7 @@ class GameScene extends Scene implements MessageListener {
         o.x = -300;
 
         var target = new TargetOscilloscope(this);
+        target.inputWaveform = o.waveform;
         target.x = 300;
 
         updateables.push(o);
@@ -46,7 +48,7 @@ class GameScene extends Scene implements MessageListener {
     
     public function update(dt:Float) {
         PhysicalWorld.update(dt);
-        cameraControl();
+        // cameraControl();
         
         var to_remove = new Array<Updateable>();
         for (u in updateables)
@@ -129,6 +131,14 @@ class GameScene extends Scene implements MessageListener {
             camera.x += 10/cameraScale;
         if (cameraMovingLeft)
             camera.x -= 10/cameraScale;
+        if (camera.x < -cameraBounds)
+            camera.x = -cameraBounds;
+        if (camera.x > cameraBounds)
+            camera.x = cameraBounds;
+        if (camera.y < -cameraBounds)
+            camera.y = -cameraBounds;
+        if (camera.y > cameraBounds)
+            camera.y = cameraBounds;
     }
 
 }

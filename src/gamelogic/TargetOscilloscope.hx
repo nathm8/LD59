@@ -1,5 +1,9 @@
 package gamelogic;
 
+import utilities.MessageManager;
+import hxd.Event;
+import h2d.col.PixelsCollider;
+import h2d.Interactive;
 import h2d.Graphics;
 import gamelogic.Waveform.Sine;
 import hxd.Res;
@@ -19,7 +23,7 @@ class TargetOscilloscope extends Object implements Updateable {
     var glowTwo: Bitmap;
     var glowThree: Bitmap;
 
-    var inputWaveform: Waveform;
+    public var inputWaveform: Waveform;
     var inputWaveformGraphics: Graphics;
     var targetWaveform: Waveform;
     var targetWaveformGraphics: Graphics;
@@ -37,11 +41,19 @@ class TargetOscilloscope extends Object implements Updateable {
         switchReady = new Bitmap(t, sprite);
         switchReady.x = -size.width/4 + 1;
         switchReady.y = size.height/4 + 67;
+
+        var pixels = new PixelsCollider(t.getTexture().capturePixels());
+        var i = new Interactive(t.width, t.height, switchReady, pixels);
+        i.x -= t.width/2;
+        i.y -= t.height/2;
+        i.onPush = (e: Event) -> {checkSolution();};
+
         t = Res.img.SwitchFlipped.toTile();
         t.setCenterRatio(0.5, 0.5);
         switchFlipped = new Bitmap(t, sprite);
         switchFlipped.x = -size.width/4 + 4;
         switchFlipped.y = size.height/4 + 67;
+        switchFlipped.visible = false;
 
         t = Res.img.Light.toTile().center();
         lightOne = new Bitmap(t, sprite);
@@ -58,12 +70,11 @@ class TargetOscilloscope extends Object implements Updateable {
         glowOne = new Bitmap(t, lightOne);
         glowTwo = new Bitmap(t, lightTwo);
         glowThree = new Bitmap(t, lightThree);
+        for (g in [glowOne, glowTwo, glowThree])
+            g.visible = false;
 
         targetWaveform = new Sine();
         targetWaveformGraphics = new Graphics(this);
-        targetWaveformGraphics.beginFill(0xFF0000);
-        targetWaveformGraphics.drawRect(0, -0.5, 1, 1);
-        targetWaveformGraphics.endFill();
         targetWaveformGraphics.scaleX = 310; 
         targetWaveformGraphics.scaleY = 150; 
         targetWaveformGraphics.x = 24 - size.width/2;
@@ -71,9 +82,6 @@ class TargetOscilloscope extends Object implements Updateable {
 
         inputWaveform = new Sine();
         inputWaveformGraphics = new Graphics(this);
-        inputWaveformGraphics.beginFill(0xFF0000);
-        inputWaveformGraphics.drawRect(0, -0.5, 1, 1);
-        inputWaveformGraphics.endFill();
         inputWaveformGraphics.scaleX = 310; 
         inputWaveformGraphics.scaleY = 150; 
         inputWaveformGraphics.x = 24 - size.width/2;
@@ -81,9 +89,6 @@ class TargetOscilloscope extends Object implements Updateable {
 
         combinedWaveform = new Sine();
         combinedWaveformGraphics = new Graphics(this);
-        combinedWaveformGraphics.beginFill(0xFF0000);
-        combinedWaveformGraphics.drawRect(0, -0.5, 1, 1);
-        combinedWaveformGraphics.endFill();
         combinedWaveformGraphics.scaleX = 310; 
         combinedWaveformGraphics.scaleY = 320; 
         combinedWaveformGraphics.x = 12;
@@ -101,5 +106,44 @@ class TargetOscilloscope extends Object implements Updateable {
         targetWaveform.draw(combinedWaveformGraphics, totalTime);
         inputWaveform.draw(combinedWaveformGraphics, totalTime);
         return false;
+    }
+
+    function checkSolution() {
+        switchReady.visible = false;
+        switchFlipped.visible = true;
+        for (g in [glowOne, glowTwo, glowThree]) {
+            g.visible = true;
+            g.alpha = 0;
+        }
+        Main.tweenManager.animateTo(glowOne, {alpha: 1.0}, 1.0).start();
+        Main.tweenManager.delay(0.5, () -> {
+            Main.tweenManager.animateTo(glowTwo, {alpha: 1.0}, 1.0).start();
+        }).start();
+        Main.tweenManager.delay(1, () -> {
+            Main.tweenManager.animateTo(glowThree, {alpha: 1.0}, 1.0).start();
+        }).start();
+
+        if (inputWaveform.match(targetWaveform)) {
+            for (g in [glowOne, glowTwo, glowThree]) {
+                g.color.b = 0;
+                g.color.r = 0;
+            }
+            Main.tweenManager.delay(3.0, () -> {MessageManager.send(new Victory());}).start();
+        } else {
+            for (g in [glowOne, glowTwo, glowThree]) {
+                g.color.g = 0;
+                g.color.b = 0;
+                Main.tweenManager.delay(3.0, () -> {
+                    for (g in [glowOne, glowTwo, glowThree]) {
+                        g.color.r = 1;
+                        g.color.g = 1;
+                        g.color.b = 1;
+                        g.visible = false;
+                    }
+                    switchReady.visible = true;
+                    switchFlipped.visible = false;
+                }).start();
+            }
+        }
     }
 }

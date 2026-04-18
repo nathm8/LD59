@@ -7,6 +7,14 @@ have modifiable waveform on Oscilloscope
 have target waveform on OscilloscopeOut
 modify starting waveform to match, recognise, win
 
+Todo
+-----------------------------------
+Limit mouse movement, give camera bounds
+
+Name ideas
+-----------------------------------
+Finnicky Fourier Trap
+
 Concept
 -----------------------------------
 match target waveform
