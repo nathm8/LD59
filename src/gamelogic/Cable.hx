@@ -84,7 +84,7 @@ class CableHead extends Object implements MessageListener implements Updateable 
         var o = connectionPromise().object;
         remove();
         o.addChildAt(this, 0);
-        x = p.x; y = p.y;
+        x = p.x; y = p.y; rotation = connection.isOutput ? -Math.PI/2 : Math.PI/2;
     }
 
     public function getTail(): Vector2D {
