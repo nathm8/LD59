@@ -1,0 +1,7 @@
+-lib heaps
+-lib box2d
+-lib slide
+-cp src
+-js bin/kriegskunst.js
+-main Main
+-debug
