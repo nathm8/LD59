@@ -50,9 +50,6 @@ class CableHead extends Object implements MessageListener implements Updateable 
             isSelected = false;
         }
 
-        // var bounds = i.getBounds();
-        // bounds.collideBounds();
-
         MessageManager.addListener(this);
     }
 

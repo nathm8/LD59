@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.5"
-     inkscape:cx="669"
-     inkscape:cy="337"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="171.11984"
+     inkscape:cy="134.35029"
      inkscape:window-width="1920"
      inkscape:window-height="1080"
      inkscape:window-x="3000"
@@ -536,7 +536,7 @@
     </g>
     <g
        id="g133"
-       transform="matrix(1,0,0,0.99328472,-1.3229167,85.228043)"
+       transform="matrix(1,0,0,0.99328472,-17.197917,55.065543)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286">
@@ -987,198 +987,6 @@
          inkscape:export-ydpi="86.840286" />
     </g>
     <g
-       id="g380"
-       transform="translate(-232.30417,-141.2875)">
-      <g
-         id="g316"
-         transform="translate(281.24006,-149.75417)"
-         inkscape:export-filename="res/img/OscilloOut.png"
-         inkscape:export-xdpi="86.840286"
-         inkscape:export-ydpi="86.840286">
-        <g
-           id="g293"
-           transform="matrix(0.5827865,0,0,0.5827865,144.73467,-39.662642)">
-          <rect
-             style="fill:#dadb9b;fill-opacity:1;stroke-width:6.01035;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-             id="rect286"
-             width="184.85005"
-             height="179.64735"
-             x="88.227562"
-             y="-140.21194"
-             ry="10.862437"
-             transform="rotate(90)"
-             inkscape:export-filename="res/img/OscilloOut.png"
-             inkscape:export-xdpi="86.840286"
-             inkscape:export-ydpi="86.840286" />
-          <rect
-             style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-             id="rect287"
-             width="162.59135"
-             height="80.246086"
-             x="-30.907448"
-             y="96.37661"
-             ry="4.8521061" />
-          <rect
-             style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-             id="rect288"
-             width="162.59135"
-             height="80.246086"
-             x="-30.907448"
-             y="184.68248"
-             ry="4.8521061" />
-          <rect
-             style="fill:#dadb9b;fill-opacity:1;stroke-width:9.15182;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-             id="rect289"
-             width="217.71771"
-             height="353.6398"
-             x="88.227562"
-             y="-314.20441"
-             ry="21.38295"
-             transform="rotate(90)"
-             inkscape:export-filename="res/img/OscilloOut.png"
-             inkscape:export-xdpi="86.840286"
-             inkscape:export-ydpi="86.840286" />
-          <rect
-             style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-             id="rect290"
-             width="162.59135"
-             height="80.246086"
-             x="-30.907448"
-             y="96.37661"
-             ry="4.8521061" />
-          <rect
-             style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-             id="rect291"
-             width="162.59135"
-             height="80.246086"
-             x="-30.907448"
-             y="184.68248"
-             ry="4.8521061" />
-          <rect
-             style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-             id="rect292"
-             width="162.59135"
-             height="80.246086"
-             x="140.02303"
-             y="96.37661"
-             ry="4.8521061" />
-          <rect
-             style="fill:#000000;fill-opacity:1;stroke-width:4.43692;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-             id="rect293"
-             width="162.59135"
-             height="111.3028"
-             x="140.02303"
-             y="153.62576"
-             ry="6.7299609" />
-        </g>
-        <g
-           id="g300">
-          <circle
-             style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="circle298"
-             cx="241.21208"
-             cy="126.01794"
-             r="9.2281904" />
-          <circle
-             style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="circle299"
-             cx="241.21208"
-             cy="126.01794"
-             r="7.893466" />
-        </g>
-        <g
-           id="g303"
-           transform="translate(5.4901109)">
-          <circle
-             style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="circle301"
-             cx="267.67041"
-             cy="126.01794"
-             r="9.2281904" />
-          <circle
-             style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="circle302"
-             cx="267.67041"
-             cy="126.01794"
-             r="7.893466" />
-        </g>
-        <g
-           id="g306"
-           transform="translate(13.229169)">
-          <circle
-             style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="circle304"
-             cx="291.87979"
-             cy="126.01794"
-             r="9.2281904" />
-          <circle
-             style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="circle305"
-             cx="291.87979"
-             cy="126.01794"
-             r="7.893466" />
-        </g>
-        <g
-           id="g309"
-           transform="translate(-50.667709)"
-           style="opacity:0.7" />
-        <g
-           id="g312"
-           transform="translate(-18.71927)"
-           style="opacity:0.7" />
-        <g
-           id="g315"
-           transform="translate(13.229169)"
-           style="opacity:0.7" />
-      </g>
-      <g
-         id="g365"
-         transform="translate(52.967541,-191.66204)">
-        <g
-           id="g362"
-           transform="matrix(0,1.6960222,-1.6846329,0,456.97714,131.25083)"
-           inkscape:export-filename="res/img/Oscillo.png"
-           inkscape:export-xdpi="86.840286"
-           inkscape:export-ydpi="86.840286"
-           style="fill:#808080">
-          <g
-             id="g361"
-             transform="translate(-33.911345,-57.000868)"
-             style="fill:#808080">
-            <rect
-               style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.200675;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-               id="rect360"
-               width="8.0448132"
-               height="21.095594"
-               x="51.565384"
-               y="78.866287"
-               ry="2.9194796" />
-          </g>
-        </g>
-        <g
-           id="g364"
-           transform="matrix(0,1.6960222,-0.22347671,0,409.61637,131.25083)"
-           inkscape:export-filename="res/img/Oscillo.png"
-           inkscape:export-xdpi="86.840286"
-           inkscape:export-ydpi="86.840286"
-           style="fill:#b3b3b3">
-          <g
-             id="g363"
-             transform="translate(-33.911345,-57.000868)"
-             style="fill:#b3b3b3">
-            <rect
-               style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.200675;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-               id="rect362"
-               width="8.0448132"
-               height="21.095594"
-               x="51.565384"
-               y="78.866287"
-               ry="2.9194796" />
-          </g>
-        </g>
-      </g>
-    </g>
-    <g
        id="g368"
        transform="matrix(1.5235101,0,0,1.1209819,-146.17355,-316.27668)"
        inkscape:export-filename="res/img/Switch.png"
@@ -1234,6 +1042,1150 @@
         <rect
            style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
            id="rect379"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
+    </g>
+    <g
+       id="g382"
+       transform="matrix(1,0,0,0.99328472,111.125,38.396793)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g381"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect380"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
+    </g>
+    <g
+       id="g439"
+       inkscape:export-filename="res/img/OscilloOut.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g380"
+         transform="translate(-232.30417,-141.2875)">
+        <g
+           id="g316"
+           transform="translate(281.24006,-149.75417)"
+           inkscape:export-filename="res/img/OscilloOut.png"
+           inkscape:export-xdpi="86.840286"
+           inkscape:export-ydpi="86.840286">
+          <g
+             id="g293"
+             transform="matrix(0.5827865,0,0,0.5827865,144.73467,-39.662642)">
+            <rect
+               style="fill:#dadb9b;fill-opacity:1;stroke-width:6.01035;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+               id="rect286"
+               width="184.85005"
+               height="179.64735"
+               x="88.227562"
+               y="-140.21194"
+               ry="10.862437"
+               transform="rotate(90)"
+               inkscape:export-filename="res/img/OscilloOut.png"
+               inkscape:export-xdpi="86.840286"
+               inkscape:export-ydpi="86.840286" />
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+               id="rect287"
+               width="162.59135"
+               height="80.246086"
+               x="-30.907448"
+               y="96.37661"
+               ry="4.8521061" />
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+               id="rect288"
+               width="162.59135"
+               height="80.246086"
+               x="-30.907448"
+               y="184.68248"
+               ry="4.8521061" />
+            <rect
+               style="fill:#dadb9b;fill-opacity:1;stroke-width:9.15182;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+               id="rect289"
+               width="217.71771"
+               height="353.6398"
+               x="88.227562"
+               y="-314.20441"
+               ry="21.38295"
+               transform="rotate(90)"
+               inkscape:export-filename="res/img/OscilloOut.png"
+               inkscape:export-xdpi="86.840286"
+               inkscape:export-ydpi="86.840286" />
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+               id="rect290"
+               width="162.59135"
+               height="80.246086"
+               x="-30.907448"
+               y="96.37661"
+               ry="4.8521061" />
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+               id="rect291"
+               width="162.59135"
+               height="80.246086"
+               x="-30.907448"
+               y="184.68248"
+               ry="4.8521061" />
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+               id="rect292"
+               width="162.59135"
+               height="80.246086"
+               x="140.02303"
+               y="96.37661"
+               ry="4.8521061" />
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:4.43692;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+               id="rect293"
+               width="162.59135"
+               height="111.3028"
+               x="140.02303"
+               y="153.62576"
+               ry="6.7299609" />
+          </g>
+          <g
+             id="g300">
+            <circle
+               style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+               id="circle298"
+               cx="241.21208"
+               cy="126.01794"
+               r="9.2281904" />
+            <circle
+               style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+               id="circle299"
+               cx="241.21208"
+               cy="126.01794"
+               r="7.893466" />
+          </g>
+          <g
+             id="g303"
+             transform="translate(5.4901109)">
+            <circle
+               style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+               id="circle301"
+               cx="267.67041"
+               cy="126.01794"
+               r="9.2281904" />
+            <circle
+               style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+               id="circle302"
+               cx="267.67041"
+               cy="126.01794"
+               r="7.893466" />
+          </g>
+          <g
+             id="g306"
+             transform="translate(13.229169)">
+            <circle
+               style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+               id="circle304"
+               cx="291.87979"
+               cy="126.01794"
+               r="9.2281904" />
+            <circle
+               style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+               id="circle305"
+               cx="291.87979"
+               cy="126.01794"
+               r="7.893466" />
+          </g>
+          <g
+             id="g309"
+             transform="translate(-50.667709)"
+             style="opacity:0.7" />
+          <g
+             id="g312"
+             transform="translate(-18.71927)"
+             style="opacity:0.7" />
+          <g
+             id="g315"
+             transform="translate(13.229169)"
+             style="opacity:0.7" />
+        </g>
+        <g
+           id="g365"
+           transform="translate(52.967541,-191.66204)">
+          <g
+             id="g362"
+             transform="matrix(0,1.6960222,-1.6846329,0,456.97714,131.25083)"
+             inkscape:export-filename="res/img/Oscillo.png"
+             inkscape:export-xdpi="86.840286"
+             inkscape:export-ydpi="86.840286"
+             style="fill:#808080">
+            <g
+               id="g361"
+               transform="translate(-33.911345,-57.000868)"
+               style="fill:#808080">
+              <rect
+                 style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.200675;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+                 id="rect360"
+                 width="8.0448132"
+                 height="21.095594"
+                 x="51.565384"
+                 y="78.866287"
+                 ry="2.9194796" />
+            </g>
+          </g>
+          <g
+             id="g364"
+             transform="matrix(0,1.6960222,-0.22347671,0,409.61637,131.25083)"
+             inkscape:export-filename="res/img/Oscillo.png"
+             inkscape:export-xdpi="86.840286"
+             inkscape:export-ydpi="86.840286"
+             style="fill:#b3b3b3">
+            <g
+               id="g363"
+               transform="translate(-33.911345,-57.000868)"
+               style="fill:#b3b3b3">
+              <rect
+                 style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.200675;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+                 id="rect362"
+                 width="8.0448132"
+                 height="21.095594"
+                 x="51.565384"
+                 y="78.866287"
+                 ry="2.9194796" />
+            </g>
+          </g>
+        </g>
+      </g>
+      <g
+         id="g438"
+         transform="matrix(1,0,0,0.99328472,203.34372,-288.34784)"
+         inkscape:export-filename="res/img/Oscillo.png"
+         inkscape:export-xdpi="86.840286"
+         inkscape:export-ydpi="86.840286">
+        <rect
+           style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect438"
+           width="41.010418"
+           height="3.175"
+           x="49.887459"
+           y="10.054167"
+           ry="1.5875" />
+      </g>
+    </g>
+    <rect
+       style="fill:#dadb9b;fill-opacity:1;stroke-width:3.12887;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+       id="rect447"
+       width="120.18936"
+       height="74.877693"
+       x="80.524948"
+       y="-307.26804"
+       ry="4.5275049"
+       transform="rotate(90)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke-width:1.70087;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+       id="rect448"
+       width="67.768692"
+       height="39.24226"
+       x="235.94484"
+       y="87.549133"
+       ry="2.3727963" />
+    <g
+       id="g464"
+       transform="matrix(1,0,0,0.99328472,205.6554,52.430125)">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.187217;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect457"
+         width="0.5967471"
+         height="4.1631145"
+         x="63.875412"
+         y="79.013229"
+         ry="0.11564207" />
+      <g
+         id="g457"
+         transform="translate(28.805166,-21.082275)"
+         style="fill:#808080"
+         inkscape:transform-center-y="-2.3853805">
+        <circle
+           style="fill:#808080;fill-opacity:1;stroke-width:2;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+           id="circle457"
+           cx="35.368618"
+           cy="111.83501"
+           r="4.6949039" />
+      </g>
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect458"
+         width="0.47278309"
+         height="2.3085804"
+         x="-64.410179"
+         y="-101.04504"
+         ry="0.064127237"
+         inkscape:transform-center-x="-3.8553103e-06"
+         inkscape:transform-center-y="5.4425278"
+         transform="scale(-1)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect459"
+         width="0.47278309"
+         height="2.3085804"
+         x="90.516342"
+         y="-74.270027"
+         ry="0.064127237"
+         inkscape:transform-center-x="-8.9419525"
+         inkscape:transform-center-y="-1.1558898e-06"
+         transform="rotate(90)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect460"
+         width="0.47278309"
+         height="2.3085804"
+         x="90.516342"
+         y="54.077541"
+         ry="0.064127237"
+         inkscape:transform-center-x="8.941953"
+         inkscape:transform-center-y="-1.1558898e-06"
+         transform="matrix(0,1,1,0,0,0)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect461"
+         width="0.47278309"
+         height="2.3085804"
+         x="18.557764"
+         y="-119.64584"
+         ry="0.064127237"
+         inkscape:transform-center-x="-6.3229215"
+         inkscape:transform-center-y="6.3229209"
+         transform="rotate(135)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect462"
+         width="0.47278309"
+         height="2.3085804"
+         x="18.557764"
+         y="99.453346"
+         ry="0.064127237"
+         inkscape:transform-center-x="6.3229175"
+         inkscape:transform-center-y="-6.3229182"
+         transform="matrix(-0.70710678,0.70710678,0.70710678,0.70710678,0,0)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect463"
+         width="0.47278309"
+         height="2.3085804"
+         x="109.3132"
+         y="8.6979046"
+         ry="0.064127237"
+         inkscape:transform-center-x="-6.3229222"
+         inkscape:transform-center-y="-6.3229207"
+         transform="rotate(45)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect464"
+         width="0.47278309"
+         height="2.3085804"
+         x="109.3132"
+         y="-28.890402"
+         ry="0.064127237"
+         inkscape:transform-center-x="6.3229169"
+         inkscape:transform-center-y="6.3229181"
+         transform="matrix(0.70710678,0.70710678,0.70710678,-0.70710678,0,0)" />
+    </g>
+    <rect
+       style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.199327;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       id="rect473"
+       width="41.010418"
+       height="3.1536789"
+       x="249.32397"
+       y="82.390076"
+       ry="1.5768394" />
+    <g
+       id="g475"
+       transform="matrix(1,0,0,0.99328472,234.41643,110.23884)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g474"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect474"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
+    </g>
+    <g
+       id="g477"
+       transform="matrix(1,0,0,0.99328472,310.56152,160.00443)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g476"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect475"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
+    </g>
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke-width:1.70087;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+       id="rect477"
+       width="67.768692"
+       height="39.24226"
+       x="235.94484"
+       y="156.02359"
+       ry="2.3727963" />
+    <g
+       id="g479"
+       transform="matrix(1,0,0,0.99328472,234.41643,205.84115)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g478"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect478"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
+    </g>
+    <rect
+       style="fill:#dadb9b;fill-opacity:1;stroke-width:2.02492;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+       id="rect479"
+       width="50.339363"
+       height="74.877693"
+       x="14.379115"
+       y="-408.86801"
+       ry="4.5275049"
+       transform="rotate(90)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke-width:1.70087;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+       id="rect480"
+       width="67.768692"
+       height="39.24226"
+       x="337.54483"
+       y="21.403299"
+       ry="2.3727963" />
+    <rect
+       style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.199327;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       id="rect489"
+       width="41.010418"
+       height="3.1536789"
+       x="350.92395"
+       y="16.244242"
+       ry="1.5768394" />
+    <g
+       id="g491"
+       transform="matrix(1,0,0,0.99328472,336.01643,44.093007)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g490"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect490"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
+    </g>
+    <g
+       id="g493"
+       transform="matrix(1,0,0,0.99328472,412.16152,44.116927)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g492"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect491"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
+    </g>
+    <rect
+       style="fill:#dadb9b;fill-opacity:1;stroke-width:3.56427;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+       id="rect495"
+       width="77.572639"
+       height="150.54852"
+       x="72.058281"
+       y="-521.05133"
+       ry="9.1029673"
+       transform="rotate(90)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke-width:1.70087;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+       id="rect496"
+       width="67.768692"
+       height="39.24226"
+       x="374.05734"
+       y="79.082466"
+       ry="2.3727963" />
+    <g
+       id="g504"
+       transform="matrix(1,0,0,0.99328472,380.81146,44.337635)">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.187217;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect497"
+         width="0.5967471"
+         height="4.1631145"
+         x="63.875412"
+         y="79.013229"
+         ry="0.11564207" />
+      <g
+         id="g497"
+         transform="translate(28.805166,-21.082275)"
+         style="fill:#808080"
+         inkscape:transform-center-y="-2.3853805">
+        <circle
+           style="fill:#808080;fill-opacity:1;stroke-width:2;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+           id="circle497"
+           cx="35.368618"
+           cy="111.83501"
+           r="4.6949039" />
+      </g>
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect498"
+         width="0.47278309"
+         height="2.3085804"
+         x="-64.410179"
+         y="-101.04504"
+         ry="0.064127237"
+         inkscape:transform-center-x="-3.8553103e-06"
+         inkscape:transform-center-y="5.4425278"
+         transform="scale(-1)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect499"
+         width="0.47278309"
+         height="2.3085804"
+         x="90.516342"
+         y="-74.270027"
+         ry="0.064127237"
+         inkscape:transform-center-x="-8.9419525"
+         inkscape:transform-center-y="-1.1558898e-06"
+         transform="rotate(90)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect500"
+         width="0.47278309"
+         height="2.3085804"
+         x="90.516342"
+         y="54.077541"
+         ry="0.064127237"
+         inkscape:transform-center-x="8.941953"
+         inkscape:transform-center-y="-1.1558898e-06"
+         transform="matrix(0,1,1,0,0,0)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect501"
+         width="0.47278309"
+         height="2.3085804"
+         x="18.557764"
+         y="-119.64584"
+         ry="0.064127237"
+         inkscape:transform-center-x="-6.3229215"
+         inkscape:transform-center-y="6.3229209"
+         transform="rotate(135)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect502"
+         width="0.47278309"
+         height="2.3085804"
+         x="18.557764"
+         y="99.453346"
+         ry="0.064127237"
+         inkscape:transform-center-x="6.3229175"
+         inkscape:transform-center-y="-6.3229182"
+         transform="matrix(-0.70710678,0.70710678,0.70710678,0.70710678,0,0)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect503"
+         width="0.47278309"
+         height="2.3085804"
+         x="109.3132"
+         y="8.6979046"
+         ry="0.064127237"
+         inkscape:transform-center-x="-6.3229222"
+         inkscape:transform-center-y="-6.3229207"
+         transform="rotate(45)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect504"
+         width="0.47278309"
+         height="2.3085804"
+         x="109.3132"
+         y="-28.890402"
+         ry="0.064127237"
+         inkscape:transform-center-x="6.3229169"
+         inkscape:transform-center-y="6.3229181"
+         transform="matrix(0.70710678,0.70710678,0.70710678,-0.70710678,0,0)" />
+    </g>
+    <rect
+       style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.199327;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       id="rect505"
+       width="41.010418"
+       height="3.1536789"
+       x="423.94897"
+       y="73.923409"
+       ry="1.5768394" />
+    <g
+       id="g507"
+       transform="matrix(1,0,0,0.99328472,372.52893,101.77217)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g506"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect506"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
+    </g>
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke-width:1.70087;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+       id="rect509"
+       width="67.768692"
+       height="39.24226"
+       x="448.33786"
+       y="79.791496"
+       ry="2.3727963" />
+    <g
+       id="g511"
+       transform="matrix(1,0,0,0.99328472,372.52893,156.09948)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g510"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect510"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
+    </g>
+    <g
+       id="g513"
+       transform="matrix(1,0,0,0.99328472,524.66435,131.62553)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g512"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect511"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
+    </g>
+    <g
+       id="g539"
+       transform="matrix(1,0,0,0.99328472,0,85.228043)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <rect
+         style="fill:#dadb9b;fill-opacity:1;stroke-width:2.83395;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+         id="rect513"
+         width="75.420372"
+         height="97.889603"
+         x="8.1764317"
+         y="-130.84341"
+         ry="5.9189277"
+         transform="rotate(90)"
+         inkscape:export-filename="res/img/Oscillo.png"
+         inkscape:export-xdpi="86.840286"
+         inkscape:export-ydpi="86.840286" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:1.95065;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+         id="rect514"
+         width="88.535538"
+         height="39.507565"
+         x="36.508316"
+         y="15.248104"
+         ry="2.3888381" />
+      <g
+         id="g522"
+         transform="translate(-17.507178,-20.108333)">
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.187217;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect515"
+           width="0.5967471"
+           height="4.1631145"
+           x="63.875412"
+           y="79.013229"
+           ry="0.11564207" />
+        <g
+           id="g515"
+           transform="translate(28.805166,-21.082275)"
+           style="fill:#808080"
+           inkscape:transform-center-y="-2.3853805">
+          <circle
+             style="fill:#808080;fill-opacity:1;stroke-width:2;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="circle515"
+             cx="35.368618"
+             cy="111.83501"
+             r="4.6949039" />
+        </g>
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect516"
+           width="0.47278309"
+           height="2.3085804"
+           x="-64.410179"
+           y="-101.04504"
+           ry="0.064127237"
+           inkscape:transform-center-x="-3.8553103e-06"
+           inkscape:transform-center-y="5.4425278"
+           transform="scale(-1)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect517"
+           width="0.47278309"
+           height="2.3085804"
+           x="90.516342"
+           y="-74.270027"
+           ry="0.064127237"
+           inkscape:transform-center-x="-8.9419525"
+           inkscape:transform-center-y="-1.1558898e-06"
+           transform="rotate(90)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect518"
+           width="0.47278309"
+           height="2.3085804"
+           x="90.516342"
+           y="54.077541"
+           ry="0.064127237"
+           inkscape:transform-center-x="8.941953"
+           inkscape:transform-center-y="-1.1558898e-06"
+           transform="matrix(0,1,1,0,0,0)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect519"
+           width="0.47278309"
+           height="2.3085804"
+           x="18.557764"
+           y="-119.64584"
+           ry="0.064127237"
+           inkscape:transform-center-x="-6.3229215"
+           inkscape:transform-center-y="6.3229209"
+           transform="rotate(135)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect520"
+           width="0.47278309"
+           height="2.3085804"
+           x="18.557764"
+           y="99.453346"
+           ry="0.064127237"
+           inkscape:transform-center-x="6.3229175"
+           inkscape:transform-center-y="-6.3229182"
+           transform="matrix(-0.70710678,0.70710678,0.70710678,0.70710678,0,0)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect521"
+           width="0.47278309"
+           height="2.3085804"
+           x="109.3132"
+           y="8.6979046"
+           ry="0.064127237"
+           inkscape:transform-center-x="-6.3229222"
+           inkscape:transform-center-y="-6.3229207"
+           transform="rotate(45)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect522"
+           width="0.47278309"
+           height="2.3085804"
+           x="109.3132"
+           y="-28.890402"
+           ry="0.064127237"
+           inkscape:transform-center-x="6.3229169"
+           inkscape:transform-center-y="6.3229181"
+           transform="matrix(0.70710678,0.70710678,0.70710678,-0.70710678,0,0)" />
+      </g>
+      <g
+         id="g530"
+         transform="translate(6.542095,-20.108333)">
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.187217;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect523"
+           width="0.5967471"
+           height="4.1631145"
+           x="63.875412"
+           y="79.013229"
+           ry="0.11564207" />
+        <g
+           id="g523"
+           transform="translate(28.805166,-21.082275)"
+           style="fill:#808080"
+           inkscape:transform-center-y="-2.3853805">
+          <circle
+             style="fill:#808080;fill-opacity:1;stroke-width:2;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="circle523"
+             cx="35.368618"
+             cy="111.83501"
+             r="4.6949039" />
+        </g>
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect524"
+           width="0.47278309"
+           height="2.3085804"
+           x="-64.410179"
+           y="-101.04504"
+           ry="0.064127237"
+           inkscape:transform-center-x="-3.8553103e-06"
+           inkscape:transform-center-y="5.4425278"
+           transform="scale(-1)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect525"
+           width="0.47278309"
+           height="2.3085804"
+           x="90.516342"
+           y="-74.270027"
+           ry="0.064127237"
+           inkscape:transform-center-x="-8.9419525"
+           inkscape:transform-center-y="-1.1558898e-06"
+           transform="rotate(90)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect526"
+           width="0.47278309"
+           height="2.3085804"
+           x="90.516342"
+           y="54.077541"
+           ry="0.064127237"
+           inkscape:transform-center-x="8.941953"
+           inkscape:transform-center-y="-1.1558898e-06"
+           transform="matrix(0,1,1,0,0,0)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect527"
+           width="0.47278309"
+           height="2.3085804"
+           x="18.557764"
+           y="-119.64584"
+           ry="0.064127237"
+           inkscape:transform-center-x="-6.3229215"
+           inkscape:transform-center-y="6.3229209"
+           transform="rotate(135)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect528"
+           width="0.47278309"
+           height="2.3085804"
+           x="18.557764"
+           y="99.453346"
+           ry="0.064127237"
+           inkscape:transform-center-x="6.3229175"
+           inkscape:transform-center-y="-6.3229182"
+           transform="matrix(-0.70710678,0.70710678,0.70710678,0.70710678,0,0)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect529"
+           width="0.47278309"
+           height="2.3085804"
+           x="109.3132"
+           y="8.6979046"
+           ry="0.064127237"
+           inkscape:transform-center-x="-6.3229222"
+           inkscape:transform-center-y="-6.3229207"
+           transform="rotate(45)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect530"
+           width="0.47278309"
+           height="2.3085804"
+           x="109.3132"
+           y="-28.890402"
+           ry="0.064127237"
+           inkscape:transform-center-x="6.3229169"
+           inkscape:transform-center-y="6.3229181"
+           transform="matrix(0.70710678,0.70710678,0.70710678,-0.70710678,0,0)" />
+      </g>
+      <g
+         id="g538"
+         transform="translate(30.591368,-20.108333)">
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.187217;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect531"
+           width="0.5967471"
+           height="4.1631145"
+           x="63.875412"
+           y="79.013229"
+           ry="0.11564207" />
+        <g
+           id="g531"
+           transform="translate(28.805166,-21.082275)"
+           style="fill:#808080"
+           inkscape:transform-center-y="-2.3853805">
+          <circle
+             style="fill:#808080;fill-opacity:1;stroke-width:2;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="circle531"
+             cx="35.368618"
+             cy="111.83501"
+             r="4.6949039" />
+        </g>
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect532"
+           width="0.47278309"
+           height="2.3085804"
+           x="-64.410179"
+           y="-101.04504"
+           ry="0.064127237"
+           inkscape:transform-center-x="-3.8553103e-06"
+           inkscape:transform-center-y="5.4425278"
+           transform="scale(-1)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect533"
+           width="0.47278309"
+           height="2.3085804"
+           x="90.516342"
+           y="-74.270027"
+           ry="0.064127237"
+           inkscape:transform-center-x="-8.9419525"
+           inkscape:transform-center-y="-1.1558898e-06"
+           transform="rotate(90)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect534"
+           width="0.47278309"
+           height="2.3085804"
+           x="90.516342"
+           y="54.077541"
+           ry="0.064127237"
+           inkscape:transform-center-x="8.941953"
+           inkscape:transform-center-y="-1.1558898e-06"
+           transform="matrix(0,1,1,0,0,0)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect535"
+           width="0.47278309"
+           height="2.3085804"
+           x="18.557764"
+           y="-119.64584"
+           ry="0.064127237"
+           inkscape:transform-center-x="-6.3229215"
+           inkscape:transform-center-y="6.3229209"
+           transform="rotate(135)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect536"
+           width="0.47278309"
+           height="2.3085804"
+           x="18.557764"
+           y="99.453346"
+           ry="0.064127237"
+           inkscape:transform-center-x="6.3229175"
+           inkscape:transform-center-y="-6.3229182"
+           transform="matrix(-0.70710678,0.70710678,0.70710678,0.70710678,0,0)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect537"
+           width="0.47278309"
+           height="2.3085804"
+           x="109.3132"
+           y="8.6979046"
+           ry="0.064127237"
+           inkscape:transform-center-x="-6.3229222"
+           inkscape:transform-center-y="-6.3229207"
+           transform="rotate(45)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect538"
+           width="0.47278309"
+           height="2.3085804"
+           x="109.3132"
+           y="-28.890402"
+           ry="0.064127237"
+           inkscape:transform-center-x="6.3229169"
+           inkscape:transform-center-y="6.3229181"
+           transform="matrix(0.70710678,0.70710678,0.70710678,-0.70710678,0,0)" />
+      </g>
+      <rect
+         style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect539"
+         width="41.010418"
+         height="3.175"
+         x="61.393406"
+         y="10.054167"
+         ry="1.5875" />
+      <g
+         id="g550"
+         transform="translate(54.640641,-20.108333)">
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.187217;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect543"
+           width="0.5967471"
+           height="4.1631145"
+           x="63.875412"
+           y="79.013229"
+           ry="0.11564207" />
+        <g
+           id="g544"
+           transform="translate(28.805166,-21.082275)"
+           style="fill:#808080"
+           inkscape:transform-center-y="-2.3853805">
+          <circle
+             style="fill:#808080;fill-opacity:1;stroke-width:2;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="circle543"
+             cx="35.368618"
+             cy="111.83501"
+             r="4.6949039" />
+        </g>
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect544"
+           width="0.47278309"
+           height="2.3085804"
+           x="-64.410179"
+           y="-101.04504"
+           ry="0.064127237"
+           inkscape:transform-center-x="-3.8553103e-06"
+           inkscape:transform-center-y="5.4425278"
+           transform="scale(-1)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect545"
+           width="0.47278309"
+           height="2.3085804"
+           x="90.516342"
+           y="-74.270027"
+           ry="0.064127237"
+           inkscape:transform-center-x="-8.9419525"
+           inkscape:transform-center-y="-1.1558898e-06"
+           transform="rotate(90)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect546"
+           width="0.47278309"
+           height="2.3085804"
+           x="90.516342"
+           y="54.077541"
+           ry="0.064127237"
+           inkscape:transform-center-x="8.941953"
+           inkscape:transform-center-y="-1.1558898e-06"
+           transform="matrix(0,1,1,0,0,0)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect547"
+           width="0.47278309"
+           height="2.3085804"
+           x="18.557764"
+           y="-119.64584"
+           ry="0.064127237"
+           inkscape:transform-center-x="-6.3229215"
+           inkscape:transform-center-y="6.3229209"
+           transform="rotate(135)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect548"
+           width="0.47278309"
+           height="2.3085804"
+           x="18.557764"
+           y="99.453346"
+           ry="0.064127237"
+           inkscape:transform-center-x="6.3229175"
+           inkscape:transform-center-y="-6.3229182"
+           transform="matrix(-0.70710678,0.70710678,0.70710678,0.70710678,0,0)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect549"
+           width="0.47278309"
+           height="2.3085804"
+           x="109.3132"
+           y="8.6979046"
+           ry="0.064127237"
+           inkscape:transform-center-x="-6.3229222"
+           inkscape:transform-center-y="-6.3229207"
+           transform="rotate(45)" />
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.124092;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect550"
+           width="0.47278309"
+           height="2.3085804"
+           x="109.3132"
+           y="-28.890402"
+           ry="0.064127237"
+           inkscape:transform-center-x="6.3229169"
+           inkscape:transform-center-y="6.3229181"
+           transform="matrix(0.70710678,0.70710678,0.70710678,-0.70710678,0,0)" />
+      </g>
+    </g>
+    <g
+       id="g543"
+       transform="matrix(1,0,0,0.99328472,134.51108,123.06346)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g542"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect541"
            width="2.8769403"
            height="9.6230984"
            x="29.746769"
