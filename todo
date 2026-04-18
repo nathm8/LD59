@@ -1,6 +1,14 @@
 Signals
 ===================================
 
+MVP
+-----------------------------------
+have modifiable waveform on Oscilloscope
+have target waveform on OscilloscopeOut
+modify starting waveform to match, recognise, win
+
+Concept
+-----------------------------------
 match target waveform
 link waveform generators and modulators to output
 gens:
@@ -13,3 +21,19 @@ combiners:
     additive, multiplicative, inverter
 
 have dials go from 1 to 10, all signal outputs normalised
+
+
+Visuals
+-----------------------------------
+do green oscilio stuff
+shader if we get time
+
+have cables to plug into\out of generators and modifiers
+
+drag the gens\mods around. Give them physics if time.
+
+Sounds
+-----------------------------------
+try to play the dynamically generated waveforms using Heaps
+
+randomly generated tones\keys for waveforms, have it match their colours

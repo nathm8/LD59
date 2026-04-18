@@ -2,6 +2,6 @@
 -lib box2d
 -lib slide
 -cp src
--js bin/kriegskunst.js
+-js bin/game.js
 -main Main
 -debug
