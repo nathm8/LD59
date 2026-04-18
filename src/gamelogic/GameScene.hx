@@ -41,9 +41,13 @@ class GameScene extends Scene implements MessageListener {
         var target = new TargetOscilloscope(this);
         target.inputWaveform = o.waveform;
         target.x = 300;
+        target.y = 300;
+
+        var cables = new Cable(this);
 
         updateables.push(o);
         updateables.push(target);
+        updateables.push(cables);
     }
     
     public function update(dt:Float) {
@@ -99,8 +103,7 @@ class GameScene extends Scene implements MessageListener {
                 cameraMovingRight = false;
                 cameraMovingUp = false;
                 cameraMovingDown = false;
-            }
-            else {
+            } else {
                 cameraMovingLeft = params.event.relX < edgeScrollDistance;
                 cameraMovingRight = params.event.relX > Window.getInstance().width - edgeScrollDistance;
                 cameraMovingUp = params.event.relY < edgeScrollDistance;

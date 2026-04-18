@@ -1,6 +1,6 @@
 package utilities;
 
-import hxd.fs.FileEntry;
+import gamelogic.Cable.CableHead;
 import hxd.Event;
 import utilities.Vector2D;
 
@@ -8,6 +8,10 @@ class Message {public function new(){}}
 
 class Victory extends Message {}
 class Restart extends Message {}
+class CableHeadMoved extends Message {
+    public var cableHead: CableHead;
+    public function new(c: CableHead) {super(); cableHead = c;}
+}
 class MousePush extends Message {
     public var event: Event;
     public var scenePosition: Vector2D;

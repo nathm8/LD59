@@ -24,15 +24,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="1484.2171"
-     inkscape:cy="-105.35891"
+     inkscape:zoom="0.5"
+     inkscape:cx="669"
+     inkscape:cy="337"
      inkscape:window-width="1920"
      inkscape:window-height="1080"
-     inkscape:window-x="1080"
+     inkscape:window-x="3000"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g358" />
+     inkscape:current-layer="layer1" />
   <defs
      id="defs1">
     <linearGradient
@@ -148,6 +148,34 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <g
+       id="g370"
+       transform="translate(-9.7897172,-41.804277)">
+      <rect
+         style="opacity:1;fill:#999999;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect368"
+         width="3.7041667"
+         height="20.902082"
+         x="138.41014"
+         y="50.006248"
+         ry="1.8520833" />
+      <rect
+         style="opacity:1;fill:#1a1a1a;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.232122;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect369"
+         width="8.4457798"
+         height="12.348383"
+         x="136.03934"
+         y="62.154453"
+         ry="0.81352895" />
+      <rect
+         style="opacity:1;fill:#c20000;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.14547;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect370"
+         width="3.2939491"
+         height="12.435035"
+         x="138.61525"
+         y="62.111126"
+         ry="0" />
+    </g>
     <g
        id="g34"
        transform="translate(-20.292118,-53.022589)"
@@ -615,279 +643,297 @@
       </g>
     </g>
     <g
-       id="g216"
-       transform="translate(45.508333,-149.75417)">
-      <g
-         id="g106"
-         transform="matrix(0.5827865,0,0,0.5827865,144.73467,-39.662642)">
-        <rect
-           style="fill:#dadb9b;fill-opacity:1;stroke-width:6.01035;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect75"
-           width="184.85005"
-           height="179.64735"
-           x="88.227562"
-           y="-140.21194"
-           ry="10.862437"
-           transform="rotate(90)"
-           inkscape:export-filename="res/img/OscilloOut.png"
-           inkscape:export-xdpi="86.840286"
-           inkscape:export-ydpi="86.840286" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect76"
-           width="162.59135"
-           height="80.246086"
-           x="-30.907448"
-           y="96.37661"
-           ry="4.8521061" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect100"
-           width="162.59135"
-           height="80.246086"
-           x="-30.907448"
-           y="184.68248"
-           ry="4.8521061" />
-        <rect
-           style="fill:#dadb9b;fill-opacity:1;stroke-width:9.15182;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect102"
-           width="217.71771"
-           height="353.6398"
-           x="88.227562"
-           y="-314.20441"
-           ry="21.38295"
-           transform="rotate(90)"
-           inkscape:export-filename="res/img/OscilloOut.png"
-           inkscape:export-xdpi="86.840286"
-           inkscape:export-ydpi="86.840286" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect103"
-           width="162.59135"
-           height="80.246086"
-           x="-30.907448"
-           y="96.37661"
-           ry="4.8521061" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect104"
-           width="162.59135"
-           height="80.246086"
-           x="-30.907448"
-           y="184.68248"
-           ry="4.8521061" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect105"
-           width="162.59135"
-           height="80.246086"
-           x="140.02303"
-           y="96.37661"
-           ry="4.8521061" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:4.43692;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect106"
-           width="162.59135"
-           height="111.3028"
-           x="140.02303"
-           y="153.62576"
-           ry="6.7299609" />
-      </g>
-      <g
-         id="g152"
-         transform="matrix(0,1.6960222,-1.6846329,0,225.36137,89.342964)"
-         inkscape:export-filename="res/img/Oscillo.png"
+       id="g106"
+       transform="matrix(0.5827865,0,0,0.5827865,190.243,-189.41681)">
+      <rect
+         style="fill:#dadb9b;fill-opacity:1;stroke-width:6.01035;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+         id="rect75"
+         width="184.85005"
+         height="179.64735"
+         x="88.227562"
+         y="-140.21194"
+         ry="10.862437"
+         transform="rotate(90)"
+         inkscape:export-filename="res/img/OscilloOut.png"
          inkscape:export-xdpi="86.840286"
-         inkscape:export-ydpi="86.840286"
+         inkscape:export-ydpi="86.840286" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+         id="rect76"
+         width="162.59135"
+         height="80.246086"
+         x="-30.907448"
+         y="96.37661"
+         ry="4.8521061" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+         id="rect100"
+         width="162.59135"
+         height="80.246086"
+         x="-30.907448"
+         y="184.68248"
+         ry="4.8521061" />
+      <rect
+         style="fill:#dadb9b;fill-opacity:1;stroke-width:9.15182;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+         id="rect102"
+         width="217.71771"
+         height="353.6398"
+         x="88.227562"
+         y="-314.20441"
+         ry="21.38295"
+         transform="rotate(90)"
+         inkscape:export-filename="res/img/OscilloOut.png"
+         inkscape:export-xdpi="86.840286"
+         inkscape:export-ydpi="86.840286" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+         id="rect103"
+         width="162.59135"
+         height="80.246086"
+         x="-30.907448"
+         y="96.37661"
+         ry="4.8521061" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+         id="rect104"
+         width="162.59135"
+         height="80.246086"
+         x="-30.907448"
+         y="184.68248"
+         ry="4.8521061" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+         id="rect105"
+         width="162.59135"
+         height="80.246086"
+         x="140.02303"
+         y="96.37661"
+         ry="4.8521061" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:4.43692;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+         id="rect106"
+         width="162.59135"
+         height="111.3028"
+         x="140.02303"
+         y="153.62576"
+         ry="6.7299609" />
+    </g>
+    <g
+       id="g152"
+       transform="matrix(0,1.6960222,-1.6846329,0,270.8697,-60.411206)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286"
+       style="fill:#808080">
+      <g
+         id="g151"
+         transform="translate(-33.911345,-57.000868)"
          style="fill:#808080">
-        <g
-           id="g151"
-           transform="translate(-33.911345,-57.000868)"
-           style="fill:#808080">
-          <rect
-             style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.200675;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="rect152"
-             width="8.0448132"
-             height="21.095594"
-             x="51.565384"
-             y="78.866287"
-             ry="2.9194796" />
-        </g>
+        <rect
+           style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.200675;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect152"
+           width="8.0448132"
+           height="21.095594"
+           x="51.565384"
+           y="78.866287"
+           ry="2.9194796" />
+      </g>
+    </g>
+    <g
+       id="g155"
+       transform="matrix(1.5235101,0,0,1.1209819,-0.9173,-163.08293)">
+      <g
+         id="g153"
+         transform="matrix(0,-2.2357538,2.2357538,0,-99.557793,289.1983)">
+        <circle
+           style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="path143"
+           cx="73.716255"
+           cy="103.34386"
+           r="1.4552083" />
+        <rect
+           style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.225082;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect143"
+           width="2.9027116"
+           height="4.583672"
+           x="72.2649"
+           y="103.08586"
+           ry="0" />
       </g>
       <g
-         id="g155"
-         transform="matrix(1.6960222,0,0,1.6960222,-71.017944,-84.856257)">
-        <g
-           id="g153"
-           transform="matrix(0,-2.2357538,2.2357538,0,-98.168457,289.1983)">
-          <circle
-             style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="path143"
-             cx="73.716255"
-             cy="103.34386"
-             r="1.4552083" />
-          <rect
-             style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.225082;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="rect143"
-             width="2.9027116"
-             height="4.583672"
-             x="72.2649"
-             y="103.08586"
-             ry="0" />
-        </g>
-        <g
-           id="g154"
-           transform="matrix(0,-2.2357538,-2.2357538,0,383.27668,289.1983)"
-           style="fill:#b3b3b3">
-          <circle
-             style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="circle153"
-             cx="73.716255"
-             cy="103.34386"
-             r="1.4552083" />
-          <rect
-             style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.225082;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="rect153"
-             width="2.9027116"
-             height="4.583672"
-             x="72.2649"
-             y="103.08586"
-             ry="0" />
-        </g>
+         id="g154"
+         transform="matrix(0,-2.2357538,-2.2357538,0,384.31867,289.1983)"
+         style="fill:#b3b3b3">
+        <circle
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="circle153"
+           cx="73.716255"
+           cy="103.34386"
+           r="1.4552083" />
+        <rect
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.225082;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect153"
+           width="2.9027116"
+           height="4.583672"
+           x="72.2649"
+           y="103.08586"
+           ry="0" />
       </g>
+    </g>
+    <g
+       id="g175"
+       transform="translate(45.508333,-149.75417)">
+      <circle
+         style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle162"
+         cx="241.21208"
+         cy="126.01794"
+         r="9.2281904" />
+      <circle
+         style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle163"
+         cx="241.21208"
+         cy="126.01794"
+         r="7.893466" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle164"
+         cx="241.21208"
+         cy="126.01794"
+         r="6.1138344" />
+    </g>
+    <g
+       id="g174"
+       transform="translate(50.998444,-149.75417)">
+      <circle
+         style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle166"
+         cx="267.67041"
+         cy="126.01794"
+         r="9.2281904" />
+      <circle
+         style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle167"
+         cx="267.67041"
+         cy="126.01794"
+         r="7.893466" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle168"
+         cx="267.67041"
+         cy="126.01794"
+         r="6.1138344" />
+    </g>
+    <g
+       id="g173"
+       transform="translate(58.737502,-149.75417)">
+      <circle
+         style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle170"
+         cx="291.87979"
+         cy="126.01794"
+         r="9.2281904" />
+      <circle
+         style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle171"
+         cx="291.87979"
+         cy="126.01794"
+         r="7.893466" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle172"
+         cx="291.87979"
+         cy="126.01794"
+         r="6.1138344" />
+    </g>
+    <g
+       id="g206"
+       transform="translate(-5.159376,-149.75417)"
+       style="opacity:0.7">
+      <circle
+         style="fill:url(#radialGradient206);stroke:none;stroke-width:0.137325;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle206"
+         cx="291.87979"
+         cy="126.01794"
+         r="11.304427" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle205"
+         cx="291.87979"
+         cy="126.01794"
+         r="6.1138344" />
+      <circle
+         style="fill:url(#radialGradient207);stroke:none;stroke-width:0.193573;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle207"
+         cx="291.87979"
+         cy="126.01794"
+         r="15.934636" />
+    </g>
+    <g
+       id="g212"
+       transform="translate(26.789063,-149.75417)"
+       style="opacity:0.7">
+      <circle
+         style="fill:url(#radialGradient212);stroke:none;stroke-width:0.137325;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle210"
+         cx="291.87979"
+         cy="126.01794"
+         r="11.304427" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle211"
+         cx="291.87979"
+         cy="126.01794"
+         r="6.1138344" />
+      <circle
+         style="fill:url(#radialGradient213);stroke:none;stroke-width:0.193573;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle212"
+         cx="291.87979"
+         cy="126.01794"
+         r="15.934636" />
+    </g>
+    <g
+       id="g215"
+       transform="translate(58.737502,-149.75417)"
+       style="opacity:0.7">
+      <circle
+         style="fill:url(#radialGradient215);stroke:none;stroke-width:0.137325;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle213"
+         cx="291.87979"
+         cy="126.01794"
+         r="11.304427" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle214"
+         cx="291.87979"
+         cy="126.01794"
+         r="6.1138344" />
+      <circle
+         style="fill:url(#radialGradient216);stroke:none;stroke-width:0.193573;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="circle215"
+         cx="291.87979"
+         cy="126.01794"
+         r="15.934636" />
+    </g>
+    <g
+       id="g360"
+       transform="matrix(0,1.6960222,-0.22347671,0,223.50893,-60.411206)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286"
+       style="fill:#666666">
       <g
-         id="g175">
-        <circle
-           style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle162"
-           cx="241.21208"
-           cy="126.01794"
-           r="9.2281904" />
-        <circle
-           style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle163"
-           cx="241.21208"
-           cy="126.01794"
-           r="7.893466" />
-        <circle
-           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle164"
-           cx="241.21208"
-           cy="126.01794"
-           r="6.1138344" />
-      </g>
-      <g
-         id="g174"
-         transform="translate(5.4901109)">
-        <circle
-           style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle166"
-           cx="267.67041"
-           cy="126.01794"
-           r="9.2281904" />
-        <circle
-           style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle167"
-           cx="267.67041"
-           cy="126.01794"
-           r="7.893466" />
-        <circle
-           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle168"
-           cx="267.67041"
-           cy="126.01794"
-           r="6.1138344" />
-      </g>
-      <g
-         id="g173"
-         transform="translate(13.229169)">
-        <circle
-           style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle170"
-           cx="291.87979"
-           cy="126.01794"
-           r="9.2281904" />
-        <circle
-           style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle171"
-           cx="291.87979"
-           cy="126.01794"
-           r="7.893466" />
-        <circle
-           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle172"
-           cx="291.87979"
-           cy="126.01794"
-           r="6.1138344" />
-      </g>
-      <g
-         id="g206"
-         transform="translate(-50.667709)"
-         style="opacity:0.7">
-        <circle
-           style="fill:url(#radialGradient206);stroke:none;stroke-width:0.137325;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle206"
-           cx="291.87979"
-           cy="126.01794"
-           r="11.304427" />
-        <circle
-           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle205"
-           cx="291.87979"
-           cy="126.01794"
-           r="6.1138344" />
-        <circle
-           style="fill:url(#radialGradient207);stroke:none;stroke-width:0.193573;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle207"
-           cx="291.87979"
-           cy="126.01794"
-           r="15.934636" />
-      </g>
-      <g
-         id="g212"
-         transform="translate(-18.71927)"
-         style="opacity:0.7">
-        <circle
-           style="fill:url(#radialGradient212);stroke:none;stroke-width:0.137325;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle210"
-           cx="291.87979"
-           cy="126.01794"
-           r="11.304427" />
-        <circle
-           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle211"
-           cx="291.87979"
-           cy="126.01794"
-           r="6.1138344" />
-        <circle
-           style="fill:url(#radialGradient213);stroke:none;stroke-width:0.193573;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle212"
-           cx="291.87979"
-           cy="126.01794"
-           r="15.934636" />
-      </g>
-      <g
-         id="g215"
-         transform="translate(13.229169)"
-         style="opacity:0.7">
-        <circle
-           style="fill:url(#radialGradient215);stroke:none;stroke-width:0.137325;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle213"
-           cx="291.87979"
-           cy="126.01794"
-           r="11.304427" />
-        <circle
-           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0742703;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle214"
-           cx="291.87979"
-           cy="126.01794"
-           r="6.1138344" />
-        <circle
-           style="fill:url(#radialGradient216);stroke:none;stroke-width:0.193573;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle215"
-           cx="291.87979"
-           cy="126.01794"
-           r="15.934636" />
+         id="g359"
+         transform="translate(-33.911345,-57.000868)"
+         style="fill:#666666">
+        <rect
+           style="fill:#666666;fill-opacity:1;stroke:none;stroke-width:0.200675;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect359"
+           width="8.0448132"
+           height="21.095594"
+           x="51.565384"
+           y="78.866287"
+           ry="2.9194796" />
       </g>
     </g>
     <g
@@ -898,214 +944,8 @@
          transform="matrix(0.5827865,0,0,0.5827865,358.518,-177.77514)" />
     </g>
     <g
-       id="g316"
-       transform="translate(281.24006,-149.75417)"
-       inkscape:export-filename="res/img/OscilloOut.png"
-       inkscape:export-xdpi="86.840286"
-       inkscape:export-ydpi="86.840286">
-      <g
-         id="g293"
-         transform="matrix(0.5827865,0,0,0.5827865,144.73467,-39.662642)">
-        <rect
-           style="fill:#dadb9b;fill-opacity:1;stroke-width:6.01035;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect286"
-           width="184.85005"
-           height="179.64735"
-           x="88.227562"
-           y="-140.21194"
-           ry="10.862437"
-           transform="rotate(90)"
-           inkscape:export-filename="res/img/OscilloOut.png"
-           inkscape:export-xdpi="86.840286"
-           inkscape:export-ydpi="86.840286" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect287"
-           width="162.59135"
-           height="80.246086"
-           x="-30.907448"
-           y="96.37661"
-           ry="4.8521061" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect288"
-           width="162.59135"
-           height="80.246086"
-           x="-30.907448"
-           y="184.68248"
-           ry="4.8521061" />
-        <rect
-           style="fill:#dadb9b;fill-opacity:1;stroke-width:9.15182;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect289"
-           width="217.71771"
-           height="353.6398"
-           x="88.227562"
-           y="-314.20441"
-           ry="21.38295"
-           transform="rotate(90)"
-           inkscape:export-filename="res/img/OscilloOut.png"
-           inkscape:export-xdpi="86.840286"
-           inkscape:export-ydpi="86.840286" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect290"
-           width="162.59135"
-           height="80.246086"
-           x="-30.907448"
-           y="96.37661"
-           ry="4.8521061" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect291"
-           width="162.59135"
-           height="80.246086"
-           x="-30.907448"
-           y="184.68248"
-           ry="4.8521061" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect292"
-           width="162.59135"
-           height="80.246086"
-           x="140.02303"
-           y="96.37661"
-           ry="4.8521061" />
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke-width:4.43692;stroke-miterlimit:3.3;paint-order:markers stroke fill"
-           id="rect293"
-           width="162.59135"
-           height="111.3028"
-           x="140.02303"
-           y="153.62576"
-           ry="6.7299609" />
-      </g>
-      <g
-         id="g295"
-         transform="matrix(0,1.6960222,-1.6846329,0,225.36137,89.342964)"
-         inkscape:export-filename="res/img/Oscillo.png"
-         inkscape:export-xdpi="86.840286"
-         inkscape:export-ydpi="86.840286"
-         style="fill:#808080">
-        <g
-           id="g294"
-           transform="translate(-33.911345,-57.000868)"
-           style="fill:#808080">
-          <rect
-             style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.200675;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-             id="rect294"
-             width="8.0448132"
-             height="21.095594"
-             x="51.565384"
-             y="78.866287"
-             ry="2.9194796" />
-        </g>
-      </g>
-      <g
-         id="g300">
-        <circle
-           style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle298"
-           cx="241.21208"
-           cy="126.01794"
-           r="9.2281904" />
-        <circle
-           style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle299"
-           cx="241.21208"
-           cy="126.01794"
-           r="7.893466" />
-      </g>
-      <g
-         id="g303"
-         transform="translate(5.4901109)">
-        <circle
-           style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle301"
-           cx="267.67041"
-           cy="126.01794"
-           r="9.2281904" />
-        <circle
-           style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle302"
-           cx="267.67041"
-           cy="126.01794"
-           r="7.893466" />
-      </g>
-      <g
-         id="g306"
-         transform="translate(13.229169)">
-        <circle
-           style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle304"
-           cx="291.87979"
-           cy="126.01794"
-           r="9.2281904" />
-        <circle
-           style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           id="circle305"
-           cx="291.87979"
-           cy="126.01794"
-           r="7.893466" />
-      </g>
-      <g
-         id="g309"
-         transform="translate(-50.667709)"
-         style="opacity:0.7" />
-      <g
-         id="g312"
-         transform="translate(-18.71927)"
-         style="opacity:0.7" />
-      <g
-         id="g315"
-         transform="translate(13.229169)"
-         style="opacity:0.7" />
-    </g>
-    <g
-       id="g331"
-       transform="matrix(0,-3.7918881,3.7918881,0,-103.32468,341.63325)"
-       inkscape:export-filename="res/img/SwitchReady.png"
-       inkscape:export-xdpi="86.840286"
-       inkscape:export-ydpi="86.840286">
-      <circle
-         style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-         id="circle330"
-         cx="73.716255"
-         cy="103.34386"
-         r="1.4552083" />
-      <rect
-         style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.225082;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-         id="rect330"
-         width="2.9027116"
-         height="4.583672"
-         x="72.2649"
-         y="103.08586"
-         ry="0" />
-    </g>
-    <g
-       id="g332"
-       transform="matrix(0,-3.7918881,-3.7918881,0,694.13392,323.67274)"
-       style="fill:#b3b3b3"
-       inkscape:export-filename="res/img/SwitchFlipped.png"
-       inkscape:export-xdpi="86.840286"
-       inkscape:export-ydpi="86.840286">
-      <circle
-         style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-         id="circle331"
-         cx="73.716255"
-         cy="103.34386"
-         r="1.4552083" />
-      <rect
-         style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.225082;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-         id="rect331"
-         width="2.9027116"
-         height="4.583672"
-         x="72.2649"
-         y="103.08586"
-         ry="0" />
-    </g>
-    <g
        id="g344"
-       transform="translate(77.517127,-69.13391)"
+       transform="translate(-159.71098,-300.0276)"
        style="opacity:0.7"
        inkscape:export-filename="res/img/LightGlow.png"
        inkscape:export-xdpi="86.840286"
@@ -1131,7 +971,7 @@
     </g>
     <g
        id="g358"
-       transform="translate(132.14702,-69.13391)"
+       transform="translate(-155.22085,-334.82608)"
        style="opacity:0.7"
        inkscape:export-filename="res/img/LightGlow.png"
        inkscape:export-xdpi="86.840286"
@@ -1145,6 +985,261 @@
          inkscape:export-filename="res/img/Light.png"
          inkscape:export-xdpi="86.840286"
          inkscape:export-ydpi="86.840286" />
+    </g>
+    <g
+       id="g380"
+       transform="translate(-232.30417,-141.2875)">
+      <g
+         id="g316"
+         transform="translate(281.24006,-149.75417)"
+         inkscape:export-filename="res/img/OscilloOut.png"
+         inkscape:export-xdpi="86.840286"
+         inkscape:export-ydpi="86.840286">
+        <g
+           id="g293"
+           transform="matrix(0.5827865,0,0,0.5827865,144.73467,-39.662642)">
+          <rect
+             style="fill:#dadb9b;fill-opacity:1;stroke-width:6.01035;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="rect286"
+             width="184.85005"
+             height="179.64735"
+             x="88.227562"
+             y="-140.21194"
+             ry="10.862437"
+             transform="rotate(90)"
+             inkscape:export-filename="res/img/OscilloOut.png"
+             inkscape:export-xdpi="86.840286"
+             inkscape:export-ydpi="86.840286" />
+          <rect
+             style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="rect287"
+             width="162.59135"
+             height="80.246086"
+             x="-30.907448"
+             y="96.37661"
+             ry="4.8521061" />
+          <rect
+             style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="rect288"
+             width="162.59135"
+             height="80.246086"
+             x="-30.907448"
+             y="184.68248"
+             ry="4.8521061" />
+          <rect
+             style="fill:#dadb9b;fill-opacity:1;stroke-width:9.15182;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="rect289"
+             width="217.71771"
+             height="353.6398"
+             x="88.227562"
+             y="-314.20441"
+             ry="21.38295"
+             transform="rotate(90)"
+             inkscape:export-filename="res/img/OscilloOut.png"
+             inkscape:export-xdpi="86.840286"
+             inkscape:export-ydpi="86.840286" />
+          <rect
+             style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="rect290"
+             width="162.59135"
+             height="80.246086"
+             x="-30.907448"
+             y="96.37661"
+             ry="4.8521061" />
+          <rect
+             style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="rect291"
+             width="162.59135"
+             height="80.246086"
+             x="-30.907448"
+             y="184.68248"
+             ry="4.8521061" />
+          <rect
+             style="fill:#000000;fill-opacity:1;stroke-width:3.76739;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="rect292"
+             width="162.59135"
+             height="80.246086"
+             x="140.02303"
+             y="96.37661"
+             ry="4.8521061" />
+          <rect
+             style="fill:#000000;fill-opacity:1;stroke-width:4.43692;stroke-miterlimit:3.3;paint-order:markers stroke fill"
+             id="rect293"
+             width="162.59135"
+             height="111.3028"
+             x="140.02303"
+             y="153.62576"
+             ry="6.7299609" />
+        </g>
+        <g
+           id="g300">
+          <circle
+             style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+             id="circle298"
+             cx="241.21208"
+             cy="126.01794"
+             r="9.2281904" />
+          <circle
+             style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+             id="circle299"
+             cx="241.21208"
+             cy="126.01794"
+             r="7.893466" />
+        </g>
+        <g
+           id="g303"
+           transform="translate(5.4901109)">
+          <circle
+             style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+             id="circle301"
+             cx="267.67041"
+             cy="126.01794"
+             r="9.2281904" />
+          <circle
+             style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+             id="circle302"
+             cx="267.67041"
+             cy="126.01794"
+             r="7.893466" />
+        </g>
+        <g
+           id="g306"
+           transform="translate(13.229169)">
+          <circle
+             style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.112103;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+             id="circle304"
+             cx="291.87979"
+             cy="126.01794"
+             r="9.2281904" />
+          <circle
+             style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.0958887;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+             id="circle305"
+             cx="291.87979"
+             cy="126.01794"
+             r="7.893466" />
+        </g>
+        <g
+           id="g309"
+           transform="translate(-50.667709)"
+           style="opacity:0.7" />
+        <g
+           id="g312"
+           transform="translate(-18.71927)"
+           style="opacity:0.7" />
+        <g
+           id="g315"
+           transform="translate(13.229169)"
+           style="opacity:0.7" />
+      </g>
+      <g
+         id="g365"
+         transform="translate(52.967541,-191.66204)">
+        <g
+           id="g362"
+           transform="matrix(0,1.6960222,-1.6846329,0,456.97714,131.25083)"
+           inkscape:export-filename="res/img/Oscillo.png"
+           inkscape:export-xdpi="86.840286"
+           inkscape:export-ydpi="86.840286"
+           style="fill:#808080">
+          <g
+             id="g361"
+             transform="translate(-33.911345,-57.000868)"
+             style="fill:#808080">
+            <rect
+               style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.200675;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+               id="rect360"
+               width="8.0448132"
+               height="21.095594"
+               x="51.565384"
+               y="78.866287"
+               ry="2.9194796" />
+          </g>
+        </g>
+        <g
+           id="g364"
+           transform="matrix(0,1.6960222,-0.22347671,0,409.61637,131.25083)"
+           inkscape:export-filename="res/img/Oscillo.png"
+           inkscape:export-xdpi="86.840286"
+           inkscape:export-ydpi="86.840286"
+           style="fill:#b3b3b3">
+          <g
+             id="g363"
+             transform="translate(-33.911345,-57.000868)"
+             style="fill:#b3b3b3">
+            <rect
+               style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.200675;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+               id="rect362"
+               width="8.0448132"
+               height="21.095594"
+               x="51.565384"
+               y="78.866287"
+               ry="2.9194796" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g368"
+       transform="matrix(1.5235101,0,0,1.1209819,-146.17355,-316.27668)"
+       inkscape:export-filename="res/img/Switch.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g366"
+         transform="matrix(0,-2.2357538,2.2357538,0,-99.557793,289.1983)">
+        <circle
+           style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="circle365"
+           cx="73.716255"
+           cy="103.34386"
+           r="1.4552083" />
+        <rect
+           style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.225082;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect365"
+           width="2.9027116"
+           height="4.583672"
+           x="72.2649"
+           y="103.08586"
+           ry="0" />
+      </g>
+      <g
+         id="g367"
+         transform="matrix(0,-2.2357538,-2.2357538,0,384.31867,289.1983)"
+         style="fill:#b3b3b3">
+        <circle
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="circle366"
+           cx="73.716255"
+           cy="103.34386"
+           r="1.4552083" />
+        <rect
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.225082;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect366"
+           width="2.9027116"
+           height="4.583672"
+           x="72.2649"
+           y="103.08586"
+           ry="0" />
+      </g>
+    </g>
+    <g
+       id="g379"
+       transform="matrix(1,0,0,0.99328472,111.125,38.396793)"
+       inkscape:export-filename="res/img/Oscillo.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
+      <g
+         id="g378"
+         transform="translate(-34.285522,-68.867139)">
+        <rect
+           style="opacity:1;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.178587;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+           id="rect379"
+           width="2.8769403"
+           height="9.6230984"
+           x="29.746769"
+           y="46.362743"
+           ry="0.9544732" />
+      </g>
     </g>
   </g>
 </svg>

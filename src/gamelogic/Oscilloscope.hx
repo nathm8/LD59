@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.RNGManager;
 import h2d.col.Circle;
 import utilities.MessageManager;
 import utilities.MessageManager.MouseMove;
@@ -47,7 +48,7 @@ class Dial extends Object {
     }
 }
 
-class Oscilloscope extends Object implements Updateable {
+class Oscilloscope extends Object implements Updateable implements MessageListener {
     
     public var waveform: Waveform;
     var waveformGraphics: Graphics;
@@ -58,6 +59,8 @@ class Oscilloscope extends Object implements Updateable {
     var phaseDial: Dial;
 
     var totalTime = 0.0;
+
+    var port: Bitmap;
 
     public function new(p: Object) {
         super(p);
@@ -78,15 +81,32 @@ class Oscilloscope extends Object implements Updateable {
         waveformGraphics.scaleY = 114; 
         waveformGraphics.x = 20 - size.width/2;
         waveformGraphics.y = 20 - waveformGraphics.scaleY/2;
+
+        port = new Bitmap(Res.img.CablePort.toTile().center(), this);
+        port.x = size.width/2;
+        port.y = -size.height/2 + 45;
+
+        MessageManager.addListener(this);
     }
 
     public function update(dt:Float):Bool {
-        totalTime += dt;
+        totalTime += dt*0.5 + RNGManager.srand(0.01);
         waveformGraphics.clear();
         waveform.draw(waveformGraphics, totalTime);
-        // ampDial.update(dt);
-        // freqDial.update(dt);
-        // phaseDial.update(dt);
+        return false;
+    }
+
+    public function receive(msg:Message):Bool {
+        if (Std.isOfType(msg, CableHeadMoved)) {
+            var params = cast(msg, CableHeadMoved);
+            var cable_head = params.cableHead;
+            var cable_bounds = cable_head.interactive.getBounds();
+            var p: Vector2D = port.getAbsPos().getPosition();
+            var c = new Circle(p.x, p.y, 30);
+            if (cable_bounds.collideCircle(c)) {
+                cable_head.snapTo(p, -Math.PI/2);
+            }
+        }
         return false;
     }
 }

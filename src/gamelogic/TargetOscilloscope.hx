@@ -1,5 +1,8 @@
 package gamelogic;
 
+import utilities.Vector2D;
+import h2d.col.Circle;
+import utilities.RNGManager;
 import utilities.MessageManager;
 import hxd.Event;
 import h2d.col.PixelsCollider;
@@ -10,7 +13,7 @@ import hxd.Res;
 import h2d.Bitmap;
 import h2d.Object;
 
-class TargetOscilloscope extends Object implements Updateable {
+class TargetOscilloscope extends Object implements Updateable implements MessageListener {
     
     var sprite: Bitmap;
     
@@ -30,7 +33,11 @@ class TargetOscilloscope extends Object implements Updateable {
     var combinedWaveform: Waveform;
     var combinedWaveformGraphics: Graphics;
 
-    var totalTime = 0.0;
+    var port: Bitmap;
+
+    var inputTotalTime = 0.0;
+    var targetTotalTime = 0.0;
+    var combinedTotalTime = 0.0;
 
     public function new(p: Object) {
         super(p);
@@ -94,17 +101,24 @@ class TargetOscilloscope extends Object implements Updateable {
         combinedWaveformGraphics.x = 12;
         combinedWaveformGraphics.y = -34;
 
+        port = new Bitmap(Res.img.CablePort.toTile().center(), this);
+        port.x = -size.width/2;
+        port.y = size.height/2 - 110;
+
+        MessageManager.addListener(this);
     }
 
     public function update(dt:Float):Bool {
-        totalTime += dt;
+        targetTotalTime += dt*0.5 + RNGManager.srand(0.01);
+        inputTotalTime += dt*0.5 + RNGManager.srand(0.01);
+        combinedTotalTime += dt*0.5 + RNGManager.srand(0.01);
         targetWaveformGraphics.clear();
         inputWaveformGraphics.clear();
         combinedWaveformGraphics.clear();
-        targetWaveform.draw(targetWaveformGraphics, totalTime);
-        inputWaveform.draw(inputWaveformGraphics, totalTime);
-        targetWaveform.draw(combinedWaveformGraphics, totalTime);
-        inputWaveform.draw(combinedWaveformGraphics, totalTime);
+        targetWaveform.draw(targetWaveformGraphics, targetTotalTime);
+        inputWaveform.draw(inputWaveformGraphics, inputTotalTime);
+        targetWaveform.draw(combinedWaveformGraphics, combinedTotalTime);
+        inputWaveform.draw(combinedWaveformGraphics, combinedTotalTime);
         return false;
     }
 
@@ -145,5 +159,19 @@ class TargetOscilloscope extends Object implements Updateable {
                 }).start();
             }
         }
+    }
+
+    public function receive(msg:Message):Bool {
+        if (Std.isOfType(msg, CableHeadMoved)) {
+            var params = cast(msg, CableHeadMoved);
+            var cable_head = params.cableHead;
+            var cable_bounds = cable_head.interactive.getBounds();
+            var p: Vector2D = port.getAbsPos().getPosition();
+            var c = new Circle(p.x, p.y, 30);
+            if (cable_bounds.collideCircle(c)) {
+                cable_head.snapTo(p, Math.PI/2);
+            }
+        }
+        return false;
     }
 }
