@@ -37,13 +37,16 @@ class TargetOscilloscope extends Object implements Updateable
 
     var port: Bitmap;
 
+    var isSelected = false;
+
     var inputTotalTime = 0.0;
     var targetTotalTime = 0.0;
     var combinedTotalTime = 0.0;
 
     public var isOutput: Bool = false;
-    public function newInput(w:Waveform) {inputWaveform = w;}
+    public function newInput(c: Connectable) {inputWaveform = c.getWaveform();}
     public function getWaveform() {return null;}
+    public function disconnect(c: Connectable) {inputWaveform = null;};
 
     public function new(p: Object) {
         super(p);
@@ -111,6 +114,13 @@ class TargetOscilloscope extends Object implements Updateable
         port.x = -size.width/2;
         port.y = size.height/2 - 110;
 
+        // 141, 11
+        var i = new Interactive(141, 16, this);
+        i.y = -size.height/2 + 3;
+        i.x = -70;
+        i.onPush = (e:Event) -> {isSelected = true;}
+        i.onRelease = (e:Event) -> {isSelected = false;}
+
         MessageManager.addListener(this);
     }
 
@@ -176,9 +186,15 @@ class TargetOscilloscope extends Object implements Updateable
             var cable_bounds = cable_head.interactive.getBounds();
             var p: Vector2D = port.getAbsPos().getPosition();
             var c = new Circle(p.x, p.y, 30);
-            if (cable_bounds.collideCircle(c)) {
-                cable_head.snapTo(p, this);
-            }
+            if (cable_bounds.collideCircle(c))
+                cable_head.snapTo(p, this, () -> {pos: new Vector2D(port.x, port.y), object: this});
+        }
+        if (Std.isOfType(msg, MouseMove)) {
+            if (!isSelected) return false;
+            var params = cast(msg, MouseMove);
+            x = params.scenePosition.x;
+            var size = sprite.getSize();
+            y = params.scenePosition.y + size.height/2 - 8;
         }
         return false;
     }

@@ -31,6 +31,11 @@ combiners:
 have dials go from 1 to 10, all signal outputs normalised
 
 
+Social
+-----------------------------------
+do zactronics style scores
+if random endless challenges, export\import
+
 Visuals
 -----------------------------------
 do green oscilio stuff
@@ -48,3 +53,5 @@ Sounds
 try to play the dynamically generated waveforms using Heaps
 
 randomly generated tones\keys for waveforms, have it match their colours
+
+generate all freq\amp\phase combos using numpy, use heaps to combine them
