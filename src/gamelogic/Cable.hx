@@ -22,11 +22,15 @@ class CableHead extends Object implements MessageListener {
     var isSelected = false;
     var lastPosition = new Vector2D();
 
-    public function new(?p: Object) {
+    public var connection: Connectable;
+    var cable: Cable;
+
+    public function new(c: Cable, ?p: Object) {
         super();
         // ensure cable is always behind other sprites
         p.addChildAt(this, 0);
         
+        cable = c;
         var t = Res.img.CableHead.toTile().center();
         sprite = new Bitmap(t, this);
         var pixels = new PixelsCollider(t.getTexture().capturePixels());
@@ -58,8 +62,10 @@ class CableHead extends Object implements MessageListener {
         return false;
     }
 
-    public function snapTo(p: Vector2D, r:Float) {
-        x = p.x; y = p.y; rotation = r;
+    public function snapTo(p: Vector2D, conn:Connectable) {
+        x = p.x; y = p.y; rotation = conn.isOutput ? -Math.PI/2 : Math.PI/2;
+        connection = conn;
+        cable.newConnection();
     }
 
     public function getTail(): Vector2D {
@@ -76,8 +82,8 @@ class Cable implements Updateable {
     var cable: Graphics;
 
     public function new(?p: Object) {
-        headOne = new CableHead(p);
-        headTwo = new CableHead(p);
+        headOne = new CableHead(this, p);
+        headTwo = new CableHead(this, p);
         cable = new Graphics(p);
     }
 
@@ -89,5 +95,14 @@ class Cable implements Updateable {
         t = headTwo.getTail();
         cable.lineTo(t.x, t.y);
         return false;
+    }
+
+    public function newConnection() {
+        if (headOne.connection != null && headTwo.connection != null) {
+            if (headOne.connection.isOutput && !headTwo.connection.isOutput)
+                headTwo.connection.newInput(headOne.connection.getWaveform());
+            if (!headOne.connection.isOutput && headTwo.connection.isOutput)
+                headOne.connection.newInput(headTwo.connection.getWaveform());
+        }
     }
 }

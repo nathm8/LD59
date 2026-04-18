@@ -48,7 +48,9 @@ class Dial extends Object {
     }
 }
 
-class Oscilloscope extends Object implements Updateable implements MessageListener {
+class Oscilloscope extends Object implements Updateable
+                                  implements Connectable
+                                  implements MessageListener {
     
     public var waveform: Waveform;
     var waveformGraphics: Graphics;
@@ -61,6 +63,10 @@ class Oscilloscope extends Object implements Updateable implements MessageListen
     var totalTime = 0.0;
 
     var port: Bitmap;
+    
+    public var isOutput: Bool = true;
+    public function newInput(w:Waveform) {}
+    public function getWaveform() {return waveform;}
 
     public function new(p: Object) {
         super(p);
@@ -104,7 +110,7 @@ class Oscilloscope extends Object implements Updateable implements MessageListen
             var p: Vector2D = port.getAbsPos().getPosition();
             var c = new Circle(p.x, p.y, 30);
             if (cable_bounds.collideCircle(c)) {
-                cable_head.snapTo(p, -Math.PI/2);
+                cable_head.snapTo(p, this);
             }
         }
         return false;

@@ -13,7 +13,9 @@ import hxd.Res;
 import h2d.Bitmap;
 import h2d.Object;
 
-class TargetOscilloscope extends Object implements Updateable implements MessageListener {
+class TargetOscilloscope extends Object implements Updateable
+                                        implements Connectable
+                                        implements MessageListener {
     
     var sprite: Bitmap;
     
@@ -38,6 +40,10 @@ class TargetOscilloscope extends Object implements Updateable implements Message
     var inputTotalTime = 0.0;
     var targetTotalTime = 0.0;
     var combinedTotalTime = 0.0;
+
+    public var isOutput: Bool = false;
+    public function newInput(w:Waveform) {inputWaveform = w;}
+    public function getWaveform() {return null;}
 
     public function new(p: Object) {
         super(p);
@@ -87,7 +93,7 @@ class TargetOscilloscope extends Object implements Updateable implements Message
         targetWaveformGraphics.x = 24 - size.width/2;
         targetWaveformGraphics.y = 96 - size.height/2;
 
-        inputWaveform = new Sine();
+        // inputWaveform = new Sine();
         inputWaveformGraphics = new Graphics(this);
         inputWaveformGraphics.scaleX = 310; 
         inputWaveformGraphics.scaleY = 150; 
@@ -116,9 +122,9 @@ class TargetOscilloscope extends Object implements Updateable implements Message
         inputWaveformGraphics.clear();
         combinedWaveformGraphics.clear();
         targetWaveform.draw(targetWaveformGraphics, targetTotalTime);
-        inputWaveform.draw(inputWaveformGraphics, inputTotalTime);
+        inputWaveform?.draw(inputWaveformGraphics, inputTotalTime);
         targetWaveform.draw(combinedWaveformGraphics, combinedTotalTime);
-        inputWaveform.draw(combinedWaveformGraphics, combinedTotalTime);
+        inputWaveform?.draw(combinedWaveformGraphics, combinedTotalTime);
         return false;
     }
 
@@ -137,7 +143,9 @@ class TargetOscilloscope extends Object implements Updateable implements Message
             Main.tweenManager.animateTo(glowThree, {alpha: 1.0}, 1.0).start();
         }).start();
 
-        if (inputWaveform.match(targetWaveform)) {
+        var match = inputWaveform == null ? false : inputWaveform.match(targetWaveform);
+
+        if (match) {
             for (g in [glowOne, glowTwo, glowThree]) {
                 g.color.b = 0;
                 g.color.r = 0;
@@ -169,7 +177,7 @@ class TargetOscilloscope extends Object implements Updateable implements Message
             var p: Vector2D = port.getAbsPos().getPosition();
             var c = new Circle(p.x, p.y, 30);
             if (cable_bounds.collideCircle(c)) {
-                cable_head.snapTo(p, Math.PI/2);
+                cable_head.snapTo(p, this);
             }
         }
         return false;

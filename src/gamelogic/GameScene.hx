@@ -39,7 +39,7 @@ class GameScene extends Scene implements MessageListener {
         o.x = -300;
 
         var target = new TargetOscilloscope(this);
-        target.inputWaveform = o.waveform;
+        // target.inputWaveform = o.waveform;
         target.x = 300;
         target.y = 300;
 
