@@ -6,41 +6,12 @@ import h2d.Graphics;
 final waveformMult = 500;
 final waveformMultInverse = 1/waveformMult;
 
-interface Waveform {
+class Waveform {
 
     // period assumed to be 1.0
     public var amplitude:Float;
     public var frequency:Float;
     public var phase:Float;
-
-    // t in [0,1]
-    // return in [0,1]
-    public function sample(t: Float): Float;
-
-    public function draw(target:Graphics, ?phase_delta:Float, ?col:Int, ?alpha:Float): Void;
-
-    public function match(o: Waveform): Bool;
-
-    public function backup(): Void;
-}
-
-function defaultMatch(lhs: Waveform, rhs: Waveform) : Bool {
-    final match_samples = 1000;
-    final epsilon = 0.01;
-    for (x in 0...match_samples) {
-        if (Math.abs(lhs.sample(x/match_samples) - rhs.sample(x/match_samples)) > epsilon)
-            return false;
-    }
-    return true;
-}
-
-class Sine implements Waveform {
-
-	public var amplitude:Float;
-	public var frequency:Float;
-	public var phase:Float;
-
-    var previous: Sine;
 
     public function new(a=0.5, f=0.5, p=0.5) {
         amplitude = a;
@@ -48,26 +19,17 @@ class Sine implements Waveform {
         phase = p;
     }
 
-    public function backup() {
-        previous = new Sine(amplitude, frequency, phase);
-    }
 
-    public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
-        return 0.5*a*Math.sin( f*4*Math.PI*t - p*Math.PI );
-    }
+    var previous: Waveform;
 
-    public function sample(t:Float):Float {
-        return Sine.staticSample(t, amplitude, frequency, phase);
-    }
+    static final drawing_samples = 1000;
 
-    public function samplePreviousWeighted(t:Float, w:Float):Float {
-        if (previous == null)
-            return sample(t);
-        return w*Sine.staticSample(t, amplitude, frequency, phase) + (1-w)*Sine.staticSample(t, previous.amplitude, previous.frequency, previous.phase);
-    }
+    // t in [0,1]
+    // return in [0,1]
+    public function sample(t:Float):Float {return 0.5;}
+    public function samplePreviousWeighted(t:Float, w:Float):Float {return 0.5;}
 
     public function draw(target:Graphics, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
-        final drawing_samples = 1000;
         target.lineStyle(5, col);
         target.moveTo(0, samplePreviousWeighted(phase_delta, 0.1)*waveformMult);
         for (i in 0...drawing_samples) {
@@ -93,7 +55,85 @@ class Sine implements Waveform {
         previous.phase     = 0.99*previous.phase + 0.01*phase;
     }
 
-    public function match(o:Waveform):Bool {
-        return defaultMatch(this, o);
+    public function match(o: Waveform): Bool {
+        final match_samples = 1000;
+        final epsilon = 0.01;
+        for (x in 0...match_samples) {
+            if (Math.abs(sample(x/match_samples) - o.sample(x/match_samples)) > epsilon)
+                return false;
+        }
+        return true;
+    }
+
+    public function backup(): Void {};
+}
+
+class Sine extends Waveform {
+
+    override public function backup() {
+        previous = new Sine(amplitude, frequency, phase);
+    }
+
+    public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
+        return 0.5*a*Math.sin( f*4*Math.PI*t - p*Math.PI );
+    }
+
+    override public function sample(t:Float):Float {
+        return staticSample(t, amplitude, frequency, phase);
+    }
+
+    override public function samplePreviousWeighted(t:Float, w:Float):Float {
+        if (previous == null)
+            return sample(t);
+        return w*Sine.staticSample(t, amplitude, frequency, phase) + (1-w)*Sine.staticSample(t, previous.amplitude, previous.frequency, previous.phase);
+    }
+
+}
+
+function sign(v: Float): Int {
+    if (v > 0)
+        return 1;
+    return -1;
+}
+
+class Square extends Waveform {
+
+    override public function backup() {
+        previous = new Square(amplitude, frequency, phase);
+    }
+
+    public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
+        return 0.5*a*sign( f*4*Math.PI*t - p*Math.PI );
+    }
+
+    override public function sample(t:Float):Float {
+        return staticSample(t, amplitude, frequency, phase);
+    }
+
+    override public function samplePreviousWeighted(t:Float, w:Float):Float {
+        if (previous == null)
+            return sample(t);
+        return w*Square.staticSample(t, amplitude, frequency, phase) + (1-w)*Square.staticSample(t, previous.amplitude, previous.frequency, previous.phase);
+    }
+}
+
+class Triangle extends Waveform {
+
+    override public function backup() {
+        previous = new Triangle(amplitude, frequency, phase);
+    }
+
+    public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
+        return a/Math.PI*Math.asin( Math.sin(f*4*Math.PI*t - p*Math.PI) );
+    }
+
+    override public function sample(t:Float):Float {
+        return staticSample(t, amplitude, frequency, phase);
+    }
+
+    override public function samplePreviousWeighted(t:Float, w:Float):Float {
+        if (previous == null)
+            return sample(t);
+        return w*Triangle.staticSample(t, amplitude, frequency, phase) + (1-w)*Triangle.staticSample(t, previous.amplitude, previous.frequency, previous.phase);
     }
 }
