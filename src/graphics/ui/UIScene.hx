@@ -16,12 +16,25 @@ class UIScene extends Scene implements MessageListener {
     var fpsText: Text;
     var victoryFlow: Flow;
     var componentFlow: Flow;
+    
+    var tutorialText: Text;
+
+    var statsText: Text;
+    var totalTime = 0.0;
+    var solvedPuzzles = 0;
+
+    var tutorialState = 0;
+    var sineSpawned = false;
+    var cableSpawned = false;
+
+    var sineConnected = false;
+    var outputConnected = false;
 
     public function new() {
         super();
         fpsText = new h2d.Text(hxd.res.DefaultFont.get(), this);
-        fpsText.visible = true;
-        defaultSmooth = false;
+
+        statsText = new h2d.Text(hxd.res.DefaultFont.get(), this);
         
         victoryFlow = new Flow(this);
         victoryFlow.backgroundTile = Res.img.ui.ScaleGrid.toTile();
@@ -48,13 +61,23 @@ class UIScene extends Scene implements MessageListener {
             if (hidden.contains(name))
                 b.visible = false;
         }
-        componentFlow.y = height - componentFlow.outerHeight;
         componentFlow.x = width/2 - componentFlow.outerWidth/2;
+        componentFlow.y = height - componentFlow.outerHeight;
+
+        tutorialText = new h2d.Text(hxd.res.DefaultFont.get(), this);
+        tutorialText.textAlign = Center;
+        tutorialText.text = "Spawn in a Sine generator and a cable";
+        tutorialText.scale(3);
+        tutorialText.x = width/2;
+        tutorialText.y = componentFlow.y - 100;
+        tutorialText.alpha = 0;
+        Main.tweenManager.animateTo(tutorialText, {alpha: 1}, 1.0).start();
 
         MessageManager.addListener(this);
     }
     
     public function update(dt:Float) {
+        totalTime += dt;
         fpsText.x = Window.getInstance().width*0.9;
         fpsText.y = Window.getInstance().height*0.9;
         var awake = 0;
@@ -68,9 +91,58 @@ class UIScene extends Scene implements MessageListener {
         // fpsText.text = '${Math.round(Timer.fps())}';
     }
 
+    function tutorialCheck() {
+        if (tutorialState == 0 && cableSpawned && sineSpawned) {
+            tutorialState++;
+            tutorialText.alpha = 0;
+            tutorialText.text = "Drag components by clicking and holding their red parts\nConnect the generator to the ¿Dëvicé?";
+            tutorialText.x = width/2;
+            Main.tweenManager.animateTo(tutorialText, {alpha: 1}, 2.0).start();
+        }
+        if (tutorialState == 1 && sineConnected && outputConnected) {
+            tutorialState++;
+            tutorialText.alpha = 0;
+            tutorialText.text = "Match the signal, and then flip the switch";
+            tutorialText.x = width/2;
+            Main.tweenManager.animateTo(tutorialText, {alpha: 1}, 2.0).start();
+        }
+        if (tutorialState == 2 && solvedPuzzles == 1) {
+            tutorialState++;
+            tutorialText.alpha = 0;
+            tutorialText.text = "If you need more room:\nYou can zoom in and out with the mouse wheel, or Q and E.\nDragging the middle mouse button or WASD can pan the camera.";
+            tutorialText.x = width/2;
+            tutorialText.y -= 50;
+            for (c in componentFlow.children)
+                c.visible = true;
+            componentFlow.x = width/2 - componentFlow.outerWidth/2;
+            Main.tweenManager.animateTo(tutorialText, {alpha: 1}, 2.0).start();
+            Main.tweenManager.delay(5, () -> {
+                Main.tweenManager.animateTo(tutorialText, {alpha: 0}, 2.0).start();
+            }).start();
+        }
+    }
+
     public function receive(msg:Message):Bool {
+        if (Std.isOfType(msg, SpawnComponent)) {
+            var params = cast(msg, SpawnComponent);
+            if (params.componentName == "Wire")
+                cableSpawned = true;
+            if (params.componentName == "Sine")
+                sineSpawned = true;
+            tutorialCheck();
+        }
+        if (Std.isOfType(msg, OutputConnected)) {
+            outputConnected = true;
+            tutorialCheck();
+        }
+        if (Std.isOfType(msg, SineConnected)) {
+            sineConnected = true;
+            tutorialCheck();
+        }
         if (Std.isOfType(msg, Victory)) {
-            Main.tweenManager.animateTo(victoryFlow, {alpha: 1}, 1.0).start();
+            solvedPuzzles++;
+            tutorialCheck();
+            // Main.tweenManager.animateTo(victoryFlow, {alpha: 1}, 1.0).start();
         }
         return false;
     }

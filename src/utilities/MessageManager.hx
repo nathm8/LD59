@@ -8,6 +8,8 @@ class Message {public function new(){}}
 
 class Victory extends Message {}
 class Restart extends Message {}
+class SineConnected extends Message {}
+class OutputConnected extends Message {}
 class CableHeadMoved extends Message {
     public var cableHead: CableHead;
     public function new(c: CableHead) {super(); cableHead = c;}

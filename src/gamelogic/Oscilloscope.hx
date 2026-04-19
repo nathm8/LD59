@@ -111,7 +111,7 @@ class Oscilloscope extends Object implements Updateable
     public function disconnect(c:Connectable) {}
     public function detachPort() {portConnected = false;}
 
-    public function new(p: Object) {
+    public function new(w: Waveform, p: Object) {
         super(p);
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
         ampDial = new Dial(() -> {waveform.backup(); waveform.amplitude = ampDial.value/8;}, sprite);
@@ -124,7 +124,7 @@ class Oscilloscope extends Object implements Updateable
         phaseDial.x = size.width/4 + 17;
         phaseDial.y = size.height/4 + 20;
 
-        waveform = new Sine(1, 1, 1);
+        waveform = w;
         waveformGraphics = new Graphics(this);
         waveformGraphics.scaleX = 212 * waveformMultInverse; 
         waveformGraphics.scaleY = 114 * waveformMultInverse;
@@ -166,6 +166,9 @@ class Oscilloscope extends Object implements Updateable
             var c = new Circle(p.x, p.y, 30);
             if (cable_bounds.collideCircle(c)) {
                 portConnected = cable_head.snapTo(new Vector2D(port.x, port.y), this, this);
+                // hacky, but shouldn't matter
+                if (portConnected)
+                    MessageManager.send(new SineConnected());
             }
         }
         if (Std.isOfType(msg, MouseMove)) {

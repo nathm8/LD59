@@ -1,6 +1,24 @@
 Signals
 ===================================
 
+Tutorial\script
+-----------------------------------
+Spawn in a Sine generator, and a cable
+
+Drag components by clicking and holding their red parts.
+Connect the generator to the ¿Dëvicé?
+
+Match the signal, and flip the switch
+
+If you need more room:
+You can zoom in and out with the mouse wheel, or Q and E.
+Dragging the middle mouse button or WASD can pan the camera.
+
+Well done, you completed the prepared puzzles in [time].
+You can proceed with randomly generated puzzles, which should all be solveable.
+
+[Keep a running track in top right corner of puzzles solved and time taken.]
+
 Todo
 -----------------------------------
 make UI with drag-droppable elements

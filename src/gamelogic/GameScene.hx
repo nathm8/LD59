@@ -1,5 +1,10 @@
 package gamelogic;
 
+import gamelogic.Waveform.Square;
+import gamelogic.Waveform.Triangle;
+import utilities.RNGManager;
+import gamelogic.Waveform.Sine;
+import hxd.Key;
 import h2d.filter.Bloom;
 import h2d.filter.Blur;
 import h2d.Flow;
@@ -89,34 +94,8 @@ class GameScene extends Scene implements MessageListener {
                 camera.x -= (params.event.relX - prevX)/camera.scaleX;
                 camera.y -= (params.event.relY - prevY)/camera.scaleY;
             }
-            else {
-                // change anchor for zooming
-                var prevAbsX = camera.absX;
-                var prevAbsY = camera.absY;
-                camera.anchorX = params.event.relX / Window.getInstance().width;
-                camera.anchorY = params.event.relY / Window.getInstance().height;
-                camera.sync(ctx, true);
-                var x_diff = prevAbsX - camera.absX;
-                var y_diff = prevAbsY - camera.absY;
-                camera.x -= x_diff/camera.scaleX;
-                camera.y -= y_diff/camera.scaleY;
-                camera.sync(ctx, true);
-            }
             prevX = params.event.relX;
             prevY = params.event.relY;
-            
-            // edge scroll
-            if (params.event.relX < 0 || params.event.relY < 0 || params.event.relX > Window.getInstance().width || params.event.relY > Window.getInstance().height) {
-                cameraMovingLeft = false;
-                cameraMovingRight = false;
-                cameraMovingUp = false;
-                cameraMovingDown = false;
-            } else {
-                cameraMovingLeft = params.event.relX < edgeScrollDistance;
-                cameraMovingRight = params.event.relX > Window.getInstance().width - edgeScrollDistance;
-                cameraMovingUp = params.event.relY < edgeScrollDistance;
-                cameraMovingDown = params.event.relY > Window.getInstance().height - edgeScrollDistance;
-            }
         }
         if (Std.isOfType(msg, MousePush)) {
             var params = cast(msg, MousePush);
@@ -133,12 +112,14 @@ class GameScene extends Scene implements MessageListener {
         if (Std.isOfType(msg, SpawnComponent)) {
             var params = cast(msg, SpawnComponent);
             var n = params.componentName;
-            if (n == "Wire") {
+            if (n == "Wire")
                 updateables.push(new Cable(this));
-            }
-            if (n == "Sine") {
-                updateables.push(new Oscilloscope(this));
-            }
+            if (n == "Sine")
+                updateables.push(new Oscilloscope(new Sine(1, 1, 1), this));
+            if (n == "Square")
+                updateables.push(new Oscilloscope(new Square(1, 1, 1), this));
+            if (n == "Triangle")
+                updateables.push(new Oscilloscope(new Triangle(1, 1, 1), this));
         }
         // graphics
         return false;
@@ -153,6 +134,21 @@ class GameScene extends Scene implements MessageListener {
         //     camera.x += 10/cameraScale;
         // if (cameraMovingLeft)
         //     camera.x -= 10/cameraScale;
+        if (Key.isDown(Key.A))
+			camera.move(-10/cameraScale,0);
+		if (Key.isDown(Key.D))
+			camera.move(10/cameraScale,0);
+		if (Key.isDown(Key.W))
+			camera.move(0,-10/cameraScale);
+		if (Key.isDown(Key.S))
+			camera.move(0,10/cameraScale);
+		if (Key.isDown(Key.E))
+			cameraScale *= 1.1;
+		if (Key.isDown(Key.Q))
+			cameraScale *= 0.9;
+        cameraScale = Math.min(Math.max(cameraMinScale, cameraScale), cameraMaxScale);
+        camera.setScale(cameraScale, cameraScale);
+
         if (camera.x < -cameraBounds)
             camera.x = -cameraBounds;
         if (camera.x > cameraBounds)

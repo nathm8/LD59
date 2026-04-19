@@ -1,5 +1,6 @@
 package gamelogic;
 
+import gamelogic.Waveform.Square;
 import h2d.filter.Blur;
 import h2d.filter.Glow;
 import h2d.filter.Group;
@@ -17,12 +18,16 @@ import hxd.Res;
 import h2d.Bitmap;
 import h2d.Object;
 
+var targets = [new Sine(), new Square()];
+
 class TargetOscilloscope extends Object implements Updateable
                                         implements Connectable
                                         implements MessageListener {
     
     var sprite: Bitmap;
     
+    var puzzlesComplete = 0;
+
     var switchReady: Bitmap;
     var switchFlipped: Bitmap;
     var lightOne: Bitmap;
@@ -137,6 +142,8 @@ class TargetOscilloscope extends Object implements Updateable
         MessageManager.addListener(this);
     }
 
+
+
     public function update(dt:Float):Bool {
         targetTotalTime += dt*0.5 + RNGManager.srand(0.01);
         inputTotalTime += dt*0.5 + RNGManager.srand(0.01);
@@ -149,6 +156,22 @@ class TargetOscilloscope extends Object implements Updateable
         targetWaveform.draw(combinedWaveformGraphics, combinedTotalTime, 0x0000DD);
         inputWaveform?.draw(combinedWaveformGraphics, combinedTotalTime);
         return false;
+    }
+
+    function nextPuzzle() {
+        for (g in [glowOne, glowTwo, glowThree]) {
+            g.color.r = 1;
+            g.color.g = 1;
+            g.color.b = 1;
+            g.visible = false;
+        }
+        switchReady.visible = true;
+        switchFlipped.visible = false;
+        if (puzzlesComplete > targets.length) {
+
+        } else {
+            targetWaveform = targets[puzzlesComplete];
+        }
     }
 
     function checkSolution() {
@@ -169,11 +192,13 @@ class TargetOscilloscope extends Object implements Updateable
         var match = inputWaveform == null ? false : inputWaveform.match(targetWaveform);
 
         if (match) {
+            puzzlesComplete++;
             for (g in [glowOne, glowTwo, glowThree]) {
                 g.color.b = 0;
                 g.color.r = 0;
             }
             Main.tweenManager.delay(3.0, () -> {MessageManager.send(new Victory());}).start();
+            Main.tweenManager.delay(5.0, nextPuzzle).start();
         } else {
             for (g in [glowOne, glowTwo, glowThree]) {
                 g.color.g = 0;
@@ -202,6 +227,9 @@ class TargetOscilloscope extends Object implements Updateable
             var c = new Circle(p.x, p.y, 30);
             if (cable_bounds.collideCircle(c)) {
                 portConnected = cable_head.snapTo(new Vector2D(port.x, port.y), this, this);
+                // hacky, but shouldn't matter
+                if (portConnected)
+                    MessageManager.send(new OutputConnected());
             }
         }
         if (Std.isOfType(msg, MouseMove)) {
