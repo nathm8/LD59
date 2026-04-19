@@ -87,7 +87,6 @@ class Dial extends Object implements MessageListener implements Updateable {
 }
 
 class Oscilloscope extends Object implements Updateable
-                                  implements Connectable
                                   implements MessageListener {
     
     public var waveform: Waveform;
@@ -100,17 +99,10 @@ class Oscilloscope extends Object implements Updateable
 
     var totalTime = 0.0;
 
-    var port: Bitmap;
-    var portConnected = false;
+    var port: Port;
 
     var isSelected = false;
     
-    public var isOutput: Bool = true;
-    public function newInput(c:Connectable) {}
-    public function getWaveform() {return waveform;}
-    public function disconnect(c:Connectable) {}
-    public function detachPort() {portConnected = false;}
-
     public function new(w: Waveform, p: Object) {
         super(p);
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
@@ -132,7 +124,8 @@ class Oscilloscope extends Object implements Updateable
         waveformGraphics.y = 90 - size.height/2;
         waveformGraphics.filter = new Group([new Glow(0x00FF00, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
-        port = new Bitmap(Res.img.CablePort.toTile().center(), this);
+        port = new Port(true, this);
+        port.getOutput = () -> {return waveform;};
         port.x = size.width/2;
         port.y = -size.height/2 + 45;
 
@@ -157,20 +150,6 @@ class Oscilloscope extends Object implements Updateable
     }
 
     public function receive(msg:Message):Bool {
-        if (Std.isOfType(msg, CableHeadMoved)) {
-            var params = cast(msg, CableHeadMoved);
-            if (portConnected) return false;
-            var cable_head = params.cableHead;
-            var cable_bounds = cable_head.interactive.getBounds();
-            var p: Vector2D = port.getAbsPos().getPosition();
-            var c = new Circle(p.x, p.y, 30);
-            if (cable_bounds.collideCircle(c)) {
-                portConnected = cable_head.snapTo(new Vector2D(port.x, port.y), this, this);
-                // hacky, but shouldn't matter
-                if (portConnected)
-                    MessageManager.send(new SineConnected());
-            }
-        }
         if (Std.isOfType(msg, MouseMove)) {
             if (!isSelected) return false;
             var params = cast(msg, MouseMove);

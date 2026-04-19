@@ -23,7 +23,7 @@ class CableHead extends Object implements MessageListener implements Updateable 
     var isSelected = false;
     var lastPosition = new Vector2D();
 
-    public var connection: Connectable;
+    public var connectedPort: Port;
     var cable: Cable;
 
     var snapImmunity = 0.0;
@@ -66,16 +66,15 @@ class CableHead extends Object implements MessageListener implements Updateable 
         return false;
     }
 
-    public function snapTo(pos: Vector2D, conn:Connectable, new_parent: Object): Bool {
+    public function snapTo(pos: Vector2D, port: Port): Bool {
         if (snapImmunity > 0) return false;
-        rotation = conn.isOutput ? -Math.PI/2 : Math.PI/2;
-        connection = conn;
+        connectedPort = port;
         cable.newConnection();
         isSelected = false;
         remove();
-        new_parent.addChildAt(this, 0);
-        x = pos.x; y = pos.y;
-        rotation = connection.isOutput ? -Math.PI/2 : Math.PI/2;
+        port.parent.addChildAt(this, 0);
+        x = port.x + pos.x; y = port.y + pos.y;
+        rotation = port.isOutput ? -Math.PI/2 : Math.PI/2;
         return true;
     }
 
@@ -87,9 +86,10 @@ class CableHead extends Object implements MessageListener implements Updateable 
 
     function disconnect() {
         snapImmunity = 0.25;
+        if (connectedPort != null)
+            connectedPort.isConnected = false;
+        connectedPort = null;
         cable.disconnect();
-        connection?.detachPort();
-        connection = null;
         var s = getScene();
         var p = getAbsPos().getPosition();
         remove();
@@ -111,13 +111,13 @@ class Cable implements Updateable {
     var cable: Graphics;
 
     public function new(?p: Object) {
+        cable = new Graphics(p);
         headOne = new CableHead(this, p);
         headOne.x -= 25 - RNGManager.random(25);
         headOne.y+= -25 + RNGManager.random(50);
         headTwo = new CableHead(this, p);
         headTwo.x += 25 + RNGManager.random(25);
         headTwo.y+= -25 + RNGManager.random(50);
-        cable = new Graphics(p);
     }
 
     public function update(dt:Float):Bool {
@@ -137,16 +137,20 @@ class Cable implements Updateable {
     }
 
     public function newConnection() {
-        if (headOne.connection != null && headTwo.connection != null) {
-            if (headOne.connection.isOutput && !headTwo.connection.isOutput)
-                headTwo.connection.newInput(headOne.connection);
-            if (!headOne.connection.isOutput && headTwo.connection.isOutput)
-                headOne.connection.newInput(headTwo.connection);
+        if (headOne.connectedPort != null && headTwo.connectedPort != null) {
+            if (headOne.connectedPort.isOutput && !headTwo.connectedPort.isOutput) {
+                headTwo.connectedPort.onConnection(headOne.connectedPort.getOutput());
+            }
+            if (!headOne.connectedPort.isOutput && headTwo.connectedPort.isOutput) {
+                headOne.connectedPort.onConnection(headTwo.connectedPort.getOutput());
+            }
         }
     }
 
     public function disconnect() {
-        headTwo.connection?.disconnect(headOne.connection);
-        headOne.connection?.disconnect(headTwo.connection);
+        if (headOne.connectedPort != null && headOne.connectedPort.onDisconnect != null)
+            headOne.connectedPort.onDisconnect();
+        if (headTwo.connectedPort != null && headTwo.connectedPort.onDisconnect != null)
+            headTwo.connectedPort.onDisconnect();
     }
 }

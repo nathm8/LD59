@@ -5,8 +5,6 @@ import h2d.filter.Blur;
 import h2d.filter.Glow;
 import h2d.filter.Group;
 import gamelogic.Waveform.waveformMultInverse;
-import utilities.Vector2D;
-import h2d.col.Circle;
 import utilities.RNGManager;
 import utilities.MessageManager;
 import hxd.Event;
@@ -21,7 +19,6 @@ import h2d.Object;
 var targets = [new Sine(), new Square()];
 
 class TargetOscilloscope extends Object implements Updateable
-                                        implements Connectable
                                         implements MessageListener {
     
     var sprite: Bitmap;
@@ -44,24 +41,13 @@ class TargetOscilloscope extends Object implements Updateable
     var combinedWaveform: Waveform;
     var combinedWaveformGraphics: Graphics;
 
-    var port: Bitmap;
+    var port: Port;
 
     var isSelected = false;
-    var portConnected = false;
 
     var inputTotalTime = 0.0;
     var targetTotalTime = 0.0;
     var combinedTotalTime = 0.0;
-
-    public var isOutput: Bool = false;
-    public function newInput(c: Connectable) {
-        inputWaveform = c.getWaveform();
-    }
-    public function getWaveform() {return null;}
-    public function disconnect(c: Connectable) {
-        inputWaveform = null;
-    };
-    public function detachPort() {portConnected = false; disconnect(null);}
 
     public function new(p: Object) {
         super(p);
@@ -128,7 +114,9 @@ class TargetOscilloscope extends Object implements Updateable
         combinedWaveformGraphics.y = -34;
         combinedWaveformGraphics.filter = new Group([new Glow(0xFFFFFF, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
-        port = new Bitmap(Res.img.CablePort.toTile().center(), this);
+        port = new Port(false, this);
+        port.onConnection = (w: Waveform) -> {inputWaveform = w;};
+        port.onDisconnect = () -> {inputWaveform = null;};
         port.x = -size.width/2;
         port.y = size.height/2 - 110;
 
@@ -219,20 +207,6 @@ class TargetOscilloscope extends Object implements Updateable
     }
 
     public function receive(msg:Message):Bool {
-        if (Std.isOfType(msg, CableHeadMoved)) {
-            var params = cast(msg, CableHeadMoved);
-            if (portConnected) return false;
-            var cable_head = params.cableHead;
-            var cable_bounds = cable_head.interactive.getBounds();
-            var p: Vector2D = port.getAbsPos().getPosition();
-            var c = new Circle(p.x, p.y, 30);
-            if (cable_bounds.collideCircle(c)) {
-                portConnected = cable_head.snapTo(new Vector2D(port.x, port.y), this, this);
-                // hacky, but shouldn't matter
-                if (portConnected)
-                    MessageManager.send(new OutputConnected());
-            }
-        }
         if (Std.isOfType(msg, MouseMove)) {
             if (!isSelected) return false;
             var params = cast(msg, MouseMove);
