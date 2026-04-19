@@ -46,7 +46,7 @@ class UIScene extends Scene implements MessageListener {
         victoryFlow.padding = 200;
         victoryFlow.alpha = 0.0;
         var victoryText = new h2d.Text(hxd.res.DefaultFont.get(), victoryFlow);
-        victoryText.text = "a winner is u~";
+        victoryText.text = '~a winner is u~';
         victoryText.scale(5);
         victoryFlow.x = width/2 - victoryFlow.outerWidth/2;
         victoryFlow.y = height/2 - victoryFlow.outerHeight/2;
@@ -118,7 +118,7 @@ class UIScene extends Scene implements MessageListener {
         }
         if (tutorialState == 3 && solvedPuzzles == 2) {
             tutorialState++;
-            tutorialText.text = "These are all the tools. The puzzles from now are randomly generated, but based off your previous solution.\nGood luck!";
+            tutorialText.text = "These are all the tools. There are six puzzles.\nGood luck!";
             tutorialText.x = width/2;
             tutorialText.y -= 50;
             for (c in componentFlow.children)
@@ -152,7 +152,8 @@ class UIScene extends Scene implements MessageListener {
         if (Std.isOfType(msg, Victory)) {
             solvedPuzzles++;
             tutorialCheck();
-            // Main.tweenManager.animateTo(victoryFlow, {alpha: 1}, 1.0).start();
+            if (solvedPuzzles == 6)
+                Main.tweenManager.animateTo(victoryFlow, {alpha: 1}, 1.0).start();
         }
         return false;
     }

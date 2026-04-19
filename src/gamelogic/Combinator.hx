@@ -117,7 +117,10 @@ class Combinator extends Object implements MessageListener
         inputWaveformOne?.draw(inputWaveformGraphicsOne, totalTimeOne, inputOneCol);
         totalTimeTwo += dt*0.5 + RNGManager.srand(0.01);
         inputWaveformGraphicsTwo.clear();
-        inputWaveformGraphicsTwo.scaleY = (1 - transformedWaveform.weight) * 114 * waveformMultInverse;
+        if (isAnd)
+            inputWaveformGraphicsTwo.scaleY = transformedWaveform.weight * 114 * waveformMultInverse;
+        else
+            inputWaveformGraphicsTwo.scaleY = (1 - transformedWaveform.weight) * 114 * waveformMultInverse;
         inputWaveformTwo?.draw(inputWaveformGraphicsTwo, totalTimeTwo, inputTwoCol);
 
         dial.update(dt);

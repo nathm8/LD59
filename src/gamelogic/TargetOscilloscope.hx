@@ -1,5 +1,7 @@
 package gamelogic;
 
+import gamelogic.Waveform.WaveformInverter;
+import gamelogic.Waveform.Triangle;
 import utilities.Utilities.colors;
 import gamelogic.Waveform.WaveformCombination;
 import gamelogic.Waveform.Square;
@@ -59,11 +61,40 @@ class TargetOscilloscope extends Object implements Updateable
 
         // ugly place to put this, but target init
         var targetOne = new Sine(4/8, 6/8, 1/8);
+        
         var targetTwo = new WaveformCombination(false);
         targetTwo.weight = 6/9;
         targetTwo.sourceOne = targetOne;
         targetTwo.sourceTwo = new Square(1, 1, 1);
-        targets = [targetOne, targetTwo];
+
+        var targetThree = new WaveformCombination(true);
+        targetThree.weight = 8/9;
+        targetThree.sourceOne = new Triangle(1, 1, 4/8);
+        targetThree.sourceTwo = new Square(1, 1, 1);
+        var and = new WaveformCombination(true);
+        and.weight = 4/9;
+        and.sourceOne = new Triangle(1, 3/8, 1);
+        and.sourceTwo = and.sourceOne;
+        var targetFour = new WaveformInverter();
+        targetFour.source = and;
+
+        var targetFive = new WaveformCombination(false);
+        targetFive.weight = 4/9;
+        targetFive.sourceOne = new Sine(1, 2/8, 2/8);
+        var or = new WaveformCombination(false);
+        or.weight = 4/9;
+        or.sourceOne = new Triangle(1, 1/8, 2/8);
+        or.sourceTwo = new Square(4/8, 1, 2/8);
+        targetFive.sourceTwo = or;
+
+        var targetSix = new WaveformCombination(true);
+        targetSix.weight = 1/9;
+        targetSix.sourceOne = new Square(1/8, 1 ,1);
+        var invert = new WaveformInverter();
+        invert.source = targetSix.sourceOne;
+        targetSix.sourceTwo = invert;
+
+        targets = [targetOne, targetTwo, targetThree, targetFour, targetFive, targetSix];
         //
 
         colOne = colors[RNGManager.random(colors.length)];
@@ -171,12 +202,9 @@ class TargetOscilloscope extends Object implements Updateable
         }
         switchReady.visible = true;
         switchFlipped.visible = false;
-        if (puzzlesComplete >= targets.length) {
-            // todo: generate random waveform
-            targetWaveform = targets[1];
-        } else {
-            targetWaveform = targets[puzzlesComplete];
-        }
+        if (puzzlesComplete >= targets.length)
+            puzzlesComplete = 0;
+        targetWaveform = targets[puzzlesComplete];
     }
 
     function checkSolution() {

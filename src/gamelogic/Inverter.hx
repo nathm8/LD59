@@ -42,7 +42,6 @@ class Inverter extends Object implements MessageListener
         outputCol = colors[RNGManager.random(colors.length)];
 
         transformedWaveform = new WaveformInverter();
-        transformedWaveform.source = inputWaveform;
 
         outputWaveformGraphics = new Graphics(this);
         outputWaveformGraphics.scaleX = 212 * waveformMultInverse; 
