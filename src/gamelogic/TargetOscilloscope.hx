@@ -38,7 +38,6 @@ class TargetOscilloscope extends Object implements Updateable
     var inputWaveformGraphics: Graphics;
     var targetWaveform: Waveform;
     var targetWaveformGraphics: Graphics;
-    var combinedWaveform: Waveform;
     var combinedWaveformGraphics: Graphics;
 
     var port: Port;
@@ -106,7 +105,6 @@ class TargetOscilloscope extends Object implements Updateable
         inputWaveformGraphics.y = 55;
         inputWaveformGraphics.filter = new Group([new Glow(0x00FF00, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
-        combinedWaveform = new Sine();
         combinedWaveformGraphics = new Graphics(this);
         combinedWaveformGraphics.scaleX = 310 * waveformMultInverse; 
         combinedWaveformGraphics.scaleY = 320 * waveformMultInverse; 
@@ -155,7 +153,7 @@ class TargetOscilloscope extends Object implements Updateable
         }
         switchReady.visible = true;
         switchFlipped.visible = false;
-        if (puzzlesComplete > targets.length) {
+        if (puzzlesComplete >= targets.length) {
             // todo: generate random waveform
             targetWaveform = targets[1];
         } else {

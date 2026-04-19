@@ -61,6 +61,9 @@ class GameScene extends Scene implements MessageListener {
         // updateables.push(o);
         updateables.push(target);
         // updateables.push(cables);
+
+        var and = new Combinator(true, this);
+        updateables.push(and);
     }
     
     public function update(dt:Float) {
