@@ -42,8 +42,11 @@ class UIScene extends Scene implements MessageListener {
         componentFlow.horizontalSpacing = 10;
         componentFlow.padding = 20; 
 
+        var hidden = ["Split", "Square", "Triangle", "And", "Or", "Invert"];
         for (name in ["Wire", "Split", "Sine", "Square", "Triangle", "And", "Or", "Invert"]) {
-            var b = new ComponentButton(name, componentFlow, () -> {});
+            var b = new ComponentButton(name, componentFlow, () -> {MessageManager.send(new SpawnComponent(name));});
+            if (hidden.contains(name))
+                b.visible = false;
         }
         componentFlow.y = height - componentFlow.outerHeight;
         componentFlow.x = width/2 - componentFlow.outerWidth/2;
@@ -62,7 +65,7 @@ class UIScene extends Scene implements MessageListener {
             b = b.getNext();
         }
         // fpsText.text = '${Math.round(Timer.fps())}\n${awake}\\${PhysicalWorld.gameWorld.getBodyCount()-1}' ;
-        fpsText.text = '${Math.round(Timer.fps())}';
+        // fpsText.text = '${Math.round(Timer.fps())}';
     }
 
     public function receive(msg:Message):Bool {

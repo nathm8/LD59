@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.RNGManager;
 import utilities.MessageManager;
 import h3d.Vector;
 import utilities.Vector2D;
@@ -65,8 +66,8 @@ class CableHead extends Object implements MessageListener implements Updateable 
         return false;
     }
 
-    public function snapTo(pos: Vector2D, conn:Connectable, new_parent: Object) {
-        if (snapImmunity > 0) return;
+    public function snapTo(pos: Vector2D, conn:Connectable, new_parent: Object): Bool {
+        if (snapImmunity > 0) return false;
         rotation = conn.isOutput ? -Math.PI/2 : Math.PI/2;
         connection = conn;
         cable.newConnection();
@@ -75,6 +76,7 @@ class CableHead extends Object implements MessageListener implements Updateable 
         new_parent.addChildAt(this, 0);
         x = pos.x; y = pos.y;
         rotation = connection.isOutput ? -Math.PI/2 : Math.PI/2;
+        return true;
     }
 
     public function getTail(): Vector2D {
@@ -84,8 +86,9 @@ class CableHead extends Object implements MessageListener implements Updateable 
     }
 
     function disconnect() {
-        snapImmunity = 0.1;
+        snapImmunity = 0.25;
         cable.disconnect();
+        connection?.detachPort();
         connection = null;
         var s = getScene();
         var p = getAbsPos().getPosition();
@@ -109,7 +112,11 @@ class Cable implements Updateable {
 
     public function new(?p: Object) {
         headOne = new CableHead(this, p);
+        headOne.x -= 25 - RNGManager.random(25);
+        headOne.y+= -25 + RNGManager.random(50);
         headTwo = new CableHead(this, p);
+        headTwo.x += 25 + RNGManager.random(25);
+        headTwo.y+= -25 + RNGManager.random(50);
         cable = new Graphics(p);
     }
 

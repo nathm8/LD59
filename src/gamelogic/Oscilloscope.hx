@@ -106,9 +106,10 @@ class Oscilloscope extends Object implements Updateable
     var isSelected = false;
     
     public var isOutput: Bool = true;
-    public function newInput(c:Connectable) {portConnected = true;}
+    public function newInput(c:Connectable) {}
     public function getWaveform() {return waveform;}
-    public function disconnect(c:Connectable) {portConnected = false;}
+    public function disconnect(c:Connectable) {}
+    public function detachPort() {portConnected = false;}
 
     public function new(p: Object) {
         super(p);
@@ -164,7 +165,7 @@ class Oscilloscope extends Object implements Updateable
             var p: Vector2D = port.getAbsPos().getPosition();
             var c = new Circle(p.x, p.y, 30);
             if (cable_bounds.collideCircle(c)) {
-                cable_head.snapTo(new Vector2D(port.x, port.y), this, this);
+                portConnected = cable_head.snapTo(new Vector2D(port.x, port.y), this, this);
             }
         }
         if (Std.isOfType(msg, MouseMove)) {

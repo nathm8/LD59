@@ -44,18 +44,18 @@ class GameScene extends Scene implements MessageListener {
 
         MessageManager.addListener(this);
 
-        var o = new Oscilloscope(this);
-        o.x = -300;
+        // var o = new Oscilloscope(this);
+        // o.x = -300;
 
         var target = new TargetOscilloscope(this);
-        target.x = 300;
-        target.y = 300;
+        target.x = 400;
+        target.y = -200;
 
-        var cables = new Cable(this);
+        // var cables = new Cable(this);
 
-        updateables.push(o);
+        // updateables.push(o);
         updateables.push(target);
-        updateables.push(cables);
+        // updateables.push(cables);
     }
     
     public function update(dt:Float) {
@@ -129,19 +129,30 @@ class GameScene extends Scene implements MessageListener {
             if (params.event.button == 2)
                 middleMouseMoving = false;
         }
+        // components
+        if (Std.isOfType(msg, SpawnComponent)) {
+            var params = cast(msg, SpawnComponent);
+            var n = params.componentName;
+            if (n == "Wire") {
+                updateables.push(new Cable(this));
+            }
+            if (n == "Sine") {
+                updateables.push(new Oscilloscope(this));
+            }
+        }
         // graphics
         return false;
     }
 
     function cameraControl() {
-        if (cameraMovingUp)
-            camera.y -= 10/cameraScale;
-        if (cameraMovingDown)
-            camera.y += 10/cameraScale;
-        if (cameraMovingRight)
-            camera.x += 10/cameraScale;
-        if (cameraMovingLeft)
-            camera.x -= 10/cameraScale;
+        // if (cameraMovingUp)
+        //     camera.y -= 10/cameraScale;
+        // if (cameraMovingDown)
+        //     camera.y += 10/cameraScale;
+        // if (cameraMovingRight)
+        //     camera.x += 10/cameraScale;
+        // if (cameraMovingLeft)
+        //     camera.x -= 10/cameraScale;
         if (camera.x < -cameraBounds)
             camera.x = -cameraBounds;
         if (camera.x > cameraBounds)

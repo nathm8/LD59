@@ -46,7 +46,7 @@ class BitmapButton extends Bitmap {
             timeRemaining -= Timer.dt;
             if (timeRemaining <= 0) {
                 timeRemaining = repeatRate;
-                i.onClick(e);
+                // i.onClick(e);
             }
         };
     }

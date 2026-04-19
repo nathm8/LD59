@@ -5,4 +5,5 @@ interface Connectable {
     public function newInput(c: Connectable): Void;
     public function getWaveform(): Waveform;
     public function disconnect(c: Connectable): Void;
+    public function detachPort(): Void;
 }

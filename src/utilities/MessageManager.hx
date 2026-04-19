@@ -12,6 +12,10 @@ class CableHeadMoved extends Message {
     public var cableHead: CableHead;
     public function new(c: CableHead) {super(); cableHead = c;}
 }
+class SpawnComponent extends Message {
+    public var componentName: String;
+    public function new(s: String) {super(); componentName = s;}
+}
 class MousePush extends Message {
     public var event: Event;
     public var scenePosition: Vector2D;
