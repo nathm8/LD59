@@ -1,5 +1,6 @@
 package gamelogic;
 
+import gamelogic.Waveform.WaveformCombination;
 import gamelogic.Waveform.Square;
 import h2d.filter.Blur;
 import h2d.filter.Glow;
@@ -16,7 +17,7 @@ import hxd.Res;
 import h2d.Bitmap;
 import h2d.Object;
 
-var targets = [new Sine(), new Square()];
+var targets = new Array<Waveform>();
 
 class TargetOscilloscope extends Object implements Updateable
                                         implements MessageListener {
@@ -50,6 +51,18 @@ class TargetOscilloscope extends Object implements Updateable
 
     public function new(p: Object) {
         super(p);
+
+        // ugly place to put this, but target init
+        var targetOne = new Sine(4/8, 6/8, 1/8);
+        var targetTwo = new WaveformCombination(false);
+        targetTwo.weight = 6/9;
+        targetTwo.sourceOne = targetOne;
+        targetTwo.sourceTwo = new Square(5/8, 4/8, 2/8);
+        // var targetThree = new WaveformCombination(true);
+        targets = [targetOne, targetTwo];
+        //
+
+
         sprite = new Bitmap(Res.img.OscilloOut.toTile().center(), this);
         var size = sprite.getSize();
         var t = Res.img.SwitchReady.toTile();
@@ -127,8 +140,6 @@ class TargetOscilloscope extends Object implements Updateable
 
         MessageManager.addListener(this);
     }
-
-
 
     public function update(dt:Float):Bool {
         targetTotalTime += dt*0.5 + RNGManager.srand(0.01);

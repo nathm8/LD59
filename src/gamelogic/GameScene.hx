@@ -2,24 +2,12 @@ package gamelogic;
 
 import gamelogic.Waveform.Square;
 import gamelogic.Waveform.Triangle;
-import utilities.RNGManager;
 import gamelogic.Waveform.Sine;
 import hxd.Key;
-import h2d.filter.Bloom;
-import h2d.filter.Blur;
-import h2d.Flow;
-import h2d.Tile;
-import h3d.mat.Texture;
-import h2d.Bitmap;
-import hxd.Res;
-import h2d.filter.Glow;
-import h2d.Graphics;
 import h2d.col.Point;
 import h2d.Scene;
-import hxd.Window;
 import gamelogic.Updateable;
 import gamelogic.physics.PhysicalWorld;
-import utilities.Vector2D;
 import utilities.MessageManager;
 
 class GameScene extends Scene implements MessageListener {
@@ -49,21 +37,11 @@ class GameScene extends Scene implements MessageListener {
 
         MessageManager.addListener(this);
 
-        // var o = new Oscilloscope(this);
-        // o.x = -300;
-
         var target = new TargetOscilloscope(this);
         target.x = 400;
         target.y = -200;
 
-        // var cables = new Cable(this);
-
-        // updateables.push(o);
         updateables.push(target);
-        // updateables.push(cables);
-
-        var and = new Combinator(true, this);
-        updateables.push(and);
     }
     
     public function update(dt:Float) {
@@ -123,6 +101,10 @@ class GameScene extends Scene implements MessageListener {
                 updateables.push(new Oscilloscope(new Square(1, 1, 1), this));
             if (n == "Triangle")
                 updateables.push(new Oscilloscope(new Triangle(1, 1, 1), this));
+            if (n == "And")
+                updateables.push(new Combinator(true, this));
+            if (n == "Or")
+                updateables.push(new Combinator(false, this));
         }
         // graphics
         return false;

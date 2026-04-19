@@ -1,5 +1,6 @@
 package gamelogic;
 
+import gamelogic.Waveform.WaveformCombination;
 import gamelogic.Waveform.Sine;
 import utilities.RNGManager;
 import hxd.Event;
@@ -15,36 +16,6 @@ import utilities.MessageManager.Message;
 import utilities.MessageManager.MessageListener;
 import h2d.Object;
 import h2d.Bitmap;
-
-class WaveformCombination extends Waveform {
-
-    public var sourceOne: Waveform;
-    public var sourceTwo: Waveform;
-    // [0, 1]
-    public var weight = 4/9;
-
-    var isAnd: Bool;
-
-    public function new(a: Bool) {
-        super();
-        isAnd = a;
-    }
-
-    override public function sample(t:Float):Float {
-        if (sourceOne == null || sourceTwo == null) return 0;
-        var y: Float;
-        if (isAnd)
-            y = weight*sourceOne.sample(t) * (1 - weight)*sourceTwo.sample(t);
-        else
-            y = weight*sourceOne.sample(t) + (1 - weight)*sourceTwo.sample(t);
-        y = y > 0.5 ? 0.5 : y < -0.5 ? -0.5 : y;
-        return y;
-    }
-
-    override public function samplePreviousWeighted(t:Float, w:Float):Float {
-        return sample(t);
-    }
-}
 
 class Combinator extends Object implements MessageListener
                                 implements Updateable {
@@ -81,26 +52,32 @@ class Combinator extends Object implements MessageListener
 
         dial = new Dial(() -> {transformedWaveform.weight = dial.value/9;}, this);
         dial.y = 6;
-
-        inputWaveformOne = new Sine(1,1,1);
-        inputWaveformTwo = new Sine(1,1,1);
+        if (!isAnd) dial.y += 5;
 
         transformedWaveform = new WaveformCombination(isAnd);
 
         inputWaveformGraphicsOne = new Graphics(this);
         inputWaveformGraphicsOne.scaleX = 212 * waveformMultInverse; 
         inputWaveformGraphicsOne.scaleY = 114 * waveformMultInverse; 
-        inputWaveformGraphicsOne.x = 24 - size.width/2;
-        inputWaveformGraphicsOne.y = -115;
+        if (isAnd) {
+            inputWaveformGraphicsOne.x = 24 - size.width/2;
+            inputWaveformGraphicsOne.y = -115;
+        } else {
+            inputWaveformGraphicsOne.x = 20 - size.width/2;
+            inputWaveformGraphicsOne.y = 0;
+        }
         inputWaveformGraphicsOne.filter = new Group([new Glow(inputOneCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         inputWaveformGraphicsTwo = new Graphics(this);
-        // inputWaveformGraphicsTwo.beginFill(0xFF0000);
-        // inputWaveformGraphicsTwo.drawRect(0, 0, 212, 114);
         inputWaveformGraphicsTwo.scaleX = 212 * waveformMultInverse; 
         inputWaveformGraphicsTwo.scaleY = 114 * waveformMultInverse; 
-        inputWaveformGraphicsTwo.x = 24 - size.width/2;
-        inputWaveformGraphicsTwo.y = 120;
+        if (isAnd) {
+            inputWaveformGraphicsTwo.x = 24 - size.width/2;
+            inputWaveformGraphicsTwo.y = 120;
+        } else {
+            inputWaveformGraphicsTwo.x = 60;
+            inputWaveformGraphicsTwo.y = 0;
+        }
         inputWaveformGraphicsTwo.filter = new Group([new Glow(inputTwoCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         inputPortOne = new Port(false, this);

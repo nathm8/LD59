@@ -136,3 +136,51 @@ class Triangle extends Waveform {
         return w*Triangle.staticSample(t, amplitude, frequency, phase) + (1-w)*Triangle.staticSample(t, previous.amplitude, previous.frequency, previous.phase);
     }
 }
+
+class WaveformCombination extends Waveform {
+
+    public var sourceOne: Waveform;
+    public var sourceTwo: Waveform;
+    // [0, 1]
+    public var weight = 8/9;
+
+    var isAnd: Bool;
+
+    public function new(a: Bool) {
+        super();
+        isAnd = a;
+    }
+
+    override public function sample(t:Float):Float {
+        if (sourceOne == null || sourceTwo == null) return 0;
+        var y: Float;
+        if (isAnd)
+            y = weight*sourceOne.sample(t) * (1 - weight)*sourceTwo.sample(t);
+        else
+            y = weight*sourceOne.sample(t) + (1 - weight)*sourceTwo.sample(t);
+        y = y > 0.5 ? 0.5 : y < -0.5 ? -0.5 : y;
+        return y;
+    }
+
+    override public function samplePreviousWeighted(t:Float, w:Float):Float {
+        return sample(t);
+    }
+}
+
+class WaveformInverter extends Waveform {
+
+    public var source: Waveform;
+
+    public function new() {
+        super();
+    }
+
+    override public function sample(t:Float):Float {
+        if (source == null) return 0;
+        return -source.sample(t);
+    }
+
+    override public function samplePreviousWeighted(t:Float, w:Float):Float {
+        return sample(t);
+    }
+}
