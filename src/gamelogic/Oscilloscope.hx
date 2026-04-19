@@ -1,5 +1,10 @@
 package gamelogic;
 
+import h2d.filter.Bloom;
+import h2d.filter.Group;
+import h2d.filter.Glow;
+import gamelogic.Waveform.waveformMultInverse;
+import h2d.filter.Blur;
 import utilities.RNGManager;
 import h2d.col.Circle;
 import utilities.MessageManager;
@@ -120,10 +125,11 @@ class Oscilloscope extends Object implements Updateable
 
         waveform = new Sine(1, 1, 1);
         waveformGraphics = new Graphics(this);
-        waveformGraphics.scaleX = 212; 
-        waveformGraphics.scaleY = 114; 
+        waveformGraphics.scaleX = 212 * waveformMultInverse; 
+        waveformGraphics.scaleY = 114 * waveformMultInverse;
         waveformGraphics.x = 20 - size.width/2;
-        waveformGraphics.y = 20 - waveformGraphics.scaleY/2;
+        waveformGraphics.y = 90 - size.height/2;
+        waveformGraphics.filter = new Group([new Glow(0x00FF00, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         port = new Bitmap(Res.img.CablePort.toTile().center(), this);
         port.x = size.width/2;
@@ -141,7 +147,7 @@ class Oscilloscope extends Object implements Updateable
     public function update(dt:Float):Bool {
         totalTime += dt*0.5 + RNGManager.srand(0.01);
         waveformGraphics.clear();
-        waveform.draw(waveformGraphics, totalTime);
+        waveform.draw(waveformGraphics, totalTime, 0x00FF00);
 
         ampDial.update(dt);
         freqDial.update(dt);

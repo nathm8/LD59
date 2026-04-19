@@ -1,5 +1,14 @@
 package gamelogic;
 
+import h2d.filter.Bloom;
+import h2d.filter.Blur;
+import h2d.Flow;
+import h2d.Tile;
+import h3d.mat.Texture;
+import h2d.Bitmap;
+import hxd.Res;
+import h2d.filter.Glow;
+import h2d.Graphics;
 import h2d.col.Point;
 import h2d.Scene;
 import hxd.Window;
@@ -23,7 +32,7 @@ class GameScene extends Scene implements MessageListener {
 
     var cameraMinScale = 0.1;
     var cameraMaxScale = 1.0;
-    var cameraBounds = 5000.0;
+    var cameraBounds = 2500.0;
 
     public function new() {
         super();
@@ -39,7 +48,6 @@ class GameScene extends Scene implements MessageListener {
         o.x = -300;
 
         var target = new TargetOscilloscope(this);
-        // target.inputWaveform = o.waveform;
         target.x = 300;
         target.y = 300;
 
@@ -52,7 +60,7 @@ class GameScene extends Scene implements MessageListener {
     
     public function update(dt:Float) {
         PhysicalWorld.update(dt);
-        // cameraControl();
+        cameraControl();
         
         var to_remove = new Array<Updateable>();
         for (u in updateables)

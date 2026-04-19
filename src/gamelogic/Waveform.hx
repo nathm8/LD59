@@ -3,9 +3,12 @@ package gamelogic;
 import utilities.RNGManager;
 import h2d.Graphics;
 
-interface Waveform {
-    // period assumed to be 1.0
+final waveformMult = 500;
+final waveformMultInverse = 1/waveformMult;
 
+interface Waveform {
+
+    // period assumed to be 1.0
     public var amplitude:Float;
     public var frequency:Float;
     public var phase:Float;
@@ -14,7 +17,7 @@ interface Waveform {
     // return in [0,1]
     public function sample(t: Float): Float;
 
-    public function draw(target: Graphics, ?phase_delta: Float, ?col: Int): Void;
+    public function draw(target:Graphics, ?phase_delta:Float, ?col:Int, ?alpha:Float): Void;
 
     public function match(o: Waveform): Bool;
 
@@ -63,19 +66,25 @@ class Sine implements Waveform {
         return w*Sine.staticSample(t, amplitude, frequency, phase) + (1-w)*Sine.staticSample(t, previous.amplitude, previous.frequency, previous.phase);
     }
 
-    public function draw(target:Graphics, ?phase_delta:Float, ?col:Int=0x00FF00): Void {
+    public function draw(target:Graphics, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
         final drawing_samples = 1000;
-        target.lineStyle(0.01, col);
-        target.moveTo(0, samplePreviousWeighted(phase_delta, 0.1));
+        target.lineStyle(5, col);
+        target.moveTo(0, samplePreviousWeighted(phase_delta, 0.1)*waveformMult);
         for (i in 0...drawing_samples) {
             var x = i/drawing_samples;
             var y = samplePreviousWeighted(x + phase_delta, 0.1);
-            y += RNGManager.srand(0.001);
-            if (RNGManager.random(10000) == 0) {
+            if (RNGManager.random(5000) == 0) {
                 y += RNGManager.srand(0.1);
+                if (RNGManager.random(1000) == 0)
+                    x += RNGManager.srand(0.1);
+            }
+            if (RNGManager.random(5000) == 0) {
+                x += RNGManager.srand(0.1);
+                if (RNGManager.random(1000) == 0)
+                    y += RNGManager.srand(0.1);
             }
             y = y < -0.5 ? -0.5: y > 0.5 ? 0.5 : y;
-            target.lineTo(x, y);
+            target.lineTo(x*waveformMult, y*waveformMult);
         }
         // this lerp is framerate dependant on how many time draw is called, but it's a visual effect only so that's fine
         if (previous == null) return;

@@ -1,5 +1,9 @@
 package gamelogic;
 
+import h2d.filter.Blur;
+import h2d.filter.Glow;
+import h2d.filter.Group;
+import gamelogic.Waveform.waveformMultInverse;
 import utilities.Vector2D;
 import h2d.col.Circle;
 import utilities.RNGManager;
@@ -98,24 +102,27 @@ class TargetOscilloscope extends Object implements Updateable
 
         targetWaveform = new Sine();
         targetWaveformGraphics = new Graphics(this);
-        targetWaveformGraphics.scaleX = 310; 
-        targetWaveformGraphics.scaleY = 150; 
+        targetWaveformGraphics.scaleX = 310 * waveformMultInverse; 
+        targetWaveformGraphics.scaleY = 150 * waveformMultInverse; 
         targetWaveformGraphics.x = 24 - size.width/2;
         targetWaveformGraphics.y = 96 - size.height/2;
+        targetWaveformGraphics.filter = new Group([new Glow(0x0000FF, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         // inputWaveform = new Sine();
         inputWaveformGraphics = new Graphics(this);
-        inputWaveformGraphics.scaleX = 310; 
-        inputWaveformGraphics.scaleY = 150; 
+        inputWaveformGraphics.scaleX = 310 * waveformMultInverse; 
+        inputWaveformGraphics.scaleY = 150 * waveformMultInverse; 
         inputWaveformGraphics.x = 24 - size.width/2;
         inputWaveformGraphics.y = 55;
+        inputWaveformGraphics.filter = new Group([new Glow(0x00FF00, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         combinedWaveform = new Sine();
         combinedWaveformGraphics = new Graphics(this);
-        combinedWaveformGraphics.scaleX = 310; 
-        combinedWaveformGraphics.scaleY = 320; 
+        combinedWaveformGraphics.scaleX = 310 * waveformMultInverse; 
+        combinedWaveformGraphics.scaleY = 320 * waveformMultInverse; 
         combinedWaveformGraphics.x = 12;
         combinedWaveformGraphics.y = -34;
+        combinedWaveformGraphics.filter = new Group([new Glow(0xFFFFFF, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         port = new Bitmap(Res.img.CablePort.toTile().center(), this);
         port.x = -size.width/2;

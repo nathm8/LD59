@@ -44,6 +44,7 @@ class UIScene extends Scene implements MessageListener {
             b = b.getNext();
         }
         // fpsText.text = '${Math.round(Timer.fps())}\n${awake}\\${PhysicalWorld.gameWorld.getBodyCount()-1}' ;
+        fpsText.text = '${Math.round(Timer.fps())}';
     }
 
     public function receive(msg:Message):Bool {

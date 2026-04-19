@@ -1,35 +1,26 @@
 Signals
 ===================================
 
-MVP
------------------------------------
-have modifiable waveform on Oscilloscope
-have target waveform on OscilloscopeOut
-modify starting waveform to match, recognise, win
-
 Todo
 -----------------------------------
+make UI with drag-droppable elements
+make trashcan for removing unwanted elements
+
 Limit mouse movement, give camera bounds
 
-Name ideas
+Stretch
 -----------------------------------
-Finnicky Fourier Toy
+make signal splitter/duplicator
 
 Concept
 -----------------------------------
-match target waveform
 link waveform generators and modulators to output
 gens:
     sine, square, triangle
     dials: amp, freq, phase
            for tri, AoA
-mods:
-    reverb, pitch
 combiners:
     additive, multiplicative, inverter
-
-have dials go from 1 to 10, all signal outputs normalised
-
 
 Social
 -----------------------------------
