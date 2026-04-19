@@ -1,5 +1,8 @@
 package graphics.ui;
 
+import hxd.res.Loader;
+import hxd.fs.EmbedFileSystem;
+import graphics.ui.BitmapButton.ComponentButton;
 import hxd.Res;
 import h2d.Flow;
 import gamelogic.physics.PhysicalWorld;
@@ -12,6 +15,7 @@ import utilities.MessageManager;
 class UIScene extends Scene implements MessageListener {
     var fpsText: Text;
     var victoryFlow: Flow;
+    var componentFlow: Flow;
 
     public function new() {
         super();
@@ -27,8 +31,22 @@ class UIScene extends Scene implements MessageListener {
         victoryFlow.alpha = 0.0;
         var victoryText = new h2d.Text(hxd.res.DefaultFont.get(), victoryFlow);
         victoryText.text = "a winner is u~";
+        victoryText.scale(5);
         victoryFlow.x = width/2 - victoryFlow.outerWidth/2;
         victoryFlow.y = height/2 - victoryFlow.outerHeight/2;
+
+        componentFlow = new Flow(this);
+        componentFlow.backgroundTile = Res.img.ui.ScaleGrid.toTile();
+        componentFlow.borderWidth = 5;
+        componentFlow.borderHeight = 20;
+        componentFlow.horizontalSpacing = 10;
+        componentFlow.padding = 20; 
+
+        for (name in ["Wire", "Split", "Sine", "Square", "Triangle", "And", "Or", "Invert"]) {
+            var b = new ComponentButton(name, componentFlow, () -> {});
+        }
+        componentFlow.y = height - componentFlow.outerHeight;
+        componentFlow.x = width/2 - componentFlow.outerWidth/2;
 
         MessageManager.addListener(this);
     }
