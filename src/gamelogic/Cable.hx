@@ -128,8 +128,11 @@ class Cable implements Updateable {
         cable.lineStyle(10, 0x1A1A1A);
         var t = headOne.getTail();
         cable.moveTo(t.x, t.y);
+        var control = new Vector2D(t.x, t.y);
         t = headTwo.getTail();
-        cable.lineTo(t.x, t.y);
+        control = 0.5*(control + new Vector2D(t.x, t.y));
+        control.y += headOne.getTail().distanceTo(headTwo.getTail());
+        cable.curveTo(control.x, control.y, t.x, t.y);
         return false;
     }
 

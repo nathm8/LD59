@@ -168,7 +168,8 @@ class TargetOscilloscope extends Object implements Updateable
         switchReady.visible = true;
         switchFlipped.visible = false;
         if (puzzlesComplete > targets.length) {
-
+            // todo: generate random waveform
+            targetWaveform = targets[1];
         } else {
             targetWaveform = targets[puzzlesComplete];
         }

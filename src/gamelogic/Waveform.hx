@@ -19,7 +19,6 @@ class Waveform {
         phase = p;
     }
 
-
     var previous: Waveform;
 
     static final drawing_samples = 1000;
@@ -103,7 +102,7 @@ class Square extends Waveform {
     }
 
     public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
-        return 0.5*a*sign( f*4*Math.PI*t - p*Math.PI );
+        return 0.5*a*sign( Math.sin(f*4*Math.PI*t - p*Math.PI) );
     }
 
     override public function sample(t:Float):Float {
