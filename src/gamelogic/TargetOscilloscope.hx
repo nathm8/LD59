@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.Utilities.colors;
 import gamelogic.Waveform.WaveformCombination;
 import gamelogic.Waveform.Square;
 import h2d.filter.Blur;
@@ -49,6 +50,10 @@ class TargetOscilloscope extends Object implements Updateable
     var targetTotalTime = 0.0;
     var combinedTotalTime = 0.0;
 
+    var colOne: Int;
+    var colTwo: Int;
+    var colThree: Int;
+
     public function new(p: Object) {
         super(p);
 
@@ -57,11 +62,13 @@ class TargetOscilloscope extends Object implements Updateable
         var targetTwo = new WaveformCombination(false);
         targetTwo.weight = 6/9;
         targetTwo.sourceOne = targetOne;
-        targetTwo.sourceTwo = new Square(5/8, 4/8, 2/8);
-        // var targetThree = new WaveformCombination(true);
+        targetTwo.sourceTwo = new Square(1, 1, 1);
         targets = [targetOne, targetTwo];
         //
 
+        colOne = colors[RNGManager.random(colors.length)];
+        colTwo = colors[RNGManager.random(colors.length)];
+        colThree = colors[RNGManager.random(colors.length)];
 
         sprite = new Bitmap(Res.img.OscilloOut.toTile().center(), this);
         var size = sprite.getSize();
@@ -102,13 +109,13 @@ class TargetOscilloscope extends Object implements Updateable
         for (g in [glowOne, glowTwo, glowThree])
             g.visible = false;
 
-        targetWaveform = new Sine();
+        targetWaveform = targets[0];
         targetWaveformGraphics = new Graphics(this);
         targetWaveformGraphics.scaleX = 310 * waveformMultInverse; 
         targetWaveformGraphics.scaleY = 150 * waveformMultInverse; 
         targetWaveformGraphics.x = 24 - size.width/2;
         targetWaveformGraphics.y = 96 - size.height/2;
-        targetWaveformGraphics.filter = new Group([new Glow(0x0000FF, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
+        targetWaveformGraphics.filter = new Group([new Glow(colOne, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         // inputWaveform = new Sine();
         inputWaveformGraphics = new Graphics(this);
@@ -116,14 +123,14 @@ class TargetOscilloscope extends Object implements Updateable
         inputWaveformGraphics.scaleY = 150 * waveformMultInverse; 
         inputWaveformGraphics.x = 24 - size.width/2;
         inputWaveformGraphics.y = 55;
-        inputWaveformGraphics.filter = new Group([new Glow(0x00FF00, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
+        inputWaveformGraphics.filter = new Group([new Glow(colTwo, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         combinedWaveformGraphics = new Graphics(this);
         combinedWaveformGraphics.scaleX = 310 * waveformMultInverse; 
         combinedWaveformGraphics.scaleY = 320 * waveformMultInverse; 
         combinedWaveformGraphics.x = 12;
         combinedWaveformGraphics.y = -34;
-        combinedWaveformGraphics.filter = new Group([new Glow(0xFFFFFF, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
+        combinedWaveformGraphics.filter = new Group([new Glow(colThree, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         port = new Port(false, this);
         port.onConnection = (w: Waveform) -> {inputWaveform = w;};
@@ -148,10 +155,10 @@ class TargetOscilloscope extends Object implements Updateable
         targetWaveformGraphics.clear();
         inputWaveformGraphics.clear();
         combinedWaveformGraphics.clear();
-        targetWaveform.draw(targetWaveformGraphics, targetTotalTime, 0x0000DD);
-        inputWaveform?.draw(inputWaveformGraphics, inputTotalTime);
-        targetWaveform.draw(combinedWaveformGraphics, combinedTotalTime, 0x0000DD);
-        inputWaveform?.draw(combinedWaveformGraphics, combinedTotalTime);
+        targetWaveform.draw(targetWaveformGraphics, targetTotalTime, colOne);
+        inputWaveform?.draw(inputWaveformGraphics, inputTotalTime, colTwo);
+        targetWaveform.draw(combinedWaveformGraphics, combinedTotalTime, colOne);
+        inputWaveform?.draw(combinedWaveformGraphics, combinedTotalTime, colTwo);
         return false;
     }
 

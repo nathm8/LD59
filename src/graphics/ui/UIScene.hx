@@ -35,6 +35,9 @@ class UIScene extends Scene implements MessageListener {
         fpsText = new h2d.Text(hxd.res.DefaultFont.get(), this);
 
         statsText = new h2d.Text(hxd.res.DefaultFont.get(), this);
+        statsText.visible = false;
+        statsText.x = width*0.9;
+        statsText.y = height*0.9;
         
         victoryFlow = new Flow(this);
         victoryFlow.backgroundTile = Res.img.ui.ScaleGrid.toTile();
@@ -58,6 +61,7 @@ class UIScene extends Scene implements MessageListener {
         var hidden = ["Split", "Square", "Triangle", "And", "Or", "Invert"];
         for (name in ["Wire", "Split", "Sine", "Square", "Triangle", "And", "Or", "Invert"]) {
             var b = new ComponentButton(name, componentFlow, () -> {MessageManager.send(new SpawnComponent(name));});
+            b.name = name;
             if (hidden.contains(name))
                 b.visible = false;
         }
@@ -78,17 +82,9 @@ class UIScene extends Scene implements MessageListener {
     
     public function update(dt:Float) {
         totalTime += dt;
-        fpsText.x = Window.getInstance().width*0.9;
-        fpsText.y = Window.getInstance().height*0.9;
-        var awake = 0;
-        var b = PhysicalWorld.gameWorld.getBodyList();
-        while (b != null) {
-            if (b.isAwake())
-                awake++;
-            b = b.getNext();
-        }
         // fpsText.text = '${Math.round(Timer.fps())}\n${awake}\\${PhysicalWorld.gameWorld.getBodyCount()-1}' ;
         // fpsText.text = '${Math.round(Timer.fps())}';
+        statsText.text = 'time:${Math.round(totalTime)}\nsolved: ${solvedPuzzles}';
     }
 
     function tutorialCheck() {
@@ -112,6 +108,19 @@ class UIScene extends Scene implements MessageListener {
             tutorialText.text = "If you need more room:\nYou can zoom in and out with the mouse wheel, or Q and E.\nDragging the middle mouse button or WASD can pan the camera.";
             tutorialText.x = width/2;
             tutorialText.y -= 50;
+            for (n in ["Or", "Square"])
+                componentFlow.getObjectByName(n).visible = true;
+            componentFlow.x = width/2 - componentFlow.outerWidth/2;
+            Main.tweenManager.animateTo(tutorialText, {alpha: 1}, 2.0).start();
+            Main.tweenManager.delay(5, () -> {
+                Main.tweenManager.animateTo(tutorialText, {alpha: 0}, 2.0).start();
+            }).start();
+        }
+        if (tutorialState == 3 && solvedPuzzles == 2) {
+            tutorialState++;
+            tutorialText.text = "These are all the tools. The puzzles from now are randomly generated, but based off your previous solution.\nGood luck!";
+            tutorialText.x = width/2;
+            tutorialText.y -= 50;
             for (c in componentFlow.children)
                 c.visible = true;
             componentFlow.x = width/2 - componentFlow.outerWidth/2;
@@ -119,6 +128,7 @@ class UIScene extends Scene implements MessageListener {
             Main.tweenManager.delay(5, () -> {
                 Main.tweenManager.animateTo(tutorialText, {alpha: 0}, 2.0).start();
             }).start();
+            statsText.visible = true;
         }
     }
 

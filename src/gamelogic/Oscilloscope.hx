@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.Utilities.colors;
 import h2d.filter.Group;
 import h2d.filter.Glow;
 import gamelogic.Waveform.waveformMultInverse;
@@ -32,6 +33,7 @@ class Oscilloscope extends Object implements Updateable
     var port: Port;
 
     var isSelected = false;
+    var col: Int;
     
     public function new(w: Waveform, p: Object) {
         super(p);
@@ -46,13 +48,15 @@ class Oscilloscope extends Object implements Updateable
         phaseDial.x = size.width/4 + 17;
         phaseDial.y = size.height/4 + 20;
 
+        col = colors[RNGManager.random(colors.length)];
+
         waveform = w;
         waveformGraphics = new Graphics(this);
         waveformGraphics.scaleX = 212 * waveformMultInverse; 
         waveformGraphics.scaleY = 114 * waveformMultInverse;
         waveformGraphics.x = 20 - size.width/2;
         waveformGraphics.y = 90 - size.height/2;
-        waveformGraphics.filter = new Group([new Glow(0x00FF00, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
+        waveformGraphics.filter = new Group([new Glow(col, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         port = new Port(true, this);
         port.getOutput = () -> {return waveform;};
@@ -71,7 +75,7 @@ class Oscilloscope extends Object implements Updateable
     public function update(dt:Float):Bool {
         totalTime += dt*0.5 + RNGManager.srand(0.01);
         waveformGraphics.clear();
-        waveform.draw(waveformGraphics, totalTime, 0x00FF00);
+        waveform.draw(waveformGraphics, totalTime, col);
 
         ampDial.update(dt);
         freqDial.update(dt);

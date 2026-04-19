@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.Utilities.colors;
 import gamelogic.Waveform.WaveformCombination;
 import gamelogic.Waveform.Sine;
 import utilities.RNGManager;
@@ -53,6 +54,9 @@ class Combinator extends Object implements MessageListener
         dial = new Dial(() -> {transformedWaveform.weight = dial.value/9;}, this);
         dial.y = 6;
         if (!isAnd) dial.y += 5;
+
+        inputOneCol = colors[RNGManager.random(colors.length)];
+        inputTwoCol = colors[RNGManager.random(colors.length)];
 
         transformedWaveform = new WaveformCombination(isAnd);
 

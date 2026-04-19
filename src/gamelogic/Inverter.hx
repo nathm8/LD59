@@ -1,5 +1,7 @@
 package gamelogic;
 
+import utilities.RNGManager;
+import utilities.Utilities.colors;
 import utilities.MessageManager;
 import hxd.Event;
 import h2d.Interactive;
@@ -29,13 +31,15 @@ class Inverter extends Object implements MessageListener
     var inputWaveform: Waveform;
     
     var outputWaveformGraphics: Graphics;
-    var outputCol = 0xFFFFFF;
+    var outputCol: Int;
 
     public function new(?p: Object) {
         super(p);
 
         sprite = new Bitmap(Res.img.Invert.toTile().center(), this);
         var size = sprite.getSize();
+
+        outputCol = colors[RNGManager.random(colors.length)];
 
         transformedWaveform = new WaveformInverter();
         transformedWaveform.source = inputWaveform;

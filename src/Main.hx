@@ -31,7 +31,7 @@ class Main extends UIApp implements MessageListener {
         RNGManager.initialise();
         SoundManager.initialise();
         // background
-        h3d.Engine.getCurrent().backgroundColor = 0x003F05;
+        h3d.Engine.getCurrent().backgroundColor = 0x3A4F41;
         // gamelogic
         newGame();
         // controls
@@ -87,8 +87,8 @@ class Main extends UIApp implements MessageListener {
     }
 
     public function receive(msg:Message):Bool {
-        if (Std.isOfType(msg, Restart))
-            newGame();
+        // if (Std.isOfType(msg, Restart))
+        //     newGame();
         return false;
     }
 }

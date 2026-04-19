@@ -1,5 +1,9 @@
 package utilities;
 
+var colors = [0xFF0000, 0x00FF00, 0x0000FF, 
+              0xFFFF00, 0x00FFFF, 0xFFFFFF,
+              0xFF00FF];
+
 function normaliseArray(arr: Array<Float>): Array<Float> {
     var min = arr[0];
     var max = 0.0;

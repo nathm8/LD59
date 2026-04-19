@@ -105,6 +105,10 @@ class GameScene extends Scene implements MessageListener {
                 updateables.push(new Combinator(true, this));
             if (n == "Or")
                 updateables.push(new Combinator(false, this));
+            if (n == "Invert")
+                updateables.push(new Inverter(this));
+            if (n == "Split")
+                updateables.push(new Splitter(this));
         }
         // graphics
         return false;
