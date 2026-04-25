@@ -1,0 +1,9 @@
+-lib heaps
+-lib box2d
+-lib slide
+-lib hlsdl
+-lib format
+-cp src
+-hl bin/game.hl
+-main Main
+-debug

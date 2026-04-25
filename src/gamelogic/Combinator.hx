@@ -52,8 +52,12 @@ class Combinator extends Object implements MessageListener
         var size = sprite.getSize();
 
         dial = new Dial(() -> {transformedWaveform.weight = dial.value/9;}, this);
-        dial.y = 6;
-        if (!isAnd) dial.y += 5;
+        if (isAnd) {
+            dial.x = 3 - size.width/4;
+            dial.y = 6;
+        } else {
+            dial.y = -63;
+        }
 
         inputOneCol = colors[RNGManager.random(colors.length)];
         inputTwoCol = colors[RNGManager.random(colors.length)];
@@ -61,8 +65,8 @@ class Combinator extends Object implements MessageListener
         transformedWaveform = new WaveformCombination(isAnd);
 
         inputWaveformGraphicsOne = new Graphics(this);
-        inputWaveformGraphicsOne.scaleX = 212 * waveformMultInverse; 
-        inputWaveformGraphicsOne.scaleY = 114 * waveformMultInverse; 
+        inputWaveformGraphicsOne.scaleX = 212 * waveformMultInverse;
+        inputWaveformGraphicsOne.scaleY = 114 * waveformMultInverse;
         if (isAnd) {
             inputWaveformGraphicsOne.x = 24 - size.width/2;
             inputWaveformGraphicsOne.y = -115;
@@ -88,22 +92,37 @@ class Combinator extends Object implements MessageListener
         inputPortOne.onConnection = (w) -> {inputWaveformOne = w; transformedWaveform.sourceOne = w;};
         inputPortOne.onDisconnect = () -> {inputWaveformOne = null; transformedWaveform.sourceOne = null;};
         inputPortOne.x = -size.width/2;
-        inputPortOne.y = -size.height/2 + 50;
+        if (isAnd)
+            inputPortOne.y = -size.height/2 + 50;
+        else
+            inputPortOne.y = -size.height/2 + 50;
 
         inputPortTwo = new Port(false, this);
         inputPortTwo.onConnection = (w) -> {inputWaveformTwo = w; transformedWaveform.sourceTwo = w;};
         inputPortTwo.onDisconnect = () -> {inputWaveformTwo = null; transformedWaveform.sourceTwo = null;};
         inputPortTwo.x = -size.width/2;
-        inputPortTwo.y = size.height/2 - 45;
+        if (isAnd)
+            inputPortTwo.y = size.height/2 - 45;
+        else
+            inputPortTwo.y = -size.height/2 + 130;
         
         outputPort = new Port(true, this);
         outputPort.getOutput = () -> {return transformedWaveform;};
         outputPort.x = size.width/2;
-        outputPort.y = 10;
+        if (isAnd)
+            outputPort.y = 10;
+        else
+            outputPort.y = -size.height/2 + 130;
 
         var i = new Interactive(141, 16, this);
-        i.y = -size.height/2 + 5;
-        i.x = -70;
+        
+        if (isAnd) {
+            i.y = 5 - size.height/2;
+            i.x = 58 - size.width/2;
+        } else {
+            i.y = 5 - size.height/2;
+            i.x = -70;
+        }
         i.onPush = (e:Event) -> {isSelected = true;}
         i.onRelease = (e:Event) -> {isSelected = false;}
 
@@ -134,6 +153,10 @@ class Combinator extends Object implements MessageListener
             x = params.scenePosition.x;
             var size = sprite.getSize();
             y = params.scenePosition.y + size.height/2 - 12;
+            if (isAnd) {
+                x += 100;
+            } else {
+            }
         }
 		return false;
 	}

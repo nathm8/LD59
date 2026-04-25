@@ -25,7 +25,7 @@ class Waveform {
 
     // t in [0,1]
     // return in [0,1]
-    public function sample(t:Float, ?d:Int=0):Float {return 0.5;}
+    public function sample(t:Float, ?d:Int=0, ?sound=false):Float {return 0.5;}
     public function samplePreviousWeighted(t:Float, w:Float):Float {return 0.5;}
 
     public function draw(target:Graphics, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
@@ -74,10 +74,11 @@ class Sine extends Waveform {
     }
 
     public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
-        return 0.5*a*Math.sin( f*4*Math.PI*t - p*Math.PI );
+        t -= p*Math.PI;
+        return 0.5*a*Math.sin( f*4*Math.PI*t );
     }
 
-    override public function sample(t:Float, ?d:Int=0):Float {
+    override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
         return staticSample(t, amplitude, frequency, phase);
     }
 
@@ -101,12 +102,19 @@ class Square extends Waveform {
         previous = new Square(amplitude, frequency, phase);
     }
 
-    public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
-        return 0.5*a*sign( Math.sin(f*4*Math.PI*t - p*Math.PI) );
+    public static function staticSample(t:Float, a:Float, f:Float, p:Float, ?sound=false):Float {
+        t -= p*Math.PI;
+        // if (!sound)
+        //     return 0.5*a*sign( Math.sin(f*4*Math.PI*t) );
+
+        var out = 0.0;
+        for (n in 1...26)
+            out += 2*(1+Math.pow(-1, n+1))/(n*Math.PI) * Math.sin(4*f*n*Math.PI*t);
+        return a*0.5*out;
     }
 
-    override public function sample(t:Float, ?d:Int=0):Float {
-        return staticSample(t, amplitude, frequency, phase);
+    override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
+        return staticSample(t, amplitude, frequency, phase, sound);
     }
 
     override public function samplePreviousWeighted(t:Float, w:Float):Float {
@@ -123,10 +131,11 @@ class Triangle extends Waveform {
     }
 
     public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
-        return a/Math.PI*Math.asin( Math.sin(f*4*Math.PI*t - p*Math.PI) );
+        t -= p*Math.PI;
+        return a/Math.PI*Math.asin( Math.sin(f*4*Math.PI*t) );
     }
 
-    override public function sample(t:Float, ?d:Int=0):Float {
+    override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
         return staticSample(t, amplitude, frequency, phase);
     }
 
@@ -151,7 +160,7 @@ class WaveformCombination extends Waveform {
         isAnd = a;
     }
 
-    override public function sample(t:Float, ?d:Int=0):Float {
+    override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
         if (d == 100) return -0.5;
         if (sourceOne == null || sourceTwo == null) return -0.5;
         var y: Float;
@@ -176,7 +185,7 @@ class WaveformInverter extends Waveform {
         super();
     }
 
-    override public function sample(t:Float, ?d:Int=0):Float {
+    override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
         if (source == null) return 0.5;
         if (d == 100) return 0.5;
         return -source.sample(t, d+1);

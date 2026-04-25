@@ -30,18 +30,18 @@ class GameScene extends Scene implements MessageListener {
     public function new() {
         super();
 
-        defaultSmooth = false;
+        defaultSmooth = true;
         camera.anchorX = 0.5;
         camera.anchorY = 0.5;
         camera.sync(ctx);
 
         MessageManager.addListener(this);
 
-        var target = new TargetOscilloscope(this);
-        target.x = 400;
-        target.y = -200;
+        // var target = new TargetOscilloscope(this);
+        // target.x = 400;
+        // target.y = -200;
 
-        updateables.push(target);
+        // updateables.push(target);
     }
     
     public function update(dt:Float) {

@@ -21,6 +21,7 @@ class Dial extends Object implements MessageListener implements Updateable {
     var interactive: Interactive;
     var isSelected = false;
     var moveImmune = 0.25;
+    var selectedTime = 0.0;
     var callback: () -> Void;
 
     public function new(f: () -> Void, p: Object) {
@@ -36,14 +37,17 @@ class Dial extends Object implements MessageListener implements Updateable {
             isSelected = false;
         }
         interactive.onPush = (e:Event) -> {
+            selectedTime = 0;
             isSelected = true;
             moveImmune = 0.25;
         }
         interactive.onClick = (e:Event) -> {
-            if (e.button == 0)
-                value++;
-            else
-                value--;
+            if (selectedTime < 0.1) {
+                if (e.button == 0)
+                    value++;
+                else
+                    value--;
+            }
             value = value == 0 ? 8 : value == 9 ? 1 : value;
             rotation = value*2*Math.PI/8;
             callback();
@@ -71,6 +75,7 @@ class Dial extends Object implements MessageListener implements Updateable {
 
     public function update(dt:Float):Bool {
         if (moveImmune > 0 && isSelected) moveImmune -= dt;
+        if (isSelected) selectedTime += dt;
         return false;
     }
 }

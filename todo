@@ -1,6 +1,50 @@
 Signals
 ===================================
 
+Post-jam MVP
+-----------------------------------
+clean up cable hitboxes. Allow click-drag mode?
+
+fix splitter memory
+ditto inverter
+
+properly store mouse offset when clicking on bar to drag components around
+
+figure out a better way of spawning in components than dumping them at 0, 0
+
+add generative sounds. Try to have them not be totally awful
+    harmonise when getting solution
+    have volume control on every component which emits sound
+    dynamically turn everything down when multiple sound generators are active to prevent too much noise
+
+add SFX for cables, dials, switch and lights
+    have each light actually correspond to something (correctish phase/freq/amp, perhaps?)
+
+add output screens to combinators
+
+have oscilloscope shader
+
+Refactor waveform graphics to not be squashed\stretched but to have waveform.draw() take parameters for available space
+
+main menu. level select
+
+physically simulate cable wire (just put control point on spring between the heads)
+
+add trashcan
+
+design more puzzles
+introduce each tool seperately with tutorial
+
+tooltips for components in menu
+
+further extensions
+-----------------------------------
+Have colours combine?
+Implement memory cell and parameterised freq\amp\phase ?
+saveable solutions (e.g. reuse saw-tooth)
+
+physically simulate components? to prevent overlapping
+
 Tutorial\script
 -----------------------------------
 Spawn in a Sine generator, and a cable
@@ -59,8 +103,14 @@ do masking on the drawn waveforms
 
 Sounds
 -----------------------------------
-try to play the dynamically generated waveforms using Heaps
-
 randomly generated tones\keys for waveforms, have it match their colours
 
-generate all freq\amp\phase combos using numpy, use heaps to combine them
+Done
+===================================
+
+Post-jam MVP
+-----------------------------------
+
+fix dial step skip
+
+add generative sounds

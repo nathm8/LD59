@@ -23,6 +23,8 @@ class Oscilloscope extends Object implements Updateable
     public var waveform: Waveform;
     var waveformGraphics: Graphics;
 
+    var sound: CustomSound;
+
     var sprite: Bitmap;
     var ampDial: Dial;
     var freqDial: Dial;
@@ -37,14 +39,15 @@ class Oscilloscope extends Object implements Updateable
     
     public function new(w: Waveform, p: Object) {
         super(p);
+
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
-        ampDial = new Dial(() -> {waveform.backup(); waveform.amplitude = ampDial.value/8;}, sprite);
+        ampDial = new Dial(() -> {waveform.backup(); waveform.amplitude = ampDial.value/8; sound.reload();}, sprite);
         var size = sprite.getSize();
         ampDial.x = -size.width/4 - 17; // 0.0664*width
         ampDial.y = size.height/4 + 20; // 0.0781*height
-        freqDial = new Dial(() -> {waveform.backup(); waveform.frequency = freqDial.value/8;}, sprite);
+        freqDial = new Dial(() -> {waveform.backup(); waveform.frequency = freqDial.value/8; sound.reload();}, sprite);
         freqDial.y = size.height/4 + 20;
-        phaseDial = new Dial(() -> {waveform.backup(); waveform.phase = phaseDial.value/8;}, sprite);
+        phaseDial = new Dial(() -> {waveform.backup(); waveform.phase = phaseDial.value/8; sound.reload();}, sprite);
         phaseDial.x = size.width/4 + 17;
         phaseDial.y = size.height/4 + 20;
 
@@ -57,6 +60,10 @@ class Oscilloscope extends Object implements Updateable
         waveformGraphics.x = 20 - size.width/2;
         waveformGraphics.y = 90 - size.height/2;
         waveformGraphics.filter = new Group([new Glow(col, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
+
+        sound = new CustomSound(waveform);
+        var channel = sound.play(true);
+        channel.volume = 0.20;
 
         port = new Port(true, this);
         port.getOutput = () -> {return waveform;};
