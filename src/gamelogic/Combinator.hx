@@ -1,5 +1,6 @@
 package gamelogic;
 
+import gamelogic.Waveform.waveformMult;
 import utilities.Utilities.colors;
 import gamelogic.Waveform.WaveformCombination;
 import gamelogic.Waveform.Sine;
@@ -31,6 +32,7 @@ class Combinator extends Object implements MessageListener
     var isSelected = false;
     var totalTimeOne = 0.0;
     var totalTimeTwo = 0.0;
+    var totalTimeThree = 0.0;
 
     var transformedWaveform: WaveformCombination;
 
@@ -40,6 +42,9 @@ class Combinator extends Object implements MessageListener
     var inputWaveformTwo: Waveform;
     var inputWaveformGraphicsTwo: Graphics;
     var inputTwoCol = 0x00FFFF;
+
+    var outputWaveformGraphics: Graphics;
+    var outputCol = 0x00FFFF;
 
     public function new(a: Bool, ?p: Object) {
         super(p);
@@ -61,8 +66,26 @@ class Combinator extends Object implements MessageListener
 
         inputOneCol = colors[RNGManager.random(colors.length)];
         inputTwoCol = colors[RNGManager.random(colors.length)];
+        outputCol = colors[RNGManager.random(colors.length)];
+
+        inputWaveformOne = new Sine(1, 1/8, 1);
+        inputWaveformTwo = new Sine(1, 1/8, 1);
 
         transformedWaveform = new WaveformCombination(isAnd);
+        transformedWaveform.sourceOne = inputWaveformOne;
+        transformedWaveform.sourceTwo = inputWaveformTwo;
+        transformedWaveform.weight = 1;
+
+        outputWaveformGraphics = new Graphics(this);
+        outputWaveformGraphics.scaleX = 212 * waveformMultInverse;
+        outputWaveformGraphics.scaleY = 114 * waveformMultInverse;
+        if (isAnd) {
+            outputWaveformGraphics.x = size.width/4 - 106;
+            outputWaveformGraphics.y = 5;
+        } else {
+            outputWaveformGraphics.x = -106;
+            outputWaveformGraphics.y = size.height/4;
+        }
 
         inputWaveformGraphicsOne = new Graphics(this);
         inputWaveformGraphicsOne.scaleX = 212 * waveformMultInverse;
@@ -72,7 +95,7 @@ class Combinator extends Object implements MessageListener
             inputWaveformGraphicsOne.y = -115;
         } else {
             inputWaveformGraphicsOne.x = 20 - size.width/2;
-            inputWaveformGraphicsOne.y = 0;
+            inputWaveformGraphicsOne.y = -66;
         }
         inputWaveformGraphicsOne.filter = new Group([new Glow(inputOneCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
@@ -84,7 +107,7 @@ class Combinator extends Object implements MessageListener
             inputWaveformGraphicsTwo.y = 120;
         } else {
             inputWaveformGraphicsTwo.x = 60;
-            inputWaveformGraphicsTwo.y = 0;
+            inputWaveformGraphicsTwo.y = -66;
         }
         inputWaveformGraphicsTwo.filter = new Group([new Glow(inputTwoCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
@@ -132,15 +155,19 @@ class Combinator extends Object implements MessageListener
     public function update(dt:Float):Bool {
         totalTimeOne += dt*0.5 + RNGManager.srand(0.01);
         inputWaveformGraphicsOne.clear();
-        inputWaveformGraphicsOne.scaleY = transformedWaveform.weight * 114 * waveformMultInverse;
+        // inputWaveformGraphicsOne.scaleY = transformedWaveform.weight * 114 * waveformMultInverse;
         inputWaveformOne?.draw(inputWaveformGraphicsOne, totalTimeOne, inputOneCol);
         totalTimeTwo += dt*0.5 + RNGManager.srand(0.01);
         inputWaveformGraphicsTwo.clear();
-        if (isAnd)
-            inputWaveformGraphicsTwo.scaleY = transformedWaveform.weight * 114 * waveformMultInverse;
-        else
-            inputWaveformGraphicsTwo.scaleY = (1 - transformedWaveform.weight) * 114 * waveformMultInverse;
+        // if (isAnd)
+        //     inputWaveformGraphicsTwo.scaleY = transformedWaveform.weight * 114 * waveformMultInverse;
+        // else
+        //     inputWaveformGraphicsTwo.scaleY = (1 - transformedWaveform.weight) * 114 * waveformMultInverse;
         inputWaveformTwo?.draw(inputWaveformGraphicsTwo, totalTimeTwo, inputTwoCol);
+        
+        totalTimeThree += dt*0.5 + RNGManager.srand(0.01);
+        outputWaveformGraphics.clear();
+        transformedWaveform?.draw(outputWaveformGraphics, totalTimeThree, outputCol);
 
         dial.update(dt);
         return false;

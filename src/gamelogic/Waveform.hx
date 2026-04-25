@@ -32,7 +32,7 @@ class Waveform {
         target.lineStyle(5, col);
         target.moveTo(0, samplePreviousWeighted(phase_delta, 0.1)*waveformMult);
         for (i in 0...drawing_samples) {
-            var x = i/drawing_samples;
+            var x = i/drawing_samples*4;
             var y = samplePreviousWeighted(x + phase_delta, 0.1);
             if (RNGManager.random(5000) == 0) {
                 y += RNGManager.srand(0.1);
@@ -45,7 +45,7 @@ class Waveform {
                     y += RNGManager.srand(0.1);
             }
             y = y < -0.5 ? -0.5: y > 0.5 ? 0.5 : y;
-            target.lineTo(x*waveformMult, y*waveformMult);
+            target.lineTo(x*waveformMult*.25, y*waveformMult);
         }
         // this lerp is framerate dependant on how many time draw is called, but it's a visual effect only so that's fine
         if (previous == null) return;
@@ -165,7 +165,8 @@ class WaveformCombination extends Waveform {
         if (sourceOne == null || sourceTwo == null) return -0.5;
         var y: Float;
         if (isAnd)
-            y = 2*weight*sourceOne.sample(t, d+1)*sourceTwo.sample(t, d+1);
+            y = weight*4*sourceOne.sample(t, d+1)*sourceTwo.sample(t, d+1) - weight*0.5;
+            // y = sourceOne.sample(t, d+1)*sourceTwo.sample(t, d+1);
         else
             y = weight*sourceOne.sample(t, d+1) + (1 - weight)*sourceTwo.sample(t, d+1);
         y = y > 0.5 ? 0.5 : y < -0.5 ? -0.5 : y;
