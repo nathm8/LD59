@@ -27,9 +27,25 @@ class RNGManager {
         return seed;
     }
 
-	public static inline function random( n ) {
+	public static inline function random( n ): Int {
         if (!init) initialise();
 		return rand.random(n);
+	}
+
+    public static inline function randoms( n, k, distinct=false ): Array<Int> {
+        if (!init) initialise();
+        if (k > n) {
+            distinct = false;
+            trace('unable to take $k distinct samples from [0, $n), setting distinct = false');
+        } 
+        var out = new Array<Int>();
+        while (out.length < k) {
+            var x = random(n);
+            if (distinct && out.contains(x))
+                continue;
+            out.push(x);
+        }
+		return out;
 	}
 
 	public static inline function shuffle<T>( a : Array<T> ) {

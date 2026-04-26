@@ -1,5 +1,7 @@
 package gamelogic;
 
+import sound.SoundManager;
+import sound.CustomSound;
 import utilities.Utilities.colors;
 import h2d.filter.Group;
 import h2d.filter.Glow;
@@ -61,9 +63,7 @@ class Oscilloscope extends Object implements Updateable
         waveformGraphics.y = 90 - size.height/2;
         waveformGraphics.filter = new Group([new Glow(col, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
-        sound = new CustomSound(waveform);
-        var channel = sound.play(true);
-        channel.volume = 0.20;
+        sound = SoundManager.addWaveform(waveform);
 
         port = new Port(true, this);
         port.getOutput = () -> {return waveform;};

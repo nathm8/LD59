@@ -1,10 +1,9 @@
 package;
 
+import sound.SoundManager;
 import UIApp;
 import graphics.ui.UIScene;
-import gamelogic.CustomSound;
 import slide.TweenManager;
-import utilities.SoundManager;
 import gamelogic.GameScene;
 import gamelogic.physics.PhysicalWorld;
 import h2d.col.Point;
@@ -21,10 +20,6 @@ class Main extends UIApp implements MessageListener {
     static function main() {
         new Main();
     }
-
-    var sdg: SoundDataGenerator;
-    var pitch: Pitch;
-    var totalTime = 0.0;
 
     override private function init() {
         // initialise resources
@@ -45,7 +40,6 @@ class Main extends UIApp implements MessageListener {
     }
     
     override function update(dt:Float) {
-        totalTime += dt;
         gameScene?.update(dt);
         uiScene?.update(dt);
         tweenManager?.update(dt);

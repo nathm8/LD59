@@ -3,7 +3,7 @@ Signals
 
 Post-jam MVP
 -----------------------------------
-clean up cable hitboxes. Allow click-drag mode?
+cables - allow click-drag mode
 
 add noise warning
 
@@ -27,8 +27,7 @@ add generative sounds. Try to have them not be totally awful
 
 add SFX for cables, dials, switch and lights
     have each light actually correspond to something (correctish phase/freq/amp, perhaps?)
-
-add output screens to combinators
+    only need two "approx", last is for complete match. Amp range is an easy one. Just do a really loose match for light two
 
 have oscilloscope shader
 
@@ -44,6 +43,9 @@ design more puzzles
 introduce each tool seperately with tutorial
 
 tooltips for components in menu
+
+jsonify the graphics magic numbers
+separate graphics from gamelogic
 
 further extensions
 -----------------------------------
@@ -124,7 +126,7 @@ Done
 
 Post-jam MVP
 -----------------------------------
-
 fix dial step skip
-
 add generative sounds
+clean up cable hitboxes
+add output screens to combinators

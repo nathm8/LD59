@@ -1,5 +1,6 @@
-package gamelogic;
+package sound;
 
+import gamelogic.Waveform;
 import hxd.fs.BytesFileSystem.BytesFileEntry;
 import hxd.snd.Data;
 import hxd.res.Sound;

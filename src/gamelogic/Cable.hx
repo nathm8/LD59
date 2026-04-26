@@ -3,7 +3,6 @@ package gamelogic;
 import h2d.col.Collider;
 import utilities.RNGManager;
 import utilities.MessageManager;
-import h3d.Vector;
 import utilities.Vector2D;
 import utilities.MessageManager.MouseMove;
 import utilities.MessageManager.Message;

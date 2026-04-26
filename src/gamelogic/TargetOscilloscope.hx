@@ -97,10 +97,10 @@ class TargetOscilloscope extends Object implements Updateable
 
         targets = [targetOne, targetTwo, targetThree, targetFour, targetFive, targetSix];
         //
-
-        colOne = colors[RNGManager.random(colors.length)];
-        colTwo = colors[RNGManager.random(colors.length)];
-        colThree = colors[RNGManager.random(colors.length)];
+        var cols = RNGManager.randoms(colors.length, 3, true);
+        colOne = colors[cols[0]];
+        colTwo = colors[cols[1]];
+        colThree = colors[cols[2]];
 
         sprite = new Bitmap(Res.img.OscilloOut.toTile().center(), this);
         var size = sprite.getSize();
