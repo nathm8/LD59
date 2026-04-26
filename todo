@@ -3,6 +3,14 @@ Signals
 
 Post-jam MVP
 -----------------------------------
+properly store mouse offset when clicking on bar to drag components around
+
+have volume control on every component which emits sound
+
+Refactor waveform graphics to not be squashed\stretched but to have waveform.draw() take parameters for available space
+
+have oscilloscope shader
+
 cables - allow click-drag mode
 
 add noise warning
@@ -13,16 +21,10 @@ cache square wave calcs
 
 implement window resizing for hashlink target
 
-fix splitter memory
-ditto inverter
-
-properly store mouse offset when clicking on bar to drag components around
-
 figure out a better way of spawning in components than dumping them at 0, 0
 
 add generative sounds. Try to have them not be totally awful
     harmonise when getting solution
-    have volume control on every component which emits sound
     dynamically turn everything down when multiple sound generators are active to prevent too much noise
         need to callback to sound manager when one is muted
 
@@ -30,31 +32,62 @@ add SFX for cables, dials, switch and lights
     have each light actually correspond to something (correctish phase/freq/amp, perhaps?)
     only need two "approx", last is for complete match. Amp range is an easy one. Just do a really loose match for light two
 
-have oscilloscope shader
-
-Refactor waveform graphics to not be squashed\stretched but to have waveform.draw() take parameters for available space
-
 main menu. level select
 
 physically simulate cable wire (just put control point on spring between the heads)
 
+physically simulate components. to prevent overlapping
+    have them rotatable by knocking, but slowing "righted" while held
+
 add trashcan
 
 design more puzzles
+    DIY square and triangle (or close to) before unlocking them
 introduce each tool seperately with tutorial
 
 tooltips for components in menu
 
-jsonify the graphics magic numbers
-separate graphics from gamelogic
+Sounds
+-----------------------------------
+for generating the "goal" tone:
+
+https://en.wikipedia.org/wiki/Envelope_(music)
+https://en.wikipedia.org/wiki/Overtone
+https://en.wikipedia.org/wiki/Harmony#Tonal_fusion
+https://en.wikipedia.org/wiki/Harmonic_series_(music)
 
 further extensions
 -----------------------------------
-Have colours combine?
-Implement memory cell and parameterised freq\amp\phase ?
+Implement memory cell and parameterised freq\amp\phase
+    or parameterised envelope
+additional generators
+    noise, constant
+additional modifiers/combinators
+    envelope, gating, limiter, hystersis, phase shift
 saveable solutions (e.g. reuse saw-tooth)
+random gen'd puzzles, import\exportable seed
+some kind of highscore metrics. Number of components used
 
-physically simulate components? to prevent overlapping
+Done
+===================================
+
+Post-jam MVP
+-----------------------------------
+fix dial step skip
+add generative sounds
+clean up cable hitboxes
+add output screens to combinators
+fix splitter memory
+ditto inverter
+dynamically turn everything down when multiple sound generators are active to prevent too much noise
+    (still need callback)
+jsonify the graphics magic numbers
+
+Todo
+-----------------------------------
+make UI with drag-droppable elements
+Limit mouse movement, give camera bounds
+make signal splitter/duplicator
 
 Tutorial\script
 -----------------------------------
@@ -73,61 +106,3 @@ Well done, you completed the prepared puzzles in [time].
 You can proceed with randomly generated puzzles, which should all be solveable.
 
 [Keep a running track in top right corner of puzzles solved and time taken.]
-
-Todo
------------------------------------
-make UI with drag-droppable elements
-make trashcan for removing unwanted elements
-
-Limit mouse movement, give camera bounds
-
-Stretch
------------------------------------
-make signal splitter/duplicator
-
-Concept
------------------------------------
-link waveform generators and modulators to output
-gens:
-    sine, square, triangle
-    dials: amp, freq, phase
-           for tri, AoA
-combiners:
-    additive, multiplicative, inverter
-
-Social
------------------------------------
-do zactronics style scores
-if random endless challenges, export\import
-
-Visuals
------------------------------------
-do green oscilio stuff
-shader if we get time
-
-have cables to plug into\out of generators and modifiers
-
-drag the gens\mods around. Give them physics if time.
-
-do masking on the drawn waveforms
-    do glow\afterglow
-
-Sounds
------------------------------------
-randomly generated tones\keys for waveforms, have it match their colours
-
-for generating the "goal" tone:
-
-https://en.wikipedia.org/wiki/Envelope_(music)
-https://en.wikipedia.org/wiki/Overtone
-https://en.wikipedia.org/wiki/Harmony#Tonal_fusion
-
-Done
-===================================
-
-Post-jam MVP
------------------------------------
-fix dial step skip
-add generative sounds
-clean up cable hitboxes
-add output screens to combinators
