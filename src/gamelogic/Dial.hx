@@ -22,9 +22,9 @@ class Dial extends Object implements MessageListener implements Updateable {
     var isSelected = false;
     var moveImmune = 0.25;
     var selectedTime = 0.0;
-    var callback: () -> Void;
+    var callback: Void -> Void;
 
-    public function new(f: () -> Void, p: Object) {
+    public function new(f: Void -> Void, p: Object) {
         super(p);
         callback = f;
         var t = Res.img.Dial.toTile();

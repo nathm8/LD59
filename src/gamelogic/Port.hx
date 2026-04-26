@@ -14,10 +14,12 @@ class Port extends Object implements MessageListener
     // output port callback
     public var getOutput: () -> Waveform;
     // input port var\callback
-    public var waveform: Waveform;
     public var onConnection: (w: Waveform) -> Void;
+    public var onDisconnect: Void -> Void;
 
-    public var onDisconnect: () -> Void;
+    // bit hacky, force connection recheck for the splitter memory edge case
+    // set and unset in Cable
+    public var forceRecheck: Void -> Void;
 
     public var isConnected(default, set) = false;
 

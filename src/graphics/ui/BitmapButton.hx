@@ -14,7 +14,7 @@ class BitmapButton extends Bitmap {
     var timeRemaining = 0.15;
     var repeating = false;
 
-    public function new(enabled:Tile, hover:Tile, active:Tile, loading:Tile, p:Object, onClick:() -> Void) {
+    public function new(enabled:Tile, hover:Tile, active:Tile, loading:Tile, p:Object, onClick:Void -> Void) {
         super(enabled, p);
         var i = new h2d.Interactive(enabled.width, enabled.height, this);
 
@@ -53,7 +53,7 @@ class BitmapButton extends Bitmap {
 }
 
 class ComponentButton extends BitmapButton {
-    public function new(button_name: String, p:Object, onClick:() -> Void) {
+    public function new(button_name: String, p:Object, onClick:Void -> Void) {
         var tiles = new Array<Tile>();
         var loader = Loader.currentInstance;
         for (state in ["Enabled", "Hover", "Active", "Loading"])

@@ -57,8 +57,16 @@ class Splitter extends Object implements MessageListener
         sprite = new Bitmap(Res.img.Split.toTile().center(), this);
 
         inputPort = new Port(false, this);
-        inputPort.onConnection = (w) -> {waveform = w;};
-        inputPort.onDisconnect = () -> {waveform = null;};
+        inputPort.onConnection = (w) -> {
+            waveform = w;
+            if (outputPortOne.forceRecheck != null) outputPortOne.forceRecheck();
+            if (outputPortTwo.forceRecheck != null) outputPortTwo.forceRecheck();
+        };
+        inputPort.onDisconnect = () -> {
+            waveform = null;
+            if (outputPortOne.forceRecheck != null) outputPortOne.forceRecheck();
+            if (outputPortTwo.forceRecheck != null) outputPortTwo.forceRecheck();
+        };
         
         outputPortOne = new Port(true, this);
         outputPortOne.getOutput = () -> {return waveform;};

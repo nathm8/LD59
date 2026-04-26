@@ -71,6 +71,7 @@ class CableHead extends Object implements MessageListener implements Updateable 
         if (snapImmunity > 0) return false;
         connectedPort = port;
         cable.newConnection();
+        port.forceRecheck = cable.newConnection;
         isSelected = false;
         remove();
         port.parent.addChildAt(this, 0);
@@ -87,8 +88,10 @@ class CableHead extends Object implements MessageListener implements Updateable 
 
     function disconnect() {
         snapImmunity = 0.25;
-        if (connectedPort != null)
+        if (connectedPort != null) {
             connectedPort.isConnected = false;
+            connectedPort.forceRecheck = null;
+        }
         connectedPort = null;
         cable.disconnect();
         var s = getScene();
@@ -140,10 +143,10 @@ class Cable implements Updateable {
     public function newConnection() {
         if (headOne.connectedPort != null && headTwo.connectedPort != null) {
             if (headOne.connectedPort.isOutput && !headTwo.connectedPort.isOutput) {
-                headTwo.connectedPort.onConnection(headOne.connectedPort.getOutput());
+                headTwo.connectedPort.onConnection( headOne.connectedPort.getOutput() );
             }
             if (!headOne.connectedPort.isOutput && headTwo.connectedPort.isOutput) {
-                headOne.connectedPort.onConnection(headTwo.connectedPort.getOutput());
+                headOne.connectedPort.onConnection( headTwo.connectedPort.getOutput() );
             }
         }
     }
