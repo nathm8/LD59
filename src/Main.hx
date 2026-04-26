@@ -88,8 +88,8 @@ class Main extends UIApp implements MessageListener {
     }
 
     public function receive(msg:Message):Bool {
-        // if (Std.isOfType(msg, Restart))
-        //     newGame();
+        if (Std.isOfType(msg, Restart))
+            newGame();
         return false;
     }
 }

@@ -24,6 +24,7 @@ add generative sounds. Try to have them not be totally awful
     harmonise when getting solution
     have volume control on every component which emits sound
     dynamically turn everything down when multiple sound generators are active to prevent too much noise
+        need to callback to sound manager when one is muted
 
 add SFX for cables, dials, switch and lights
     have each light actually correspond to something (correctish phase/freq/amp, perhaps?)

@@ -27,6 +27,7 @@ class SoundManager implements MessageListener{
         waveformChannelGroup = new ChannelGroup("Waveform");
         waveformSoundGroup = new SoundGroup("Waveform");
         if (soundManager == null) soundManager = new SoundManager();
+        playingWaveforms = 0;
         MessageManager.addListener(soundManager);
     }
 
@@ -38,7 +39,7 @@ class SoundManager implements MessageListener{
         playingWaveforms++;
         channel.loop = true;
         // do some dynamic volume EQ so too many sources doesn't get too noisy
-        waveformChannelGroup.volume = 0.1 * Math.pow(0.9, playingWaveforms);
+        waveformChannelGroup.volume = 0.1 * Math.pow(0.9, Math.min(playingWaveforms, Manager.MAX_SOURCES));
         return sound;
     }
     

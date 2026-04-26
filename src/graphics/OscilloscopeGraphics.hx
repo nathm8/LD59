@@ -1,7 +1,5 @@
-package gamelogic;
+package graphics;
 
-import hxd.fs.FileEntry;
-import haxe.Json;
 import utilities.Utilities.colors;
 import h2d.filter.Group;
 import h2d.filter.Glow;
@@ -19,27 +17,7 @@ import h2d.Object;
 import h2d.Bitmap;
 import hxd.Res;
 
-typedef OscilloscopeJson = {
-    var ampDialX: Float;
-    var ampDialY: Float;
-    var freqDialX: Float;
-    var freqDialY: Float;
-    var phaseDialX: Float;
-    var phaseDialY: Float;
-
-    var waveformGraphicsWidth: Float;
-    var waveformGraphicsHeight: Float;
-    var waveformGraphicsX: Float;
-    var waveformGraphicsY: Float;
-
-    var portX: Float;
-    var portY: Float;
-
-    var handleX: Float;
-    var handleY: Float;
-}
-
-class Oscilloscope extends Object implements Updateable
+class OscilloscopeGraphics extends Object implements Updateable
                                   implements MessageListener {
     
     public var waveform: Waveform;
@@ -56,44 +34,38 @@ class Oscilloscope extends Object implements Updateable
 
     var isSelected = false;
     var col: Int;
-
-    var params: OscilloscopeJson;
     
-    function fromJson(j: FileEntry) {
-        params = Json.parse(j.getText());
-    }
-
     public function new(w: Waveform, p: Object) {
         super(p);
-        fromJson(hxd.Res.data.Oscilloscope.entry);
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
         ampDial = new Dial(() -> {waveform.backup(); waveform.amplitude = ampDial.value/8;}, sprite);
-        ampDial.x = params.ampDialX;
-        ampDial.y = params.ampDialY;
+        var size = sprite.getSize();
+        ampDial.x = -size.width/4 - 17; // 0.0664*width
+        ampDial.y = size.height/4 + 20; // 0.0781*height
         freqDial = new Dial(() -> {waveform.backup(); waveform.frequency = freqDial.value/8;}, sprite);
-        freqDial.y = params.freqDialY;
+        freqDial.y = size.height/4 + 20;
         phaseDial = new Dial(() -> {waveform.backup(); waveform.phase = phaseDial.value/8;}, sprite);
-        phaseDial.x = params.phaseDialX;
-        phaseDial.y = params.phaseDialY;
+        phaseDial.x = size.width/4 + 17;
+        phaseDial.y = size.height/4 + 20;
 
         col = colors[RNGManager.random(colors.length)];
 
         waveform = w;
         waveformGraphics = new Graphics(this);
-        waveformGraphics.scaleX = params.waveformGraphicsWidth * waveformMultInverse; 
-        waveformGraphics.scaleY = params.waveformGraphicsHeight * waveformMultInverse;
-        waveformGraphics.x = params.waveformGraphicsX;
-        waveformGraphics.y = params.waveformGraphicsY;
+        waveformGraphics.scaleX = 212 * waveformMultInverse; 
+        waveformGraphics.scaleY = 114 * waveformMultInverse;
+        waveformGraphics.x = 20 - size.width/2;
+        waveformGraphics.y = 90 - size.height/2;
         waveformGraphics.filter = new Group([new Glow(col, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         port = new Port(true, this);
         port.getOutput = () -> {return waveform;};
-        port.x = params.portX;
-        port.y = params.portY;
+        port.x = size.width/2;
+        port.y = -size.height/2 + 45;
 
         var i = new Interactive(141, 16, this);
-        i.x = params.handleX;
-        i.y = params.handleY;
+        i.y = -size.height/2 + 5;
+        i.x = -70;
         i.onPush = (e:Event) -> {isSelected = true;}
         i.onRelease = (e:Event) -> {isSelected = false;}
 
