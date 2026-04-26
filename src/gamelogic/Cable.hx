@@ -1,5 +1,6 @@
 package gamelogic;
 
+import h2d.col.Collider;
 import utilities.RNGManager;
 import utilities.MessageManager;
 import h3d.Vector;
@@ -18,7 +19,8 @@ import h2d.Object;
 class CableHead extends Object implements MessageListener implements Updateable {
 
     var sprite: Bitmap;
-    public var interactive: Interactive;
+    var interactive: Interactive;
+    public var collider: Collider;
 
     var isSelected = false;
     var lastPosition = new Vector2D();
@@ -36,8 +38,8 @@ class CableHead extends Object implements MessageListener implements Updateable 
         cable = c;
         var t = Res.img.CableHead.toTile().center();
         sprite = new Bitmap(t, this);
-        var pixels = new PixelsCollider(t.getTexture().capturePixels());
-        interactive = new Interactive(t.width, t.height, this, pixels);
+        collider = new PixelsCollider(t.getTexture().capturePixels());
+        interactive = new Interactive(t.width, t.height, this, collider);
         interactive.x -= t.width/2;
         interactive.y -= t.height/2;
 
