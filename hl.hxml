@@ -3,6 +3,7 @@
 -lib slide
 -lib hlsdl
 -lib format
+-lib hlopenal
 -cp src
 -hl bin/game.hl
 -main Main

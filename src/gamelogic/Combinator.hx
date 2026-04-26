@@ -68,13 +68,7 @@ class Combinator extends Object implements MessageListener
         inputTwoCol = colors[RNGManager.random(colors.length)];
         outputCol = colors[RNGManager.random(colors.length)];
 
-        inputWaveformOne = new Sine(1, 1/8, 1);
-        inputWaveformTwo = new Sine(1, 1/8, 1);
-
         transformedWaveform = new WaveformCombination(isAnd);
-        transformedWaveform.sourceOne = inputWaveformOne;
-        transformedWaveform.sourceTwo = inputWaveformTwo;
-        transformedWaveform.weight = 1;
 
         outputWaveformGraphics = new Graphics(this);
         outputWaveformGraphics.scaleX = 212 * waveformMultInverse;

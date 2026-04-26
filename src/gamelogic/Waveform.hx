@@ -47,7 +47,7 @@ class Waveform {
             y = y < -0.5 ? -0.5: y > 0.5 ? 0.5 : y;
             target.lineTo(x*waveformMult*.25, y*waveformMult);
         }
-        // this lerp is framerate dependant on how many time draw is called, but it's a visual effect only so that's fine
+        // this lerp is framerate dependant on how many times draw is called, but it's a visual effect only so that's fine
         if (previous == null) return;
         previous.amplitude = 0.99*previous.amplitude + 0.01*amplitude;
         previous.frequency = 0.99*previous.frequency + 0.01*frequency;
@@ -104,8 +104,8 @@ class Square extends Waveform {
 
     public static function staticSample(t:Float, a:Float, f:Float, p:Float, ?sound=false):Float {
         t -= p*Math.PI;
-        // if (!sound)
-        //     return 0.5*a*sign( Math.sin(f*4*Math.PI*t) );
+        if (!sound)
+            return 0.5*a*sign( Math.sin(f*4*Math.PI*t) );
 
         var out = 0.0;
         for (n in 1...26)
@@ -161,8 +161,8 @@ class WaveformCombination extends Waveform {
     }
 
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
-        if (d == 100) return -0.5;
-        if (sourceOne == null || sourceTwo == null) return -0.5;
+        if (d == 100) return -1;
+        if (sourceOne == null || sourceTwo == null || sourceOne.sample(0) == -1 || sourceTwo.sample(0) == -1) return -1;
         var y: Float;
         if (isAnd)
             y = weight*4*sourceOne.sample(t, d+1)*sourceTwo.sample(t, d+1) - weight*0.5;
@@ -176,6 +176,11 @@ class WaveformCombination extends Waveform {
     override public function samplePreviousWeighted(t:Float, w:Float):Float {
         return sample(t);
     }
+
+    override public function draw(target:Graphics, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
+        if (sample(0) == -1) return;
+        super.draw(target, phase_delta, col, alpha);
+    }
 }
 
 class WaveformInverter extends Waveform {
@@ -187,12 +192,17 @@ class WaveformInverter extends Waveform {
     }
 
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
-        if (source == null) return 0.5;
-        if (d == 100) return 0.5;
+        if (source == null || source.sample(0) == -1) return -1;
+        if (d == 100) return -1;
         return -source.sample(t, d+1);
     }
 
     override public function samplePreviousWeighted(t:Float, w:Float):Float {
         return sample(t);
+    }
+
+    override public function draw(target:Graphics, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
+        if (sample(0) == -1) return;
+        super.draw(target, phase_delta, col, alpha);
     }
 }

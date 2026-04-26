@@ -71,6 +71,7 @@ class TargetOscilloscope extends Object implements Updateable
         targetThree.weight = 8/9;
         targetThree.sourceOne = new Triangle(1, 1, 4/8);
         targetThree.sourceTwo = new Square(1, 1, 1);
+        
         var and = new WaveformCombination(true);
         and.weight = 4/9;
         and.sourceOne = new Triangle(1, 3/8, 1);

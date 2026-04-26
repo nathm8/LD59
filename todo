@@ -5,6 +5,14 @@ Post-jam MVP
 -----------------------------------
 clean up cable hitboxes. Allow click-drag mode?
 
+add noise warning
+
+put in guards to prevent dragging components off-screen
+
+cache square wave calcs
+
+implement window resizing for hashlink target
+
 fix splitter memory
 ditto inverter
 
