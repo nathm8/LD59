@@ -1,23 +1,25 @@
 package gamelogic;
 
-import hxd.fs.FileEntry;
 import haxe.Json;
-import utilities.Utilities.colors;
+import hxd.fs.FileEntry;
+import hxd.Event;
+import hxd.Res;
 import h2d.filter.Group;
 import h2d.filter.Glow;
-import gamelogic.Waveform.waveformMultInverse;
 import h2d.filter.Blur;
+import h2d.Interactive;
+import h2d.Graphics;
+import h2d.Object;
+import h2d.Bitmap;
+import gamelogic.Waveform.waveformMultInverse;
+import utilities.Utilities.HANDLE_HEIGHT;
+import utilities.Utilities.HANDLE_WIDTH;
+import utilities.Utilities.colors;
 import utilities.RNGManager;
 import utilities.MessageManager;
 import utilities.MessageManager.MouseMove;
 import utilities.MessageManager.Message;
 import utilities.MessageManager.MessageListener;
-import hxd.Event;
-import h2d.Interactive;
-import h2d.Graphics;
-import h2d.Object;
-import h2d.Bitmap;
-import hxd.Res;
 
 typedef OscilloscopeJson = {
     var ampDialX: Float;
@@ -42,22 +44,23 @@ typedef OscilloscopeJson = {
 class Oscilloscope extends Object implements Updateable
                                   implements MessageListener {
     
+    var params: OscilloscopeJson;
+
     public var waveform: Waveform;
     var waveformGraphics: Graphics;
 
     var sprite: Bitmap;
+    var handle: Interactive;
     var ampDial: Dial;
     var freqDial: Dial;
     var phaseDial: Dial;
-
+    var port: Port;
+    
+    var col: Int;
+    
+    var isSelected = false;
     var totalTime = 0.0;
 
-    var port: Port;
-
-    var isSelected = false;
-    var col: Int;
-
-    var params: OscilloscopeJson;
     
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
@@ -65,39 +68,43 @@ class Oscilloscope extends Object implements Updateable
 
     public function new(w: Waveform, p: Object) {
         super(p);
-        fromJson(hxd.Res.data.Oscilloscope.entry);
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
         ampDial = new Dial(() -> {waveform.backup(); waveform.amplitude = ampDial.value/8;}, sprite);
-        ampDial.x = params.ampDialX;
-        ampDial.y = params.ampDialY;
         freqDial = new Dial(() -> {waveform.backup(); waveform.frequency = freqDial.value/8;}, sprite);
-        freqDial.y = params.freqDialY;
         phaseDial = new Dial(() -> {waveform.backup(); waveform.phase = phaseDial.value/8;}, sprite);
-        phaseDial.x = params.phaseDialX;
-        phaseDial.y = params.phaseDialY;
-
+        
         col = colors[RNGManager.random(colors.length)];
-
+        
         waveform = w;
         waveformGraphics = new Graphics(this);
+        waveformGraphics.filter = new Group([new Glow(col, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
+        
+        port = new Port(true, this);
+        port.getOutput = () -> {return waveform;};
+        
+        handle = new Interactive(HANDLE_WIDTH, HANDLE_HEIGHT, this);
+        handle.onPush = (e:Event) -> {isSelected = true;}
+        handle.onRelease = (e:Event) -> {isSelected = false;}
+        
+        MessageManager.addListener(this);
+        fromJson(hxd.Res.data.Oscilloscope.entry);
+        updateGraphics();
+    }
+    
+    function updateGraphics() {
+        ampDial.x = params.ampDialX;
+        ampDial.y = params.ampDialY;
+        freqDial.y = params.freqDialY;
+        phaseDial.x = params.phaseDialX;
+        phaseDial.y = params.phaseDialY;
         waveformGraphics.scaleX = params.waveformGraphicsWidth * waveformMultInverse; 
         waveformGraphics.scaleY = params.waveformGraphicsHeight * waveformMultInverse;
         waveformGraphics.x = params.waveformGraphicsX;
         waveformGraphics.y = params.waveformGraphicsY;
-        waveformGraphics.filter = new Group([new Glow(col, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
-
-        port = new Port(true, this);
-        port.getOutput = () -> {return waveform;};
         port.x = params.portX;
         port.y = params.portY;
-
-        var i = new Interactive(141, 16, this);
-        i.x = params.handleX;
-        i.y = params.handleY;
-        i.onPush = (e:Event) -> {isSelected = true;}
-        i.onRelease = (e:Event) -> {isSelected = false;}
-
-        MessageManager.addListener(this);
+        handle.x = params.handleX;
+        handle.y = params.handleY;
     }
 
     public function update(dt:Float):Bool {
@@ -112,6 +119,11 @@ class Oscilloscope extends Object implements Updateable
     }
 
     public function receive(msg:Message):Bool {
+        if (Std.isOfType(msg, UpdateOscilloscope)) {
+            var params: UpdateOscilloscope = cast(msg, UpdateOscilloscope);
+            fromJson(params.json);
+            updateGraphics();
+        }
         if (Std.isOfType(msg, MouseMove)) {
             if (!isSelected) return false;
             var params = cast(msg, MouseMove);

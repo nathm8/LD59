@@ -3,8 +3,10 @@
 -lib slide
 -lib hlsdl
 -lib format
--lib hlopenal
+# -lib hlopenal
 -cp src
+-D windowSize=1600x900
+-D windowTitle=Finicky Fourier Toy
 -hl bin/game.hl
 -main Main
 -debug

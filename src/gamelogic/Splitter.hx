@@ -1,18 +1,25 @@
 package gamelogic;
 
-import utilities.MessageManager;
+import hxd.fs.FileEntry;
+import haxe.Json;
 import hxd.Event;
-import h2d.Interactive;
-import h2d.filter.Blur;
-import h2d.filter.Glow;
-import h2d.filter.Group;
-import gamelogic.Waveform.waveformMultInverse;
 import hxd.Res;
-import h2d.Graphics;
+import h2d.Interactive;
 import h2d.Bitmap;
-import utilities.MessageManager.MessageListener;
 import h2d.Object;
-import gamelogic.Waveform.WaveformInverter;
+import utilities.MessageManager;
+import utilities.MessageManager.MessageListener;
+
+typedef SplitterJson = {
+    var inputPortX: Float;
+    var inputPortY: Float;
+    var outputPortOneX: Float;
+    var outputPortOneY: Float;
+    var outputPortTwoX: Float;
+    var outputPortTwoY: Float;
+    var handleX: Float;
+    var handleY: Float;
+}
 
 class Splitter extends Object implements MessageListener
                               implements Updateable {
@@ -25,36 +32,47 @@ class Splitter extends Object implements MessageListener
     var waveform: Waveform;
 
     var isSelected = false;
+    var handle: Interactive;
+
+    var params: SplitterJson;
+
+    function fromJson(j: FileEntry) {
+        params = Json.parse(j.getText());
+    }
+
+    function updateGraphics() {
+        inputPort.x = params.inputPortX;
+        inputPort.y = params.inputPortY;
+        outputPortOne.x = params.outputPortOneX;
+        outputPortOne.y = params.outputPortOneY;
+        outputPortTwo.x = params.outputPortTwoX;
+        outputPortTwo.y = params.outputPortTwoY;
+        handle.x = params.handleX;
+        handle.y = params.handleY;
+    }
 
     public function new(?p: Object) {
         super(p);
 
         sprite = new Bitmap(Res.img.Split.toTile().center(), this);
-        var size = sprite.getSize();
 
         inputPort = new Port(false, this);
         inputPort.onConnection = (w) -> {waveform = w;};
         inputPort.onDisconnect = () -> {waveform = null;};
-        inputPort.x = -size.width/2;
-        inputPort.y = 20;
         
         outputPortOne = new Port(true, this);
         outputPortOne.getOutput = () -> {return waveform;};
-        outputPortOne.x = size.width/2;
-        outputPortOne.y = -20;
 
         outputPortTwo = new Port(true, this);
         outputPortTwo.getOutput = () -> {return waveform;};
-        outputPortTwo.x = size.width/2;
-        outputPortTwo.y = 20;
 
-        var i = new Interactive(141, 16, this);
-        i.y = -size.height/2 + 5;
-        i.x = -70;
-        i.onPush = (e:Event) -> {isSelected = true;}
-        i.onRelease = (e:Event) -> {isSelected = false;}
+        handle = new Interactive(141, 16, this);
+        handle.onPush = (e:Event) -> {isSelected = true;}
+        handle.onRelease = (e:Event) -> {isSelected = false;}
 
         MessageManager.addListener(this);
+        fromJson(hxd.Res.data.Splitter.entry);
+        updateGraphics();
     }
 
     public function update(dt:Float):Bool {

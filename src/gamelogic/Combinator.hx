@@ -1,23 +1,53 @@
 package gamelogic;
 
-import gamelogic.Waveform.waveformMult;
-import utilities.Utilities.colors;
-import gamelogic.Waveform.WaveformCombination;
-import gamelogic.Waveform.Sine;
-import utilities.RNGManager;
+import utilities.Utilities.HANDLE_HEIGHT;
+import utilities.Utilities.HANDLE_WIDTH;
+import haxe.Json;
 import hxd.Event;
+import hxd.Res;
+import hxd.fs.FileEntry;
+import h2d.Bitmap;
+import h2d.Graphics;
 import h2d.Interactive;
+import h2d.Object;
 import h2d.filter.Blur;
 import h2d.filter.Glow;
-import gamelogic.Waveform.waveformMultInverse;
 import h2d.filter.Group;
+import utilities.Utilities.colors;
+import utilities.RNGManager;
 import utilities.MessageManager;
-import h2d.Graphics;
-import hxd.Res;
 import utilities.MessageManager.Message;
 import utilities.MessageManager.MessageListener;
-import h2d.Object;
-import h2d.Bitmap;
+import gamelogic.Waveform.WaveformCombination;
+import gamelogic.Waveform.waveformMultInverse;
+
+typedef CombinatorJson = {
+    var inputWaveformGraphicsOneWidth: Float;
+    var inputWaveformGraphicsOneHeight: Float;
+    var inputWaveformGraphicsOneX: Float;
+    var inputWaveformGraphicsOneY: Float;
+    var inputWaveformGraphicsTwoWidth: Float;
+    var inputWaveformGraphicsTwoHeight: Float;
+    var inputWaveformGraphicsTwoX: Float;
+    var inputWaveformGraphicsTwoY: Float;
+    var outputWaveformGraphicsWidth: Float;
+    var outputWaveformGraphicsHeight: Float;
+    var outputWaveformGraphicsX: Float;
+    var outputWaveformGraphicsY: Float;
+
+    var dialX: Float;
+    var dialY: Float;
+
+    var inputPortOneX: Float;
+    var inputPortOneY: Float;
+    var inputPortTwoX: Float;
+    var inputPortTwoY: Float;
+    var outputPortX: Float;
+    var outputPortY: Float;
+
+    var handleX: Float;
+    var handleY: Float;
+}
 
 class Combinator extends Object implements MessageListener
                                 implements Updateable {
@@ -36,6 +66,8 @@ class Combinator extends Object implements MessageListener
 
     var transformedWaveform: WaveformCombination;
 
+    var handle: Interactive;
+
     var inputWaveformOne: Waveform;
     var inputWaveformGraphicsOne: Graphics;
     var inputOneCol = 0xFF00FF;
@@ -46,6 +78,37 @@ class Combinator extends Object implements MessageListener
     var outputWaveformGraphics: Graphics;
     var outputCol = 0x00FFFF;
 
+    var params: CombinatorJson;
+
+    function fromJson(j: FileEntry) {
+        params = Json.parse(j.getText());
+    }
+
+    function updateGraphics() {
+        outputWaveformGraphics.scaleX = params.outputWaveformGraphicsWidth * waveformMultInverse;
+        outputWaveformGraphics.scaleY = params.outputWaveformGraphicsHeight * waveformMultInverse;
+        outputWaveformGraphics.x = params.outputWaveformGraphicsX;
+        outputWaveformGraphics.y = params.outputWaveformGraphicsY;
+        inputWaveformGraphicsOne.scaleX = params.inputWaveformGraphicsOneWidth * waveformMultInverse;
+        inputWaveformGraphicsOne.scaleY = params.inputWaveformGraphicsOneHeight * waveformMultInverse;
+        inputWaveformGraphicsOne.x = params.inputWaveformGraphicsOneX;
+        inputWaveformGraphicsOne.y = params.inputWaveformGraphicsOneY;
+        inputWaveformGraphicsTwo.scaleX = params.inputWaveformGraphicsTwoWidth * waveformMultInverse; 
+        inputWaveformGraphicsTwo.scaleY = params.inputWaveformGraphicsTwoHeight * waveformMultInverse; 
+        inputWaveformGraphicsTwo.x = params.inputWaveformGraphicsTwoX;
+        inputWaveformGraphicsTwo.y = params.inputWaveformGraphicsTwoY;
+        inputPortOne.x = params.inputPortOneX;
+        inputPortOne.y = params.inputPortOneY;
+        inputPortTwo.x = params.inputPortTwoX;
+        inputPortTwo.y = params.inputPortTwoY;
+        outputPort.x = params.outputPortX;
+        outputPort.y = params.outputPortY;
+        handle.x = params.handleX;
+        handle.y = params.handleY;
+        dial.x = params.dialX;
+        dial.y = params.dialY;
+    }
+
     public function new(a: Bool, ?p: Object) {
         super(p);
         isAnd = a;
@@ -54,15 +117,8 @@ class Combinator extends Object implements MessageListener
             sprite = new Bitmap(Res.img.And.toTile().center(), this);
         else
             sprite = new Bitmap(Res.img.Or.toTile().center(), this);
-        var size = sprite.getSize();
 
         dial = new Dial(() -> {transformedWaveform.weight = dial.value/9;}, this);
-        if (isAnd) {
-            dial.x = 3 - size.width/4;
-            dial.y = 6;
-        } else {
-            dial.y = -63;
-        }
 
         inputOneCol = colors[RNGManager.random(colors.length)];
         inputTwoCol = colors[RNGManager.random(colors.length)];
@@ -71,95 +127,46 @@ class Combinator extends Object implements MessageListener
         transformedWaveform = new WaveformCombination(isAnd);
 
         outputWaveformGraphics = new Graphics(this);
-        outputWaveformGraphics.scaleX = 212 * waveformMultInverse;
-        outputWaveformGraphics.scaleY = 114 * waveformMultInverse;
-        if (isAnd) {
-            outputWaveformGraphics.x = size.width/4 - 106;
-            outputWaveformGraphics.y = 5;
-        } else {
-            outputWaveformGraphics.x = -106;
-            outputWaveformGraphics.y = size.height/4;
-        }
 
         inputWaveformGraphicsOne = new Graphics(this);
-        inputWaveformGraphicsOne.scaleX = 212 * waveformMultInverse;
-        inputWaveformGraphicsOne.scaleY = 114 * waveformMultInverse;
-        if (isAnd) {
-            inputWaveformGraphicsOne.x = 24 - size.width/2;
-            inputWaveformGraphicsOne.y = -115;
-        } else {
-            inputWaveformGraphicsOne.x = 20 - size.width/2;
-            inputWaveformGraphicsOne.y = -66;
-        }
         inputWaveformGraphicsOne.filter = new Group([new Glow(inputOneCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         inputWaveformGraphicsTwo = new Graphics(this);
-        inputWaveformGraphicsTwo.scaleX = 212 * waveformMultInverse; 
-        inputWaveformGraphicsTwo.scaleY = 114 * waveformMultInverse; 
-        if (isAnd) {
-            inputWaveformGraphicsTwo.x = 24 - size.width/2;
-            inputWaveformGraphicsTwo.y = 120;
-        } else {
-            inputWaveformGraphicsTwo.x = 60;
-            inputWaveformGraphicsTwo.y = -66;
-        }
         inputWaveformGraphicsTwo.filter = new Group([new Glow(inputTwoCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         inputPortOne = new Port(false, this);
         inputPortOne.onConnection = (w) -> {inputWaveformOne = w; transformedWaveform.sourceOne = w;};
         inputPortOne.onDisconnect = () -> {inputWaveformOne = null; transformedWaveform.sourceOne = null;};
-        inputPortOne.x = -size.width/2;
-        if (isAnd)
-            inputPortOne.y = -size.height/2 + 50;
-        else
-            inputPortOne.y = -size.height/2 + 50;
 
         inputPortTwo = new Port(false, this);
         inputPortTwo.onConnection = (w) -> {inputWaveformTwo = w; transformedWaveform.sourceTwo = w;};
         inputPortTwo.onDisconnect = () -> {inputWaveformTwo = null; transformedWaveform.sourceTwo = null;};
-        inputPortTwo.x = -size.width/2;
-        if (isAnd)
-            inputPortTwo.y = size.height/2 - 45;
-        else
-            inputPortTwo.y = -size.height/2 + 130;
         
         outputPort = new Port(true, this);
         outputPort.getOutput = () -> {return transformedWaveform;};
-        outputPort.x = size.width/2;
-        if (isAnd)
-            outputPort.y = 10;
-        else
-            outputPort.y = -size.height/2 + 130;
 
-        var i = new Interactive(141, 16, this);
-        
-        if (isAnd) {
-            i.y = 5 - size.height/2;
-            i.x = 58 - size.width/2;
-        } else {
-            i.y = 5 - size.height/2;
-            i.x = -70;
-        }
-        i.onPush = (e:Event) -> {isSelected = true;}
-        i.onRelease = (e:Event) -> {isSelected = false;}
+        handle = new Interactive(HANDLE_WIDTH, HANDLE_HEIGHT, this);
+        handle.onPush = (e:Event) -> {isSelected = true;}
+        handle.onRelease = (e:Event) -> {isSelected = false;}
 
         MessageManager.addListener(this);
+
+        if (isAnd)
+            fromJson(hxd.Res.data.And.entry);
+        else
+            fromJson(hxd.Res.data.Or.entry);
+        updateGraphics();
     }
 
     public function update(dt:Float):Bool {
-        totalTimeOne += dt*0.5 + RNGManager.srand(0.01);
-        inputWaveformGraphicsOne.clear();
-        // inputWaveformGraphicsOne.scaleY = transformedWaveform.weight * 114 * waveformMultInverse;
-        inputWaveformOne?.draw(inputWaveformGraphicsOne, totalTimeOne, inputOneCol);
-        totalTimeTwo += dt*0.5 + RNGManager.srand(0.01);
-        inputWaveformGraphicsTwo.clear();
-        // if (isAnd)
-        //     inputWaveformGraphicsTwo.scaleY = transformedWaveform.weight * 114 * waveformMultInverse;
-        // else
-        //     inputWaveformGraphicsTwo.scaleY = (1 - transformedWaveform.weight) * 114 * waveformMultInverse;
-        inputWaveformTwo?.draw(inputWaveformGraphicsTwo, totalTimeTwo, inputTwoCol);
-        
+        totalTimeOne   += dt*0.5 + RNGManager.srand(0.01);
+        totalTimeTwo   += dt*0.5 + RNGManager.srand(0.01);
         totalTimeThree += dt*0.5 + RNGManager.srand(0.01);
+        
+        inputWaveformGraphicsOne.clear();
+        inputWaveformOne?.draw(inputWaveformGraphicsOne, totalTimeOne, inputOneCol);
+        inputWaveformGraphicsTwo.clear();
+        inputWaveformTwo?.draw(inputWaveformGraphicsTwo, totalTimeTwo, inputTwoCol);
         outputWaveformGraphics.clear();
         transformedWaveform?.draw(outputWaveformGraphics, totalTimeThree, outputCol);
 
@@ -174,10 +181,20 @@ class Combinator extends Object implements MessageListener
             x = params.scenePosition.x;
             var size = sprite.getSize();
             y = params.scenePosition.y + size.height/2 - 12;
-            if (isAnd) {
+            if (isAnd)
                 x += 100;
-            } else {
-            }
+        }
+        if (Std.isOfType(msg, UpdateAnd)) {
+            var params: UpdateAnd = cast(msg, UpdateAnd);
+            if (!isAnd) return false;
+            fromJson(params.json);
+            updateGraphics();
+        }
+        if (Std.isOfType(msg, UpdateOr)) {
+            var params: UpdateOr = cast(msg, UpdateOr);
+            if (isAnd) return false;
+            fromJson(params.json);
+            updateGraphics();
         }
 		return false;
 	}

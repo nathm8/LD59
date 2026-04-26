@@ -1,20 +1,38 @@
 package gamelogic;
 
-import utilities.RNGManager;
-import utilities.Utilities.colors;
-import utilities.MessageManager;
-import hxd.Event;
-import h2d.Interactive;
+import utilities.Utilities.HANDLE_WIDTH;
+import haxe.Json;
+import hxd.fs.FileEntry;
 import h2d.filter.Blur;
 import h2d.filter.Glow;
 import h2d.filter.Group;
-import gamelogic.Waveform.waveformMultInverse;
-import hxd.Res;
+import h2d.Interactive;
 import h2d.Graphics;
 import h2d.Bitmap;
-import utilities.MessageManager.MessageListener;
 import h2d.Object;
+import hxd.Res;
+import hxd.Event;
+import gamelogic.Waveform.waveformMultInverse;
 import gamelogic.Waveform.WaveformInverter;
+import utilities.RNGManager;
+import utilities.Utilities.colors;
+import utilities.MessageManager;
+import utilities.MessageManager.MessageListener;
+
+typedef InverterJson = {
+    var outputWaveformGraphicsWidth: Float;
+    var outputWaveformGraphicsHeight: Float;
+    var outputWaveformGraphicsX: Float;
+    var outputWaveformGraphicsY: Float;
+
+    var inputPortX: Float;
+    var inputPortY: Float;
+    var outputPortX: Float;
+    var outputPortY: Float;
+
+    var handleX: Float;
+    var handleY: Float;
+}
 
 class Inverter extends Object implements MessageListener
                               implements Updateable {
@@ -33,6 +51,28 @@ class Inverter extends Object implements MessageListener
     var outputWaveformGraphics: Graphics;
     var outputCol: Int;
 
+    var handle: Interactive;
+
+    var params: InverterJson;
+
+
+    function fromJson(j: FileEntry) {
+        params = Json.parse(j.getText());
+    }
+
+    function updateGraphics() {
+        outputWaveformGraphics.scaleX = params.outputWaveformGraphicsWidth * waveformMultInverse;
+        outputWaveformGraphics.scaleY = params.outputWaveformGraphicsHeight * waveformMultInverse;
+        outputWaveformGraphics.x = params.outputWaveformGraphicsX;
+        outputWaveformGraphics.y = params.outputWaveformGraphicsY;
+        inputPort.x = params.inputPortX;
+        inputPort.y = params.inputPortY;
+        outputPort.x = params.outputPortX;
+        outputPort.y = params.outputPortY;
+        handle.x = params.handleX;
+        handle.y = params.handleY;
+    }
+
     public function new(?p: Object) {
         super(p);
 
@@ -44,30 +84,22 @@ class Inverter extends Object implements MessageListener
         transformedWaveform = new WaveformInverter();
 
         outputWaveformGraphics = new Graphics(this);
-        outputWaveformGraphics.scaleX = 212 * waveformMultInverse; 
-        outputWaveformGraphics.scaleY = 114 * waveformMultInverse; 
-        outputWaveformGraphics.x = 22 - size.width/2;
-        outputWaveformGraphics.y = 0;
         outputWaveformGraphics.filter = new Group([new Glow(outputCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         inputPort = new Port(false, this);
         inputPort.onConnection = (w) -> {inputWaveform = w; transformedWaveform.source = w;};
         inputPort.onDisconnect = () -> {inputWaveform = null; transformedWaveform.source = null;};
-        inputPort.x = -size.width/2;
-        inputPort.y = size.height/2 - 45;
         
         outputPort = new Port(true, this);
         outputPort.getOutput = () -> {return transformedWaveform;};
-        outputPort.x = size.width/2;
-        outputPort.y = size.height/2 - 45;
 
-        var i = new Interactive(141, 16, this);
-        i.y = size.height/2 - 20;
-        i.x = -70;
-        i.onPush = (e:Event) -> {isSelected = true;}
-        i.onRelease = (e:Event) -> {isSelected = false;}
+        handle = new Interactive(HANDLE_WIDTH, HANDLE_WIDTH, this);
+        handle.onPush = (e:Event) -> {isSelected = true;}
+        handle.onRelease = (e:Event) -> {isSelected = false;}
 
         MessageManager.addListener(this);
+        fromJson(hxd.Res.data.Inverter.entry);
+        updateGraphics();
     }
 
     public function update(dt:Float):Bool {
@@ -84,6 +116,11 @@ class Inverter extends Object implements MessageListener
             x = params.scenePosition.x;
             var size = sprite.getSize();
             y = params.scenePosition.y - size.height/2 + 6;
+        }
+        if (Std.isOfType(msg, UpdateInvert)) {
+            var params: UpdateInvert = cast(msg, UpdateInvert);
+            fromJson(params.json);
+            updateGraphics();
         }
 		return false;
 	}

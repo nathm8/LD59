@@ -62,8 +62,8 @@ class UIScene extends Scene implements MessageListener {
         for (name in ["Wire", "Split", "Sine", "Square", "Triangle", "And", "Or", "Invert"]) {
             var b = new ComponentButton(name, componentFlow, () -> {MessageManager.send(new SpawnComponent(name));});
             b.name = name;
-            if (hidden.contains(name))
-                b.visible = false;
+            // if (hidden.contains(name))
+            //     b.visible = false;
         }
         componentFlow.x = width/2 - componentFlow.outerWidth/2;
         componentFlow.y = height - componentFlow.outerHeight;

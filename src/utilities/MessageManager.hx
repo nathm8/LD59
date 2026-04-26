@@ -1,5 +1,6 @@
 package utilities;
 
+import hxd.fs.FileEntry;
 import gamelogic.Cable.CableHead;
 import hxd.Event;
 import utilities.Vector2D;
@@ -41,6 +42,26 @@ class MouseWheel extends Message {
     public var event: Event;
     public var scenePosition: Vector2D;
     public function new(e: Event, p: Vector2D) {super(); event = e; scenePosition = p;}
+}
+class UpdateOscilloscope extends Message {
+    public var json: FileEntry;
+    public function new(j: FileEntry) {super(); json = j;}
+}
+class UpdateAnd extends Message {
+    public var json: FileEntry;
+    public function new(j: FileEntry) {super(); json = j;}
+}
+class UpdateOr extends Message {
+    public var json: FileEntry;
+    public function new(j: FileEntry) {super(); json = j;}
+}
+class UpdateInvert extends Message {
+    public var json: FileEntry;
+    public function new(j: FileEntry) {super(); json = j;}
+}
+class UpdateTarget extends Message {
+    public var json: FileEntry;
+    public function new(j: FileEntry) {super(); json = j;}
 }
 
 interface MessageListener {

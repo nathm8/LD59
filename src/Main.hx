@@ -37,6 +37,10 @@ class Main extends UIApp implements MessageListener {
         newGame();
         // controls
         hxd.Window.getInstance().addEventTarget(onEvent);
+
+        // filewatchers
+        hxd.Res.data.Oscilloscope.watch(() -> { MessageManager.send(new UpdateOscilloscope(hxd.Res.data.Oscilloscope.entry)); });
+        hxd.Res.data.Target.watch(() -> { MessageManager.send(new UpdateTarget(hxd.Res.data.Target.entry)); });
     }
     
     override function update(dt:Float) {

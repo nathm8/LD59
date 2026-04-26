@@ -7,6 +7,12 @@ runjs: buildjs
 buildjs:
 	haxe js.hxml
 
+buildhl:
+	haxe hl.hxml
+
+runhl: buildhl
+	hl ./bin/game.hl
+
 push: clean buildjs
 	rm -f LD59.zip
 	zip -r LD59.zip index.html bin/game.js bin/game.js.map

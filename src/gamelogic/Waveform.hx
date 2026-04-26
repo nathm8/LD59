@@ -162,7 +162,7 @@ class WaveformCombination extends Waveform {
 
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
         if (d == 100) return -1;
-        if (sourceOne == null || sourceTwo == null || sourceOne.sample(0) == -1 || sourceTwo.sample(0) == -1) return -1;
+        if (sourceOne == null || sourceTwo == null || sourceOne.sample(0, d+1) == -1 || sourceTwo.sample(0, d+1) == -1) return -1;
         var y: Float;
         if (isAnd)
             y = weight*4*sourceOne.sample(t, d+1)*sourceTwo.sample(t, d+1) - weight*0.5;
@@ -192,8 +192,8 @@ class WaveformInverter extends Waveform {
     }
 
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
-        if (source == null || source.sample(0) == -1) return -1;
         if (d == 100) return -1;
+        if (source == null || source.sample(0, d+1) == -1) return -1;
         return -source.sample(t, d+1);
     }
 

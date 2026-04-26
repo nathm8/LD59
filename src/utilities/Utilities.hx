@@ -1,6 +1,9 @@
 package utilities;
 
-var colors = [0xFF0000, 0x00FF00, 0x0000FF, 
+final HANDLE_WIDTH = 141;
+final HANDLE_HEIGHT = 16;
+
+final colors = [0xFF0000, 0x00FF00, 0x0000FF, 
               0xFFFF00, 0x00FFFF, 0xFFFFFF,
               0xFF00FF];
 
