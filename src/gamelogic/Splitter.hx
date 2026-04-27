@@ -1,13 +1,13 @@
 package gamelogic;
 
-import graphics.Handle;
-import hxd.fs.FileEntry;
 import haxe.Json;
+import hxd.fs.FileEntry;
 import hxd.Event;
 import hxd.Res;
 import h2d.Interactive;
 import h2d.Bitmap;
 import h2d.Object;
+import graphics.Handle;
 import utilities.MessageManager;
 import utilities.MessageManager.MessageListener;
 

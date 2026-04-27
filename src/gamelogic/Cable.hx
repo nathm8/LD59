@@ -18,7 +18,7 @@ import h2d.Object;
 class CableHead extends Object implements MessageListener implements Updateable {
 
     var sprite: Bitmap;
-    var interactive: Interactive;
+    public var interactive: Interactive;
     public var collider: Collider;
 
     var isSelected = false;
@@ -38,7 +38,7 @@ class CableHead extends Object implements MessageListener implements Updateable 
         var t = Res.img.CableHead.toTile().center();
         sprite = new Bitmap(t, this);
         collider = new PixelsCollider(t.getTexture().capturePixels());
-        interactive = new Interactive(t.width, t.height, this, collider);
+        interactive = new Interactive(0, 0, this, collider);
         interactive.x -= t.width/2;
         interactive.y -= t.height/2;
 
