@@ -10,7 +10,7 @@ import h2d.filter.Blur;
 import h2d.Graphics;
 import h2d.Object;
 import h2d.Bitmap;
-import gamelogic.Waveform.waveformMultInverse;
+
 import utilities.Utilities.colors;
 import utilities.RNGManager;
 import utilities.MessageManager;
@@ -89,8 +89,6 @@ class Oscilloscope extends Object implements Updateable
         freqDial.y = params.freqDialY;
         phaseDial.x = params.phaseDialX;
         phaseDial.y = params.phaseDialY;
-        waveformGraphics.scaleX = params.waveformGraphicsWidth * waveformMultInverse; 
-        waveformGraphics.scaleY = params.waveformGraphicsHeight * waveformMultInverse;
         waveformGraphics.x = params.waveformGraphicsX;
         waveformGraphics.y = params.waveformGraphicsY;
         port.x = params.portX;
@@ -102,7 +100,7 @@ class Oscilloscope extends Object implements Updateable
     public function update(dt:Float):Bool {
         totalTime += dt*0.5 + RNGManager.srand(0.01);
         waveformGraphics.clear();
-        waveform.draw(waveformGraphics, totalTime, col);
+        waveform.draw(waveformGraphics, params.waveformGraphicsWidth, params.waveformGraphicsHeight, totalTime, col);
 
         ampDial.update(dt);
         freqDial.update(dt);

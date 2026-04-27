@@ -16,7 +16,6 @@ import utilities.MessageManager;
 import utilities.MessageManager.Message;
 import utilities.MessageManager.MessageListener;
 import gamelogic.Waveform.WaveformCombination;
-import gamelogic.Waveform.waveformMultInverse;
 
 typedef CombinatorJson = {
     var inputWaveformGraphicsOneWidth: Float;
@@ -80,16 +79,10 @@ class Combinator extends Object implements MessageListener
     }
 
     function updateGraphics() {
-        outputWaveformGraphics.scaleX = params.outputWaveformGraphicsWidth * waveformMultInverse;
-        outputWaveformGraphics.scaleY = params.outputWaveformGraphicsHeight * waveformMultInverse;
         outputWaveformGraphics.x = params.outputWaveformGraphicsX;
         outputWaveformGraphics.y = params.outputWaveformGraphicsY;
-        inputWaveformGraphicsOne.scaleX = params.inputWaveformGraphicsOneWidth * waveformMultInverse;
-        inputWaveformGraphicsOne.scaleY = params.inputWaveformGraphicsOneHeight * waveformMultInverse;
         inputWaveformGraphicsOne.x = params.inputWaveformGraphicsOneX;
         inputWaveformGraphicsOne.y = params.inputWaveformGraphicsOneY;
-        inputWaveformGraphicsTwo.scaleX = params.inputWaveformGraphicsTwoWidth * waveformMultInverse; 
-        inputWaveformGraphicsTwo.scaleY = params.inputWaveformGraphicsTwoHeight * waveformMultInverse; 
         inputWaveformGraphicsTwo.x = params.inputWaveformGraphicsTwoX;
         inputWaveformGraphicsTwo.y = params.inputWaveformGraphicsTwoY;
         inputPortOne.x = params.inputPortOneX;
@@ -157,11 +150,11 @@ class Combinator extends Object implements MessageListener
         totalTimeThree += dt*0.5 + RNGManager.srand(0.01);
         
         inputWaveformGraphicsOne.clear();
-        inputWaveformOne?.draw(inputWaveformGraphicsOne, totalTimeOne, inputOneCol);
+        inputWaveformOne?.draw(inputWaveformGraphicsOne, params.inputWaveformGraphicsOneWidth, params.inputWaveformGraphicsOneHeight, totalTimeOne, inputOneCol);
         inputWaveformGraphicsTwo.clear();
-        inputWaveformTwo?.draw(inputWaveformGraphicsTwo, totalTimeTwo, inputTwoCol);
+        inputWaveformTwo?.draw(inputWaveformGraphicsTwo, params.inputWaveformGraphicsTwoWidth, params.inputWaveformGraphicsTwoHeight, totalTimeTwo, inputTwoCol);
         outputWaveformGraphics.clear();
-        transformedWaveform?.draw(outputWaveformGraphics, totalTimeThree, outputCol);
+        transformedWaveform?.draw(outputWaveformGraphics, params.outputWaveformGraphicsWidth, params.outputWaveformGraphicsHeight, totalTimeThree, outputCol);
 
         dial.update(dt);
         return false;

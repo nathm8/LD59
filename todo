@@ -3,19 +3,19 @@ Signals
 
 Post-jam MVP
 -----------------------------------
-properly store mouse offset when clicking on bar to drag components around
+fix cable head-port collision detection
 
 have volume control on every component which emits sound
 
-Refactor waveform graphics to not be squashed\stretched but to have waveform.draw() take parameters for available space
+implement new Device switch
 
 have oscilloscope shader
+
+put in guards to prevent dragging components off-screen
 
 cables - allow click-drag mode
 
 add noise warning
-
-put in guards to prevent dragging components off-screen
 
 cache square wave calcs
 
@@ -30,7 +30,7 @@ add generative sounds. Try to have them not be totally awful
 
 add SFX for cables, dials, switch and lights
     have each light actually correspond to something (correctish phase/freq/amp, perhaps?)
-    only need two "approx", last is for complete match. Amp range is an easy one. Just do a really loose match for light two
+        only need two "approx", last is for complete match. Amp range is an easy one. Just do a really loose match for light two
 
 main menu. level select
 
@@ -82,6 +82,7 @@ ditto inverter
 dynamically turn everything down when multiple sound generators are active to prevent too much noise
     (still need callback)
 jsonify the graphics magic numbers
+properly store mouse offset when clicking on bar to drag components around
 
 Todo
 -----------------------------------
@@ -106,3 +107,5 @@ Well done, you completed the prepared puzzles in [time].
 You can proceed with randomly generated puzzles, which should all be solveable.
 
 [Keep a running track in top right corner of puzzles solved and time taken.]
+
+Refactor waveform graphics to not be squashed\stretched but to have waveform.draw() take parameters for available space

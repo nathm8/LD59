@@ -10,7 +10,7 @@ import h2d.Graphics;
 import h2d.Bitmap;
 import h2d.Object;
 import hxd.Res;
-import gamelogic.Waveform.waveformMultInverse;
+
 import gamelogic.Waveform.WaveformInverter;
 import utilities.RNGManager;
 import utilities.Utilities.colors;
@@ -58,8 +58,6 @@ class Inverter extends Object implements MessageListener
     }
 
     function updateGraphics() {
-        outputWaveformGraphics.scaleX = params.outputWaveformGraphicsWidth * waveformMultInverse;
-        outputWaveformGraphics.scaleY = params.outputWaveformGraphicsHeight * waveformMultInverse;
         outputWaveformGraphics.x = params.outputWaveformGraphicsX;
         outputWaveformGraphics.y = params.outputWaveformGraphicsY;
         inputPort.x = params.inputPortX;
@@ -100,7 +98,7 @@ class Inverter extends Object implements MessageListener
     public function update(dt:Float):Bool {
         totalTime += dt*0.5;
         outputWaveformGraphics.clear();
-        transformedWaveform?.draw(outputWaveformGraphics, totalTime, outputCol);
+        transformedWaveform?.draw(outputWaveformGraphics, params.outputWaveformGraphicsWidth, params.outputWaveformGraphicsHeight, totalTime, outputCol);
         return false;
     }
 

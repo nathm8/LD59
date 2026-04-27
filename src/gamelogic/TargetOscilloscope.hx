@@ -16,7 +16,7 @@ import gamelogic.Waveform.WaveformInverter;
 import gamelogic.Waveform.Triangle;
 import gamelogic.Waveform.WaveformCombination;
 import gamelogic.Waveform.Square;
-import gamelogic.Waveform.waveformMultInverse;
+
 import gamelogic.Waveform.Sine;
 import utilities.Utilities.colors;
 import utilities.RNGManager;
@@ -208,16 +208,10 @@ class TargetOscilloscope extends Object implements Updateable
         lightThree.x = params.lightThreeX;
         lightThree.y = params.lightThreeY;
 
-        targetWaveformGraphics.scaleX = params.targetWaveformGraphicsWidth * waveformMultInverse; 
-        targetWaveformGraphics.scaleY = params.targetWaveformGraphicsHeight * waveformMultInverse; 
         targetWaveformGraphics.x = params.targetWaveformGraphicsX;
         targetWaveformGraphics.y = params.targetWaveformGraphicsY;
-        inputWaveformGraphics.scaleX = params.inputWaveformGraphicsWidth * waveformMultInverse; 
-        inputWaveformGraphics.scaleY = params.inputWaveformGraphicsHeight * waveformMultInverse; 
         inputWaveformGraphics.x = params.inputWaveformGraphicsX;
         inputWaveformGraphics.y = params.inputWaveformGraphicsY;
-        combinedWaveformGraphics.scaleX = params.combinedWaveformGraphicsWidth * waveformMultInverse; 
-        combinedWaveformGraphics.scaleY = params.combinedWaveformGraphicsHeight * waveformMultInverse; 
         combinedWaveformGraphics.x = params.combinedWaveformGraphicsX;
         combinedWaveformGraphics.y = params.combinedWaveformGraphicsY;
 
@@ -235,10 +229,10 @@ class TargetOscilloscope extends Object implements Updateable
         targetWaveformGraphics.clear();
         inputWaveformGraphics.clear();
         combinedWaveformGraphics.clear();
-        targetWaveform.draw(targetWaveformGraphics, targetTotalTime, colOne);
-        inputWaveform?.draw(inputWaveformGraphics, inputTotalTime, colTwo);
-        targetWaveform.draw(combinedWaveformGraphics, combinedTotalTime, colOne);
-        inputWaveform?.draw(combinedWaveformGraphics, combinedTotalTime, colTwo);
+        targetWaveform.draw(targetWaveformGraphics, params.targetWaveformGraphicsWidth, params.targetWaveformGraphicsHeight, targetTotalTime, colOne);
+        inputWaveform?.draw(inputWaveformGraphics, params.inputWaveformGraphicsWidth, params.inputWaveformGraphicsHeight, inputTotalTime, colTwo);
+        targetWaveform.draw(combinedWaveformGraphics, params.combinedWaveformGraphicsWidth, params.combinedWaveformGraphicsHeight, combinedTotalTime, colOne);
+        inputWaveform?.draw(combinedWaveformGraphics, params.combinedWaveformGraphicsWidth, params.combinedWaveformGraphicsHeight, combinedTotalTime, colTwo);
         return false;
     }
 

@@ -1,5 +1,8 @@
 package gamelogic;
 
+import h2d.col.Matrix;
+import h2d.col.Point;
+import h2d.Graphics;
 import h2d.col.Circle;
 import utilities.Vector2D;
 import hxd.Res;
@@ -25,11 +28,19 @@ class Port extends Object implements MessageListener
 
     var sprite: Bitmap;
 
+    var graphics: Graphics;
+    var graphics2: Graphics;
+
     public function new(o:Bool, ?p: Object) {
         isOutput = o;
         super(p);
 
         sprite = new Bitmap(Res.img.CablePort.toTile().center(), this);
+        graphics = new Graphics(getScene());
+        graphics.lineStyle(1, 0x0000FF);
+        graphics.drawCircle(0, 0, 15);
+        graphics.visible = false;
+        graphics2 = new Graphics(getScene());
 
         MessageManager.addListener(this);
     }
@@ -39,10 +50,11 @@ class Port extends Object implements MessageListener
             var params = cast(msg, CableHeadMoved);
             if (isConnected) return false;
             var cable_head = params.cableHead;
-            var p: Vector2D = sprite.getAbsPos().getPosition();
-            var q: Vector2D = cable_head.getAbsPos().getPosition();
-            var c = new Circle(p.x - q.x, p.y - q.y, 35);
-            if (cable_head.collider.collideCircle(c)) {
+            var p = sprite.getAbsPos().getPosition();
+            var c1 = new Circle(p.x, p.y, 15);
+            var q = cable_head.getAbsPos().getPosition();
+            var c2 = new Circle(q.x, q.y, 40);
+            if (c2.collideCircle(c1)) {
                 isConnected = cable_head.snapTo(new Vector2D(sprite.x, sprite.y), this);
                 // hack for tutorial progression, but shouldn't matter elsewhere
                 if (isConnected) {

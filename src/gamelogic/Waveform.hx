@@ -3,9 +3,6 @@ package gamelogic;
 import utilities.RNGManager;
 import h2d.Graphics;
 
-final waveformMult = 500;
-final waveformMultInverse = 1/waveformMult;
-
 class Waveform {
 
     // period assumed to be 1.0
@@ -28,9 +25,9 @@ class Waveform {
     public function sample(t:Float, ?d:Int=0, ?sound=false):Float {return 0.5;}
     public function samplePreviousWeighted(t:Float, w:Float):Float {return 0.5;}
 
-    public function draw(target:Graphics, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
+    public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
         target.lineStyle(5, col);
-        target.moveTo(0, samplePreviousWeighted(phase_delta, 0.1)*waveformMult);
+        target.moveTo(0, samplePreviousWeighted(phase_delta, 0.1)*height);
         for (i in 0...drawing_samples) {
             var x = i/drawing_samples*4;
             var y = samplePreviousWeighted(x + phase_delta, 0.1);
@@ -45,7 +42,7 @@ class Waveform {
                     y += RNGManager.srand(0.1);
             }
             y = y < -0.5 ? -0.5: y > 0.5 ? 0.5 : y;
-            target.lineTo(x*waveformMult*.25, y*waveformMult);
+            target.lineTo(x*.25*width, y*height);
         }
         // this lerp is framerate dependant on how many times draw is called, but it's a visual effect only so that's fine
         if (previous == null) return;
@@ -177,9 +174,9 @@ class WaveformCombination extends Waveform {
         return sample(t);
     }
 
-    override public function draw(target:Graphics, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
+    override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
         if (sample(0) == -1) return;
-        super.draw(target, phase_delta, col, alpha);
+        super.draw(target, width, height, phase_delta, col, alpha);
     }
 }
 
@@ -201,8 +198,8 @@ class WaveformInverter extends Waveform {
         return sample(t);
     }
 
-    override public function draw(target:Graphics, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
+    override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
         if (sample(0) == -1) return;
-        super.draw(target, phase_delta, col, alpha);
+        super.draw(target, width, height, phase_delta, col, alpha);
     }
 }
