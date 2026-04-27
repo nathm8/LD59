@@ -22,6 +22,7 @@ class CableHead extends Object implements MessageListener implements Updateable 
     public var collider: Collider;
 
     var isSelected = false;
+    var selectedOffset = new Vector2D();
     var lastPosition = new Vector2D();
 
     public var connectedPort: Port;
@@ -35,12 +36,15 @@ class CableHead extends Object implements MessageListener implements Updateable 
         p.addChildAt(this, 0);
         
         cable = c;
-        var t = Res.img.CableHead.toTile().center();
+        var t = Res.img.CableHead.toTile();
         sprite = new Bitmap(t, this);
         collider = new PixelsCollider(t.getTexture().capturePixels());
         interactive = new Interactive(0, 0, this, collider);
-        interactive.x -= t.width/2;
-        interactive.y -= t.height/2;
+
+        var s = sprite.getSize();
+        var h = s.height;
+        var w = s.width;
+        selectedOffset = new Vector2D(-w/2, -h/2);
 
         interactive.onPush = (e:Event) -> {
             disconnect();
@@ -57,8 +61,10 @@ class CableHead extends Object implements MessageListener implements Updateable 
         if (Std.isOfType(msg, MouseMove)) {
             if (!isSelected) return false;
             var params = cast(msg, MouseMove);
-            x = params.scenePosition.x;
-            y = params.scenePosition.y;
+            var p = selectedOffset.clone();
+            p.rotate(rotation);
+            x = params.scenePosition.x + p.x;
+            y = params.scenePosition.y + p.y;
             var v = new Vector2D(x, y);
             rotation = (v - lastPosition).angle() + Math.PI/2;
             lastPosition = 0.99*lastPosition + 0.01*v;
@@ -75,15 +81,22 @@ class CableHead extends Object implements MessageListener implements Updateable 
         isSelected = false;
         remove();
         port.parent.addChildAt(this, 0);
-        x = port.x + pos.x; y = port.y + pos.y;
+
+        var s = sprite.getSize();
+        var w = port.isOutput ? s.width : -s.width;
+        var h = port.isOutput ? -s.height : s.height;
+        x = port.x + pos.x + h/2;
+        y = port.y + pos.y + w/2;
         rotation = port.isOutput ? -Math.PI/2 : Math.PI/2;
         return true;
     }
 
     public function getTail(): Vector2D {
-        var h = sprite.getSize().height;
+        var s = sprite.getSize();
+        var h = s.height;
+        var w = s.width;
         var p: Vector2D = sprite.getAbsPos().getPosition();
-        return p - new Vector2D(0, -h/2).rotate(rotation);
+        return p - new Vector2D(-w/2, -h).rotate(rotation);
     }
 
     function disconnect() {
