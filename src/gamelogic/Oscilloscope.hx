@@ -1,23 +1,19 @@
 package gamelogic;
 
+import graphics.Handle;
 import haxe.Json;
 import hxd.fs.FileEntry;
-import hxd.Event;
 import hxd.Res;
 import h2d.filter.Group;
 import h2d.filter.Glow;
 import h2d.filter.Blur;
-import h2d.Interactive;
 import h2d.Graphics;
 import h2d.Object;
 import h2d.Bitmap;
 import gamelogic.Waveform.waveformMultInverse;
-import utilities.Utilities.HANDLE_HEIGHT;
-import utilities.Utilities.HANDLE_WIDTH;
 import utilities.Utilities.colors;
 import utilities.RNGManager;
 import utilities.MessageManager;
-import utilities.MessageManager.MouseMove;
 import utilities.MessageManager.Message;
 import utilities.MessageManager.MessageListener;
 
@@ -50,7 +46,7 @@ class Oscilloscope extends Object implements Updateable
     var waveformGraphics: Graphics;
 
     var sprite: Bitmap;
-    var handle: Interactive;
+    var handle: Handle;
     var ampDial: Dial;
     var freqDial: Dial;
     var phaseDial: Dial;
@@ -58,9 +54,7 @@ class Oscilloscope extends Object implements Updateable
     
     var col: Int;
     
-    var isSelected = false;
     var totalTime = 0.0;
-
     
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
@@ -82,9 +76,7 @@ class Oscilloscope extends Object implements Updateable
         port = new Port(true, this);
         port.getOutput = () -> {return waveform;};
         
-        handle = new Interactive(HANDLE_WIDTH, HANDLE_HEIGHT, this);
-        handle.onPush = (e:Event) -> {isSelected = true;}
-        handle.onRelease = (e:Event) -> {isSelected = false;}
+        handle = new Handle(this);
         
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Oscilloscope.entry);
@@ -123,13 +115,6 @@ class Oscilloscope extends Object implements Updateable
             var params: UpdateOscilloscope = cast(msg, UpdateOscilloscope);
             fromJson(params.json);
             updateGraphics();
-        }
-        if (Std.isOfType(msg, MouseMove)) {
-            if (!isSelected) return false;
-            var params = cast(msg, MouseMove);
-            x = params.scenePosition.x;
-            var size = sprite.getSize();
-            y = params.scenePosition.y + size.height/2 - 12;
         }
         return false;
     }

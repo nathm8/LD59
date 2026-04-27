@@ -1,17 +1,15 @@
 package gamelogic;
 
-import utilities.Utilities.HANDLE_WIDTH;
+import graphics.Handle;
 import haxe.Json;
 import hxd.fs.FileEntry;
 import h2d.filter.Blur;
 import h2d.filter.Glow;
 import h2d.filter.Group;
-import h2d.Interactive;
 import h2d.Graphics;
 import h2d.Bitmap;
 import h2d.Object;
 import hxd.Res;
-import hxd.Event;
 import gamelogic.Waveform.waveformMultInverse;
 import gamelogic.Waveform.WaveformInverter;
 import utilities.RNGManager;
@@ -41,7 +39,6 @@ class Inverter extends Object implements MessageListener
     var inputPort: Port;
     var outputPort: Port;
 
-    var isSelected = false;
     var totalTime = 0.0;
 
     var transformedWaveform: WaveformInverter;
@@ -51,7 +48,7 @@ class Inverter extends Object implements MessageListener
     var outputWaveformGraphics: Graphics;
     var outputCol: Int;
 
-    var handle: Interactive;
+    var handle: Handle;
 
     var params: InverterJson;
 
@@ -93,9 +90,7 @@ class Inverter extends Object implements MessageListener
         outputPort = new Port(true, this);
         outputPort.getOutput = () -> {return transformedWaveform;};
 
-        handle = new Interactive(HANDLE_WIDTH, HANDLE_WIDTH, this);
-        handle.onPush = (e:Event) -> {isSelected = true;}
-        handle.onRelease = (e:Event) -> {isSelected = false;}
+        handle = new Handle(this);
 
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Inverter.entry);
@@ -110,13 +105,6 @@ class Inverter extends Object implements MessageListener
     }
 
     public function receive(msg:Message):Bool {
-        if (Std.isOfType(msg, MouseMove)) {
-            if (!isSelected) return false;
-            var params = cast(msg, MouseMove);
-            x = params.scenePosition.x;
-            var size = sprite.getSize();
-            y = params.scenePosition.y - size.height/2 + 6;
-        }
         if (Std.isOfType(msg, UpdateInvert)) {
             var params: UpdateInvert = cast(msg, UpdateInvert);
             fromJson(params.json);

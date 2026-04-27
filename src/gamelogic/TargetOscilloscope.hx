@@ -1,28 +1,27 @@
 package gamelogic;
 
-import utilities.Utilities.HANDLE_HEIGHT;
-import utilities.Utilities.HANDLE_WIDTH;
-import hxd.fs.FileEntry;
 import haxe.Json;
-import gamelogic.Waveform.WaveformInverter;
-import gamelogic.Waveform.Triangle;
-import utilities.Utilities.colors;
-import gamelogic.Waveform.WaveformCombination;
-import gamelogic.Waveform.Square;
+import hxd.fs.FileEntry;
+import hxd.Event;
+import hxd.Res;
+import h2d.Interactive;
+import h2d.Graphics;
+import h2d.Bitmap;
+import h2d.Object;
+import h2d.col.PixelsCollider;
 import h2d.filter.Blur;
 import h2d.filter.Glow;
 import h2d.filter.Group;
+import gamelogic.Waveform.WaveformInverter;
+import gamelogic.Waveform.Triangle;
+import gamelogic.Waveform.WaveformCombination;
+import gamelogic.Waveform.Square;
 import gamelogic.Waveform.waveformMultInverse;
+import gamelogic.Waveform.Sine;
+import utilities.Utilities.colors;
 import utilities.RNGManager;
 import utilities.MessageManager;
-import hxd.Event;
-import h2d.col.PixelsCollider;
-import h2d.Interactive;
-import h2d.Graphics;
-import gamelogic.Waveform.Sine;
-import hxd.Res;
-import h2d.Bitmap;
-import h2d.Object;
+import graphics.Handle;
 
 var targets = new Array<Waveform>();
 
@@ -85,8 +84,6 @@ class TargetOscilloscope extends Object implements Updateable
 
     var port: Port;
 
-    var isSelected = false;
-
     var inputTotalTime = 0.0;
     var targetTotalTime = 0.0;
     var combinedTotalTime = 0.0;
@@ -95,7 +92,7 @@ class TargetOscilloscope extends Object implements Updateable
     var colTwo: Int;
     var colThree: Int;
 
-    var handle: Interactive;
+    var handle: Handle;
 
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
@@ -191,10 +188,7 @@ class TargetOscilloscope extends Object implements Updateable
         port.onConnection = (w: Waveform) -> {inputWaveform = w;};
         port.onDisconnect = () -> {inputWaveform = null;};
         
-        // 141, 11
-        handle = new Interactive(HANDLE_WIDTH, HANDLE_HEIGHT, this);
-        handle.onPush = (e:Event) -> {isSelected = true;}
-        handle.onRelease = (e:Event) -> {isSelected = false;}
+        handle = new Handle(this);
         
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Target.entry);
@@ -306,13 +300,6 @@ class TargetOscilloscope extends Object implements Updateable
     }
 
     public function receive(msg:Message):Bool {
-        if (Std.isOfType(msg, MouseMove)) {
-            if (!isSelected) return false;
-            var params = cast(msg, MouseMove);
-            x = params.scenePosition.x;
-            var size = sprite.getSize();
-            y = params.scenePosition.y + size.height/2 - 8;
-        }
         if (Std.isOfType(msg, UpdateTarget)) {
             var params = cast(msg, UpdateTarget);
             fromJson(params.json);

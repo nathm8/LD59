@@ -1,5 +1,6 @@
 package gamelogic;
 
+import graphics.Handle;
 import hxd.fs.FileEntry;
 import haxe.Json;
 import hxd.Event;
@@ -31,8 +32,7 @@ class Splitter extends Object implements MessageListener
 
     var waveform: Waveform;
 
-    var isSelected = false;
-    var handle: Interactive;
+    var handle: Handle;
 
     var params: SplitterJson;
 
@@ -74,9 +74,7 @@ class Splitter extends Object implements MessageListener
         outputPortTwo = new Port(true, this);
         outputPortTwo.getOutput = () -> {return waveform;};
 
-        handle = new Interactive(141, 16, this);
-        handle.onPush = (e:Event) -> {isSelected = true;}
-        handle.onRelease = (e:Event) -> {isSelected = false;}
+        handle = new Handle(this);
 
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Splitter.entry);
@@ -88,13 +86,6 @@ class Splitter extends Object implements MessageListener
     }
 
     public function receive(msg:Message):Bool {
-        if (Std.isOfType(msg, MouseMove)) {
-            if (!isSelected) return false;
-            var params = cast(msg, MouseMove);
-            x = params.scenePosition.x;
-            var size = sprite.getSize();
-            y = params.scenePosition.y + size.height/2 - 12;
-        }
 		return false;
 	}
 }

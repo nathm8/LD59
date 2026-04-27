@@ -1,14 +1,11 @@
 package gamelogic;
 
-import utilities.Utilities.HANDLE_HEIGHT;
-import utilities.Utilities.HANDLE_WIDTH;
+import graphics.Handle;
 import haxe.Json;
-import hxd.Event;
 import hxd.Res;
 import hxd.fs.FileEntry;
 import h2d.Bitmap;
 import h2d.Graphics;
-import h2d.Interactive;
 import h2d.Object;
 import h2d.filter.Blur;
 import h2d.filter.Glow;
@@ -58,15 +55,13 @@ class Combinator extends Object implements MessageListener
     var inputPortOne: Port;
     var inputPortTwo: Port;
     var outputPort: Port;
+    var handle: Handle;
 
-    var isSelected = false;
     var totalTimeOne = 0.0;
     var totalTimeTwo = 0.0;
     var totalTimeThree = 0.0;
 
     var transformedWaveform: WaveformCombination;
-
-    var handle: Interactive;
 
     var inputWaveformOne: Waveform;
     var inputWaveformGraphicsOne: Graphics;
@@ -145,9 +140,7 @@ class Combinator extends Object implements MessageListener
         outputPort = new Port(true, this);
         outputPort.getOutput = () -> {return transformedWaveform;};
 
-        handle = new Interactive(HANDLE_WIDTH, HANDLE_HEIGHT, this);
-        handle.onPush = (e:Event) -> {isSelected = true;}
-        handle.onRelease = (e:Event) -> {isSelected = false;}
+        handle = new Handle(this);
 
         MessageManager.addListener(this);
 
@@ -175,15 +168,6 @@ class Combinator extends Object implements MessageListener
     }
 
 	public function receive(msg:Message):Bool {
-        if (Std.isOfType(msg, MouseMove)) {
-            if (!isSelected) return false;
-            var params = cast(msg, MouseMove);
-            x = params.scenePosition.x;
-            var size = sprite.getSize();
-            y = params.scenePosition.y + size.height/2 - 12;
-            if (isAnd)
-                x += 100;
-        }
         if (Std.isOfType(msg, UpdateAnd)) {
             var params: UpdateAnd = cast(msg, UpdateAnd);
             if (!isAnd) return false;
