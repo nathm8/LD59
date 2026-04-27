@@ -51,6 +51,16 @@ class Splitter extends Object implements MessageListener
         handle.y = params.handleY;
     }
 
+    // moar hacks :(
+    // temporarily null forceRecheck before calling it, to prevent stackoverflow between `Cable.newConnection` and `Port.onConnect`
+    function recursionBreaker(p: Port) {
+        if (p.forceRecheck == null) return;
+        var f = p.forceRecheck;
+        p.forceRecheck = null;
+        f();
+        p.forceRecheck = f;
+    }
+
     public function new(?p: Object) {
         super(p);
 
@@ -59,13 +69,13 @@ class Splitter extends Object implements MessageListener
         inputPort = new Port(false, this);
         inputPort.onConnection = (w) -> {
             waveform = w;
-            if (outputPortOne.forceRecheck != null) outputPortOne.forceRecheck();
-            if (outputPortTwo.forceRecheck != null) outputPortTwo.forceRecheck();
+            recursionBreaker(outputPortOne);
+            recursionBreaker(outputPortTwo);
         };
         inputPort.onDisconnect = () -> {
             waveform = null;
-            if (outputPortOne.forceRecheck != null) outputPortOne.forceRecheck();
-            if (outputPortTwo.forceRecheck != null) outputPortTwo.forceRecheck();
+            recursionBreaker(outputPortOne);
+            recursionBreaker(outputPortTwo);
         };
         
         outputPortOne = new Port(true, this);
