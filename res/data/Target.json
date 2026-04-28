@@ -21,8 +21,9 @@
   "lightTwoY": 174.5,
   "lightThreeX": 275,
   "lightThreeY": 174.5,
-  "switchStartX": -175.25,
-  "switchStartY": 175.5,
-  "switchEndX": -172.25,
-  "switchEndY": 175.5
+  "switchStartX": -250,
+  "switchStartY": 173,
+  "switchEndX": -99,
+  "switchEndY": 173,
+  "switchMaxLag": 10
 }

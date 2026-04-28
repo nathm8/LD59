@@ -1,5 +1,8 @@
 package gamelogic;
 
+import utilities.Utilities.clamp;
+import utilities.Vector2D;
+import h2d.col.Circle;
 import haxe.Json;
 import hxd.fs.FileEntry;
 import hxd.Event;
@@ -8,7 +11,6 @@ import h2d.Interactive;
 import h2d.Graphics;
 import h2d.Bitmap;
 import h2d.Object;
-import h2d.col.PixelsCollider;
 import h2d.filter.Blur;
 import h2d.filter.Glow;
 import h2d.filter.Group;
@@ -24,6 +26,114 @@ import utilities.MessageManager;
 import graphics.Handle;
 
 var targets = new Array<Waveform>();
+
+class TargetSwitch extends Object implements MessageListener {
+
+    public var startPos = new Vector2D();
+    public var endPos = new Vector2D();
+    public var switchMaxLag = 0.0;
+    
+    var switchReady: Bitmap;
+    var switchReadyMid: Bitmap;
+    var switchReadyBot: Bitmap;
+    var switchFlipped: Bitmap;
+    var callback: Void -> Void;
+    
+    var isSelected = false;
+    
+    public function new(c: Void -> Void, ?p: Object) {
+        super(p);
+        
+        callback = c;
+        
+        switchReadyBot = new Bitmap(Res.img.SwitchBottom.toTile().center(), this);
+        switchReadyMid = new Bitmap(Res.img.SwitchMiddle.toTile().center(), this);
+        switchReady = new Bitmap(Res.img.SwitchTop.toTile().center(), this);
+        
+        var i = new Interactive(0, 0, switchReady, new Circle(0, 0, 22));
+        i.onPush = (e: Event) -> {
+            isSelected = true;
+        };
+        i.onRelease = (e: Event) -> {
+            // TODO tween this
+            setActiveSpritesPositions(1);
+            isSelected = false;
+        };
+
+        switchFlipped = new Bitmap(Res.img.SwitchOff.toTile().center(), this);
+        switchFlipped.visible = false;
+        switchFlipped.x = endPos.x;
+        switchFlipped.y = endPos.y;
+
+        MessageManager.addListener(this);
+    }
+
+    // r in [0, 1] ratio between startPos and endPos, 1 = startPos
+    function setActiveSpritesPositions(r: Float) {
+        switchReady.x = r*startPos.x + (1-r)*endPos.x;
+        switchReady.x = clamp(switchReady.x, startPos.x, endPos.x);
+
+        r = r == 0.5 ? 0 : (r-0.5)/0.5;
+        switchReadyMid.x = switchReady.x + 0.5*r*switchMaxLag;
+        switchReadyBot.x = switchReady.x + r*switchMaxLag;
+    }
+
+    public function receive(msg: Message): Bool {
+        if (Std.isOfType(msg, MouseMove)) {
+            if (!isSelected) return false;
+            var params = cast(msg, MouseMove);
+            var start_abs = localToGlobal(startPos);
+            var end_abs = localToGlobal(endPos);
+            
+            var mouse_x = params.scenePosition.x;
+            var x_diff = mouse_x - start_abs.x;
+
+            var r = x_diff/(end_abs.x - start_abs.x);
+
+            // TODO proper physical spring simulation
+            var m: Float;
+            if (r <= 0.0)
+                m = 1.0;
+            else if (r < 0.5)
+                m = 15*Math.pow(-r, 5) + 1
+            else if (r < 1)
+                m = 15*Math.pow(-r + 0.5, 5) + 0.5;
+            else
+                m = 0;
+        
+            setActiveSpritesPositions(m);
+            if (switchReady.x == endPos.x) {
+                isSelected = false;
+                callback();
+                switchReady.visible = false;
+                switchReadyMid.visible = false;
+                switchReadyBot.visible = false;
+                switchFlipped.visible = true;
+            }
+        }
+        return false;
+    }
+
+    public function reset() {
+        // TODO tween
+        switchReady.x = startPos.x;
+        switchReady.visible = true;
+        switchReadyMid.visible = true;
+        switchReadyBot.visible = true;
+        switchFlipped.visible = false;
+    }
+
+    // this won't play nice if it's called while mouse movement is happening, but it's debug only so that's not a problem
+    public function updateGraphics() {
+        switchReadyBot.y = startPos.y;
+        switchReadyMid.y = startPos.y;
+        switchReady.y = startPos.y;
+        switchFlipped.x = endPos.x;
+        switchFlipped.y = endPos.y;
+        setActiveSpritesPositions(1);
+    }
+
+}
 
 typedef TargetJson = {
     var inputWaveformGraphicsWidth: Float;
@@ -56,6 +166,7 @@ typedef TargetJson = {
     var switchStartY: Float;
     var switchEndX: Float;
     var switchEndY: Float;
+    var switchMaxLag: Float;
 }
 
 class TargetOscilloscope extends Object implements Updateable
@@ -67,8 +178,6 @@ class TargetOscilloscope extends Object implements Updateable
     
     var puzzlesComplete = 0;
 
-    var switchReady: Bitmap;
-    var switchFlipped: Bitmap;
     var lightOne: Bitmap;
     var lightTwo: Bitmap;
     var lightThree: Bitmap;
@@ -93,6 +202,7 @@ class TargetOscilloscope extends Object implements Updateable
     var colThree: Int;
 
     var handle: Handle;
+    var targetSwitch: TargetSwitch;
 
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
@@ -147,31 +257,18 @@ class TargetOscilloscope extends Object implements Updateable
         colThree = colors[cols[2]];
 
         sprite = new Bitmap(Res.img.OscilloOut.toTile().center(), this);
-        var size = sprite.getSize();
-        var t = Res.img.SwitchReady.toTile().center();
-        switchReady = new Bitmap(t, sprite);
         
-        var pixels = new PixelsCollider(t.getTexture().capturePixels());
-        var i = new Interactive(t.width, t.height, switchReady, pixels);
-        i.x -= t.width/2;
-        i.y -= t.height/2;
-        i.onPush = (e: Event) -> {checkSolution();};
+        lightOne = new Bitmap(Res.img.Light.toTile().center(), this);
+        lightTwo = new Bitmap(Res.img.Light.toTile().center(), this);
+        lightThree = new Bitmap(Res.img.Light.toTile().center(), this);
         
-        t = Res.img.SwitchFlipped.toTile().center();
-        switchFlipped = new Bitmap(t, sprite);
-        switchFlipped.visible = false;
-        
-        t = Res.img.Light.toTile().center();
-        lightOne = new Bitmap(t, sprite);
-        lightTwo = new Bitmap(t, sprite);
-        lightThree = new Bitmap(t, sprite);
-        
-        t = Res.img.LightGlow.toTile().center();
-        glowOne = new Bitmap(t, lightOne);
-        glowTwo = new Bitmap(t, lightTwo);
-        glowThree = new Bitmap(t, lightThree);
+        glowOne = new Bitmap(Res.img.LightGlow.toTile().center(), lightOne);
+        glowTwo = new Bitmap(Res.img.LightGlow.toTile().center(), lightTwo);
+        glowThree = new Bitmap(Res.img.LightGlow.toTile().center(), lightThree);
         for (g in [glowOne, glowTwo, glowThree])
             g.visible = false;
+
+        targetSwitch = new TargetSwitch(checkSolution, this);
         
         targetWaveform = targets[0];
         targetWaveformGraphics = new Graphics(this);
@@ -196,10 +293,11 @@ class TargetOscilloscope extends Object implements Updateable
     }
     
     function updateGraphics() {
-        switchReady.x = params.switchStartX;
-        switchReady.y = params.switchStartY;
-        switchFlipped.x = params.switchEndX;
-        switchFlipped.y = params.switchEndY;
+        targetSwitch.startPos.x = params.switchStartX;
+        targetSwitch.startPos.y = params.switchStartY;
+        targetSwitch.endPos.x = params.switchEndX;
+        targetSwitch.endPos.y = params.switchEndY;
+        targetSwitch.switchMaxLag = params.switchMaxLag;
 
         lightOne.x = params.lightOneX;
         lightOne.y = params.lightOneY;
@@ -220,6 +318,8 @@ class TargetOscilloscope extends Object implements Updateable
         
         handle.x = params.handleX;
         handle.y = params.handleY;
+
+        targetSwitch.updateGraphics();
     }
 
     public function update(dt:Float):Bool {
@@ -243,16 +343,13 @@ class TargetOscilloscope extends Object implements Updateable
             g.color.b = 1;
             g.visible = false;
         }
-        switchReady.visible = true;
-        switchFlipped.visible = false;
+        targetSwitch.reset();
         if (puzzlesComplete >= targets.length)
             puzzlesComplete = 0;
         targetWaveform = targets[puzzlesComplete];
     }
 
     function checkSolution() {
-        switchReady.visible = false;
-        switchFlipped.visible = true;
         for (g in [glowOne, glowTwo, glowThree]) {
             g.visible = true;
             g.alpha = 0;
@@ -286,8 +383,7 @@ class TargetOscilloscope extends Object implements Updateable
                         g.color.b = 1;
                         g.visible = false;
                     }
-                    switchReady.visible = true;
-                    switchFlipped.visible = false;
+                    targetSwitch.reset();
                 }).start();
             }
         }

@@ -3,15 +3,12 @@ Signals
 
 Post-jam MVP
 -----------------------------------
-fix cable head-port collision detection
-
 have volume control on every component which emits sound
-
-implement new Device switch
 
 have oscilloscope shader
 
 put in guards to prevent dragging components off-screen
+    and out of bounds when zoomed out\panned far out
 
 cables - allow click-drag mode
 
@@ -83,6 +80,8 @@ dynamically turn everything down when multiple sound generators are active to pr
     (still need callback)
 jsonify the graphics magic numbers
 properly store mouse offset when clicking on bar to drag components around
+fix cable head-port collision detection
+implement new Device switch
 
 Todo
 -----------------------------------

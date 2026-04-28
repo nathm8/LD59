@@ -4,6 +4,14 @@ final colors = [0xFF0000, 0x00FF00, 0x0000FF,
               0xFFFF00, 0x00FFFF, 0xFFFFFF,
               0xFF00FF];
 
+function clamp(value: Float, low: Float, high: Float): Float {
+    if (value < low)
+        value = low;
+    if (value > high)
+        value = high;
+    return value;
+}
+
 function normaliseArray(arr: Array<Float>): Array<Float> {
     var min = arr[0];
     var max = 0.0;
