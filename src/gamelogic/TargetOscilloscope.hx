@@ -1,5 +1,6 @@
 package gamelogic;
 
+import slide.Tween;
 import utilities.Utilities.clamp;
 import utilities.Vector2D;
 import h2d.col.Circle;
@@ -32,6 +33,8 @@ class TargetSwitch extends Object implements MessageListener {
     public var startPos = new Vector2D();
     public var endPos = new Vector2D();
     public var switchMaxLag = 0.0;
+    var tweenParam = 0.0;
+    var tween: Tween;
     
     var switchReady: Bitmap;
     var switchReadyMid: Bitmap;
@@ -55,8 +58,8 @@ class TargetSwitch extends Object implements MessageListener {
             isSelected = true;
         };
         i.onRelease = (e: Event) -> {
-            // TODO tween this
-            setActiveSpritesPositions(1);
+            if (switchReady.x != endPos.x)
+                reset();
             isSelected = false;
         };
 
@@ -69,10 +72,11 @@ class TargetSwitch extends Object implements MessageListener {
     }
 
     // r in [0, 1] ratio between startPos and endPos, 1 = startPos
-    function setActiveSpritesPositions(r: Float) {
+    function setActiveSpritesPositions(r: Float, update_tween_param=true) {
         switchReady.x = r*startPos.x + (1-r)*endPos.x;
         switchReady.x = clamp(switchReady.x, startPos.x, endPos.x);
 
+        if (update_tween_param) tweenParam = r;
         r = r == 0.5 ? 0 : (r-0.5)/0.5;
         switchReadyMid.x = switchReady.x + 0.5*r*switchMaxLag;
         switchReadyBot.x = switchReady.x + r*switchMaxLag;
@@ -116,7 +120,11 @@ class TargetSwitch extends Object implements MessageListener {
 
     public function reset() {
         // TODO tween
-        switchReady.x = startPos.x;
+        tween?.stop();
+        tween = Main.tweenManager.animateTo(this, { tweenParam: 1}, 0.1)
+            .onUpdate(() -> setActiveSpritesPositions(tweenParam, false)
+            );
+        tween.start();
         switchReady.visible = true;
         switchReadyMid.visible = true;
         switchReadyBot.visible = true;
