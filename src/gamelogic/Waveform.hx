@@ -18,7 +18,7 @@ class Waveform {
 
     var previous: Waveform;
 
-    static final drawing_samples = 1000;
+    static final drawing_samples = 100;
 
     // t in [0,1]
     // return in [0,1]
@@ -148,7 +148,7 @@ class WaveformCombination extends Waveform {
     public var sourceOne: Waveform;
     public var sourceTwo: Waveform;
     // [0, 1]
-    public var weight = 8/9;
+    public var weight = 0.5;
 
     var isAnd: Bool;
 

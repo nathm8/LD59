@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.Assert.assert;
 import h2d.col.Circle;
 import utilities.MessageManager;
 import utilities.MessageManager.MouseMove;
@@ -24,12 +25,14 @@ class Dial extends Object implements MessageListener implements Updateable {
     var selectedTime = 0.0;
     var callback: Void -> Void;
 
-    public function new(f: Void -> Void, p: Object) {
+    public function new(v: Int, f: Void -> Void, p: Object) {
         super(p);
+        value = v;
         callback = f;
         var t = Res.img.Dial.toTile();
         t.setCenterRatio(0.5, 0.83);
         sprite = new Bitmap(t, this);
+        rotation = value*2*Math.PI/8;
 
         interactive = new Interactive(t.width, t.height, this, new Circle(0, 0, 40));
         interactive.enableRightButton = true;

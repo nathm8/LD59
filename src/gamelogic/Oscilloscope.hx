@@ -62,16 +62,18 @@ class Oscilloscope extends Object implements Updateable
 
     public function new(w: Waveform, p: Object) {
         super(p);
-        sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
-        ampDial = new Dial(() -> {waveform.backup(); waveform.amplitude = ampDial.value/8;}, sprite);
-        freqDial = new Dial(() -> {waveform.backup(); waveform.frequency = freqDial.value/8;}, sprite);
-        phaseDial = new Dial(() -> {waveform.backup(); waveform.phase = phaseDial.value/8;}, sprite);
-        
-        col = colors[RNGManager.random(colors.length)];
-        
+
         waveform = w;
+
+        sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
+        ampDial = new Dial(Math.round(waveform.amplitude*8), () -> {waveform.backup(); waveform.amplitude = ampDial.value/8;}, sprite);
+        freqDial = new Dial(Math.round(waveform.frequency*8), () -> {waveform.backup(); waveform.frequency = freqDial.value/8;}, sprite);
+        phaseDial = new Dial(Math.round(waveform.phase*8), () -> {waveform.backup(); waveform.phase = phaseDial.value/8;}, sprite);
+
         waveformGraphics = new Graphics(this);
         waveformGraphics.filter = new Group([new Glow(col, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
+
+        col = colors[RNGManager.random(colors.length)];
         
         port = new Port(true, this);
         port.getOutput = () -> {return waveform;};

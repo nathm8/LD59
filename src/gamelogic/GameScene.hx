@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.RNGManager;
 import gamelogic.Waveform.Square;
 import gamelogic.Waveform.Triangle;
 import gamelogic.Waveform.Sine;
@@ -93,14 +94,17 @@ class GameScene extends Scene implements MessageListener {
         if (Std.isOfType(msg, SpawnComponent)) {
             var params = cast(msg, SpawnComponent);
             var n = params.componentName;
+            var amp = 1/8*(3 + RNGManager.random(3));
+            var freq = 1/8*(3 + RNGManager.random(3));
+            var phase = 1/8*(3 + RNGManager.random(3));
             if (n == "Wire")
                 updateables.push(new Cable(this));
             if (n == "Sine")
-                updateables.push(new Oscilloscope(new Sine(1, 1, 1), this));
+                updateables.push(new Oscilloscope(new Sine(amp, freq, phase), this));
             if (n == "Square")
-                updateables.push(new Oscilloscope(new Square(1, 1, 1), this));
+                updateables.push(new Oscilloscope(new Square(amp, freq, phase), this));
             if (n == "Triangle")
-                updateables.push(new Oscilloscope(new Triangle(1, 1, 1), this));
+                updateables.push(new Oscilloscope(new Triangle(amp, freq, phase), this));
             if (n == "And")
                 updateables.push(new Combinator(true, this));
             if (n == "Or")

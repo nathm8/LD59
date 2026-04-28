@@ -106,7 +106,7 @@ class Combinator extends Object implements MessageListener
         else
             sprite = new Bitmap(Res.img.Or.toTile().center(), this);
 
-        dial = new Dial(() -> {transformedWaveform.weight = dial.value/9;}, this);
+        dial = new Dial(4, () -> {transformedWaveform.weight = dial.value/9;}, this);
 
         inputOneCol = colors[RNGManager.random(colors.length)];
         inputTwoCol = colors[RNGManager.random(colors.length)];
