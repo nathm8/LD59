@@ -3,9 +3,6 @@ Signals
 
 Post-jam MVP
 -----------------------------------
-have volume control on every component which emits sound
-    have it tween to zero once it's plugged into another sound emitter
-
 have oscilloscope shader
 
 put in guards to prevent dragging components off-screen
@@ -30,9 +27,7 @@ implement window resizing for hashlink target
 figure out a better way of spawning in components than dumping them at 0, 0
 
 add generative sounds. Try to have them not be totally awful
-    harmonise when getting solution
-    dynamically turn everything down when multiple sound generators are active to prevent too much noise
-        need to callback to sound manager when one is muted
+    harmonise when getting solution - overtone? needs some research
 
 add SFX for cables, dials, switch and lights
     have each light actually correspond to something (correctish phase/freq/amp, perhaps?)
@@ -86,12 +81,14 @@ add output screens to combinators
 fix splitter memory
 ditto inverter
 dynamically turn everything down when multiple sound generators are active to prevent too much noise
-    (still need callback)
+    need to callback to sound manager when one is muted - accomplished by tracking channel with volume = 0
 jsonify the graphics magic numbers
 properly store mouse offset when clicking on bar to drag components around
 fix cable head-port collision detection
 implement new Device switch
-
+have volume control on every component which emits sound
+    have it tween to zero once it's plugged into another sound emitter
+    
 Todo
 -----------------------------------
 make UI with drag-droppable elements

@@ -144,7 +144,8 @@ class Combinator extends Object implements MessageListener
         inputPortTwo.onDisconnect = () ->  { inputWaveformTwo = null; transformedWaveform.sourceTwo = null; sound.reload(); };
         
         outputPort = new Port(true, this);
-        outputPort.getOutput = () -> {return transformedWaveform;};
+        outputPort.getOutput = () -> { slider.mute(); return transformedWaveform; };
+        outputPort.onDisconnect = () -> { slider.restore(); };
 
         handle = new Handle(this);
 

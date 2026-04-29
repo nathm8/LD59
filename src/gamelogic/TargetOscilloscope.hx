@@ -234,31 +234,31 @@ class TargetOscilloscope extends Object implements Updateable
         var targetOne = new Sine(4/8, 6/8, 1/8);
         
         var targetTwo = new WaveformCombination(false);
-        targetTwo.weight = 6/8;
+        targetTwo.weight = 3/6;
         targetTwo.sourceOne = targetOne;
-        targetTwo.sourceTwo = new Square(1, 1, 1);
+        targetTwo.sourceTwo = new Square(0.5, 0.5, 0.5);
 
         var targetThree = new WaveformCombination(true);
-        targetThree.sourceOne = new Triangle(1, 1, 4/8);
-        targetThree.sourceTwo = new Square(1, 1, 1);
+        targetThree.sourceOne = new Triangle(0.5, 0.5, 4/8);
+        targetThree.sourceTwo = new Square(0.5, 0.5, 0.5);
         
         var and = new WaveformCombination(true);
-        and.sourceOne = new Triangle(1, 3/8, 1);
+        and.sourceOne = new Triangle(0.5, 3/8, 0.5);
         and.sourceTwo = and.sourceOne;
         var targetFour = new WaveformInverter();
         targetFour.source = and;
 
         var targetFive = new WaveformCombination(false);
         targetFive.weight = 4/8;
-        targetFive.sourceOne = new Sine(1, 2/8, 2/8);
+        targetFive.sourceOne = new Sine(0.5, 2/8, 2/8);
         var or = new WaveformCombination(false);
         or.weight = 4/8;
-        or.sourceOne = new Triangle(1, 1/8, 2/8);
-        or.sourceTwo = new Square(4/8, 1, 2/8);
+        or.sourceOne = new Triangle(0.5, 1/8, 2/8);
+        or.sourceTwo = new Square(4/8, 0.5, 2/8);
         targetFive.sourceTwo = or;
 
         var targetSix = new WaveformCombination(true);
-        targetSix.sourceOne = new Square(1/8, 1 ,1);
+        targetSix.sourceOne = new Square(1/8, 0.5, 0.5);
         var invert = new WaveformInverter();
         invert.source = targetSix.sourceOne;
         targetSix.sourceTwo = invert;
@@ -286,7 +286,6 @@ class TargetOscilloscope extends Object implements Updateable
         targetSwitch = new TargetSwitch(checkSolution, this);
         
         targetWaveform = targets[0];
-        targetWaveform = new Sine(1,1,1);
         targetWaveformGraphics = new Graphics(this);
         inputWaveformGraphics = new Graphics(this);
         combinedWaveformGraphics = new Graphics(this);

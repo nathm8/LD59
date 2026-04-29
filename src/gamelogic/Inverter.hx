@@ -96,7 +96,8 @@ class Inverter extends Object implements MessageListener
         inputPort.onDisconnect = () ->  { inputWaveform = null; transformedWaveform.source = null; sound.reload(); };
         
         outputPort = new Port(true, this);
-        outputPort.getOutput = () -> {return transformedWaveform;};
+        outputPort.getOutput = () -> { slider.mute(); return transformedWaveform; };
+        outputPort.onDisconnect = () -> { slider.restore(); };
 
         handle = new Handle(this);
 
