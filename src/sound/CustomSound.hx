@@ -11,7 +11,7 @@ import haxe.io.Bytes;
 // from https://gist.github.com/Eiyeron/0f3d49082308389e9a17d1e650f3453d
 class SoundDataGenerator extends hxd.snd.Data
 {
-    private var waveform: Waveform;
+    public var waveform: Waveform;
     public var reload: Void -> Void;
 
     public function new(w: Waveform) {
@@ -26,9 +26,14 @@ class SoundDataGenerator extends hxd.snd.Data
     // called from hxd.snd.Data.decode
     public override function decodeBuffer(out:Bytes, outPos:Int, sampleStart:Int, sampleCount:Int) {
         for (i in outPos...out.length) {
-            var r = i/out.length;
-            // todo, random up this multiplier
-            var v = Math.round(50000*waveform.sample(r, 0, true));
+            var v: Int;
+            if (waveform == null)
+                v = 0;
+            else {
+                var r = i/out.length;
+                // todo, random up this multiplier
+                v = Math.round(50000*waveform.sample(r, 0, true));
+            }
             out.set(i, v);
         }
     }
@@ -44,6 +49,7 @@ class SoundDataGenerator extends hxd.snd.Data
 class CustomSound extends Sound {
 
     static var id = 0;
+    public var waveform(null, set): Waveform;
 
     public function new(w: Waveform) {
         super(null);
@@ -60,5 +66,11 @@ class CustomSound extends Sound {
     public function reload() {
         var d = cast(data, SoundDataGenerator);
         d.reload();
+    }
+
+    function set_waveform(value:Waveform):Waveform {
+        var sdg = cast(data, SoundDataGenerator);
+        sdg.waveform = value;
+        return value;
     }
 }

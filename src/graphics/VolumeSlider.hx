@@ -23,6 +23,7 @@ class VolumeSlider extends Object implements MessageListener {
     var slider: Bitmap;
     var channel: Channel;
     
+    var savedVolume: Float;
     var isSelected = false;
     
     public function new(c: Channel, ?p: Object) {
@@ -30,6 +31,7 @@ class VolumeSlider extends Object implements MessageListener {
         
         channel = c;
         channel.volume = 0.5;
+        savedVolume = channel.volume;
 
         slider = new Bitmap(Res.img.Slider.toTile().center(), this);
         // slider.x = startPos.x;
@@ -67,7 +69,16 @@ class VolumeSlider extends Object implements MessageListener {
 
     public function mute() {
         tween?.stop();
+        savedVolume = channel.volume;
         tween = Main.tweenManager.animateTo(channel, { volume: 0}, 0.5).onUpdate(
+            () -> {slider.x = (1 - channel.volume)*startPos.x + channel.volume*endPos.x;}
+        );
+        tween.start();
+    }
+
+    public function restore() {
+        tween?.stop();
+        tween = Main.tweenManager.animateTo(channel, { volume: savedVolume}, 0.5).onUpdate(
             () -> {slider.x = (1 - channel.volume)*startPos.x + channel.volume*endPos.x;}
         );
         tween.start();

@@ -176,8 +176,10 @@ typedef TargetJson = {
     var switchEndY: Float;
     var switchMaxLag: Float;
 
-    var sliderX: Float;
-    var sliderY: Float;
+    var sliderOneX: Float;
+    var sliderOneY: Float;
+    var sliderTwoX: Float;
+    var sliderTwoY: Float;
 }
 
 class TargetOscilloscope extends Object implements Updateable
@@ -215,8 +217,10 @@ class TargetOscilloscope extends Object implements Updateable
     var handle: Handle;
     var targetSwitch: TargetSwitch;
 
-    var slider: VolumeSlider;
-    var sound: CustomSound;
+    var sliderOne: VolumeSlider;
+    var soundOne: CustomSound;
+    var sliderTwo: VolumeSlider;
+    var soundTwo: CustomSound;
 
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
@@ -282,20 +286,25 @@ class TargetOscilloscope extends Object implements Updateable
         targetSwitch = new TargetSwitch(checkSolution, this);
         
         targetWaveform = targets[0];
+        targetWaveform = new Sine(1,1,1);
         targetWaveformGraphics = new Graphics(this);
         inputWaveformGraphics = new Graphics(this);
         combinedWaveformGraphics = new Graphics(this);
         
         port = new Port(false, this);
-        port.onConnection = (w: Waveform) -> {inputWaveform = w;};
-        port.onDisconnect = () -> {inputWaveform = null;};
+        port.onConnection = (w: Waveform) -> {inputWaveform = w; soundTwo.waveform = w; soundTwo.reload(); };
+        port.onDisconnect = () -> {inputWaveform = null; soundTwo.reload();};
         
         handle = new Handle(this);
 
         // TODO make this more distinct with an overtone or something
         var sound_channel = SoundManager.addWaveform(targetWaveform);
-        sound = sound_channel.sound;
-        slider = new VolumeSlider(sound_channel.channel, this);
+        soundOne = sound_channel.sound;
+        sliderOne = new VolumeSlider(sound_channel.channel, this);
+
+        sound_channel = SoundManager.addWaveform(inputWaveform);
+        soundTwo = sound_channel.sound;
+        sliderTwo = new VolumeSlider(sound_channel.channel, this);
         
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Target.entry);
@@ -329,8 +338,10 @@ class TargetOscilloscope extends Object implements Updateable
         handle.x = params.handleX;
         handle.y = params.handleY;
 
-        slider.x = params.sliderX;
-        slider.y = params.sliderY;
+        sliderOne.x = params.sliderOneX;
+        sliderOne.y = params.sliderOneY;
+        sliderTwo.x = params.sliderTwoX;
+        sliderTwo.y = params.sliderTwoY;
 
         targetSwitch.updateGraphics();
     }
@@ -360,7 +371,7 @@ class TargetOscilloscope extends Object implements Updateable
         if (puzzlesComplete >= targets.length)
             puzzlesComplete = 0;
         targetWaveform = targets[puzzlesComplete];
-        sound.reload();
+        soundOne.reload();
     }
 
     function checkSolution() {

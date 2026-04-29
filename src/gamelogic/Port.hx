@@ -4,7 +4,6 @@ import hxd.Res;
 import h2d.Bitmap;
 import h2d.Object;
 import h2d.col.Circle;
-import utilities.Vector2D;
 import utilities.MessageManager;
 import utilities.MessageManager.MessageListener;
 

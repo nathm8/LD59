@@ -83,7 +83,8 @@ class Oscilloscope extends Object implements Updateable
         col = colors[RNGManager.random(colors.length)];
         
         port = new Port(true, this);
-        port.getOutput = () -> {return waveform;};
+        port.getOutput = () -> {slider.mute(); return waveform;};
+        port.onDisconnect = () -> {slider.restore();};
         
         handle = new Handle(this);
 
