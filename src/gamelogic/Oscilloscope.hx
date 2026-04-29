@@ -1,5 +1,9 @@
 package gamelogic;
 
+import sound.CustomSound;
+import hxd.snd.Channel;
+import sound.SoundManager;
+import graphics.VolumeSlider;
 import graphics.Handle;
 import haxe.Json;
 import hxd.fs.FileEntry;
@@ -35,6 +39,9 @@ typedef OscilloscopeJson = {
 
     var handleX: Float;
     var handleY: Float;
+
+    var sliderX: Float;
+    var sliderY: Float;
 }
 
 class Oscilloscope extends Object implements Updateable
@@ -51,6 +58,8 @@ class Oscilloscope extends Object implements Updateable
     var freqDial: Dial;
     var phaseDial: Dial;
     var port: Port;
+    var slider: VolumeSlider;
+    var sound: CustomSound;
     
     var col: Int;
     
@@ -66,9 +75,9 @@ class Oscilloscope extends Object implements Updateable
         waveform = w;
 
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
-        ampDial = new Dial(Math.round(waveform.amplitude*8), () -> {waveform.backup(); waveform.amplitude = ampDial.value/8;}, sprite);
-        freqDial = new Dial(Math.round(waveform.frequency*8), () -> {waveform.backup(); waveform.frequency = freqDial.value/8;}, sprite);
-        phaseDial = new Dial(Math.round(waveform.phase*8), () -> {waveform.backup(); waveform.phase = phaseDial.value/8;}, sprite);
+        ampDial = new Dial(Math.round(waveform.amplitude*8), () -> {waveform.backup(); waveform.amplitude = ampDial.value/8; sound.reload();}, sprite);
+        freqDial = new Dial(Math.round(waveform.frequency*8), () -> {waveform.backup(); waveform.frequency = freqDial.value/8; sound.reload();}, sprite);
+        phaseDial = new Dial(Math.round(waveform.phase*8), () -> {waveform.backup(); waveform.phase = phaseDial.value/8; sound.reload();}, sprite);
 
         waveformGraphics = new Graphics(this);
         waveformGraphics.filter = new Group([new Glow(col, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
@@ -79,6 +88,10 @@ class Oscilloscope extends Object implements Updateable
         port.getOutput = () -> {return waveform;};
         
         handle = new Handle(this);
+
+        var sound_channel = SoundManager.addWaveform(waveform);
+        sound = sound_channel.sound;
+        slider = new VolumeSlider(sound_channel.channel, this);
         
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Oscilloscope.entry);
@@ -97,6 +110,8 @@ class Oscilloscope extends Object implements Updateable
         port.y = params.portY;
         handle.x = params.handleX;
         handle.y = params.handleY;
+        slider.x = params.sliderX;
+        slider.y = params.sliderY;
     }
 
     public function update(dt:Float):Bool {

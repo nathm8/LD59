@@ -106,11 +106,12 @@ class Combinator extends Object implements MessageListener
         else
             sprite = new Bitmap(Res.img.Or.toTile().center(), this);
 
-        dial = new Dial(4, () -> {transformedWaveform.weight = dial.value/9;}, this);
+        dial = new Dial(4, () -> {transformedWaveform.weight = dial.value/8;}, this);
 
-        inputOneCol = colors[RNGManager.random(colors.length)];
-        inputTwoCol = colors[RNGManager.random(colors.length)];
-        outputCol = colors[RNGManager.random(colors.length)];
+        var cols = RNGManager.randoms(colors.length, 3, true);
+        inputOneCol = colors[cols[0]];
+        inputTwoCol = colors[cols[1]];
+        outputCol = colors[cols[2]];
 
         transformedWaveform = new WaveformCombination(isAnd);
 

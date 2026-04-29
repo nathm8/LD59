@@ -19,7 +19,6 @@ import gamelogic.Waveform.WaveformInverter;
 import gamelogic.Waveform.Triangle;
 import gamelogic.Waveform.WaveformCombination;
 import gamelogic.Waveform.Square;
-
 import gamelogic.Waveform.Sine;
 import utilities.Utilities.colors;
 import utilities.RNGManager;
@@ -119,7 +118,6 @@ class TargetSwitch extends Object implements MessageListener {
     }
 
     public function reset() {
-        // TODO tween
         tween?.stop();
         tween = Main.tweenManager.animateTo(this, { tweenParam: 1}, 0.1)
             .onUpdate(() -> setActiveSpritesPositions(tweenParam, false)
@@ -140,7 +138,6 @@ class TargetSwitch extends Object implements MessageListener {
         switchFlipped.y = endPos.y;
         setActiveSpritesPositions(1);
     }
-
 }
 
 typedef TargetJson = {
@@ -224,33 +221,30 @@ class TargetOscilloscope extends Object implements Updateable
         var targetOne = new Sine(4/8, 6/8, 1/8);
         
         var targetTwo = new WaveformCombination(false);
-        targetTwo.weight = 6/9;
+        targetTwo.weight = 6/8;
         targetTwo.sourceOne = targetOne;
         targetTwo.sourceTwo = new Square(1, 1, 1);
 
         var targetThree = new WaveformCombination(true);
-        targetThree.weight = 8/9;
         targetThree.sourceOne = new Triangle(1, 1, 4/8);
         targetThree.sourceTwo = new Square(1, 1, 1);
         
         var and = new WaveformCombination(true);
-        and.weight = 4/9;
         and.sourceOne = new Triangle(1, 3/8, 1);
         and.sourceTwo = and.sourceOne;
         var targetFour = new WaveformInverter();
         targetFour.source = and;
 
         var targetFive = new WaveformCombination(false);
-        targetFive.weight = 4/9;
+        targetFive.weight = 4/8;
         targetFive.sourceOne = new Sine(1, 2/8, 2/8);
         var or = new WaveformCombination(false);
-        or.weight = 4/9;
+        or.weight = 4/8;
         or.sourceOne = new Triangle(1, 1/8, 2/8);
         or.sourceTwo = new Square(4/8, 1, 2/8);
         targetFive.sourceTwo = or;
 
         var targetSix = new WaveformCombination(true);
-        targetSix.weight = 1/9;
         targetSix.sourceOne = new Square(1/8, 1 ,1);
         var invert = new WaveformInverter();
         invert.source = targetSix.sourceOne;

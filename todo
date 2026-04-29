@@ -4,6 +4,7 @@ Signals
 Post-jam MVP
 -----------------------------------
 have volume control on every component which emits sound
+    have it tween to zero once it's plugged into another sound emitter
 
 have oscilloscope shader
 

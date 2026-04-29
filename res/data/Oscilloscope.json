@@ -1,16 +1,18 @@
 {
   "ampDialX": -81,
-  "ampDialY": 84,
+  "ampDialY": 97,
   "freqDialX": 0,
-  "freqDialY": 84,
+  "freqDialY": 97,
   "phaseDialX": 81,
-  "phaseDialY": 84,
+  "phaseDialY": 97,
   "waveformGraphicsWidth": 212,
   "waveformGraphicsHeight": 114,
   "waveformGraphicsX": -108,
-  "waveformGraphicsY": -38,
+  "waveformGraphicsY": -55,
   "portX": 128,
   "portY": -83,
   "handleX": -70,
-  "handleY": -123
+  "handleY": -142,
+  "sliderX": 0,
+  "sliderY": 33
 }

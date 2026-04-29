@@ -15,7 +15,7 @@ class SoundDataGenerator extends hxd.snd.Data
     public var reload: Void -> Void;
 
     public function new(w: Waveform) {
-        samplingRate = 44100;
+        samplingRate = 3000;
         sampleFormat = SampleFormat.UI8;
         samples = samplingRate;
         channels = 1;
@@ -24,10 +24,8 @@ class SoundDataGenerator extends hxd.snd.Data
     }
 
     // called from hxd.snd.Data.decode
-    // need to force hxd.snd.Manager.fillSoundBuffer recall when waveform changes
-
-    var totalSamples = 0;
     public override function decodeBuffer(out:Bytes, outPos:Int, sampleStart:Int, sampleCount:Int) {
+        trace(out.length);
         for (i in outPos...out.length) {
             var r = i/out.length;
             // todo, random up this multiplier
@@ -36,8 +34,9 @@ class SoundDataGenerator extends hxd.snd.Data
         }
     }
 
+    // need to force hxd.snd.Manager.fillSoundBuffer recall when waveform changes
     override public function load( onEnd : Void -> Void ) {
-		reload = onEnd;
+        reload = onEnd;
 		onEnd();
 	}
 }

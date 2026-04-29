@@ -18,14 +18,14 @@ class Waveform {
 
     var previous: Waveform;
 
-    static final drawing_samples = 100;
-
-    // t in [0,1]
-    // return in [0,1]
+    /**
+        t in [0,1]
+        return in [0,1]
+    **/
     public function sample(t:Float, ?d:Int=0, ?sound=false):Float {return 0.5;}
     public function samplePreviousWeighted(t:Float, w:Float):Float {return 0.5;}
 
-    public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
+    public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?drawing_samples=100): Void {
         target.lineStyle(5, col);
         target.moveTo(0, samplePreviousWeighted(phase_delta, 0.1)*height);
         for (i in 0...drawing_samples) {
@@ -147,7 +147,7 @@ class WaveformCombination extends Waveform {
 
     public var sourceOne: Waveform;
     public var sourceTwo: Waveform;
-    // [0, 1]
+    // [0, 1], only used by Or
     public var weight = 0.5;
 
     var isAnd: Bool;
@@ -162,8 +162,7 @@ class WaveformCombination extends Waveform {
         if (sourceOne == null || sourceTwo == null || sourceOne.sample(0, d+1) == -1 || sourceTwo.sample(0, d+1) == -1) return -1;
         var y: Float;
         if (isAnd)
-            y = weight*4*sourceOne.sample(t, d+1)*sourceTwo.sample(t, d+1) - weight*0.5;
-            // y = sourceOne.sample(t, d+1)*sourceTwo.sample(t, d+1);
+            y = sourceOne.sample(t, d+1)*sourceTwo.sample(t, d+1);
         else
             y = weight*sourceOne.sample(t, d+1) + (1 - weight)*sourceTwo.sample(t, d+1);
         y = y > 0.5 ? 0.5 : y < -0.5 ? -0.5 : y;
@@ -174,9 +173,9 @@ class WaveformCombination extends Waveform {
         return sample(t);
     }
 
-    override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
+    override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?drawing_samples=100): Void {
         if (sample(0) == -1) return;
-        super.draw(target, width, height, phase_delta, col, alpha);
+        super.draw(target, width, height, phase_delta, col, drawing_samples);
     }
 }
 
@@ -198,8 +197,8 @@ class WaveformInverter extends Waveform {
         return sample(t);
     }
 
-    override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?alpha:Float=0): Void {
+    override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?drawing_samples=100): Void {
         if (sample(0) == -1) return;
-        super.draw(target, width, height, phase_delta, col, alpha);
+        super.draw(target, width, height, phase_delta, col, drawing_samples);
     }
 }
