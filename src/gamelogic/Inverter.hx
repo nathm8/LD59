@@ -90,7 +90,6 @@ class Inverter extends Object implements MessageListener
         transformedWaveform = new WaveformInverter();
 
         outputWaveformGraphics = new Graphics(this);
-        outputWaveformGraphics.filter = new Group([new Glow(outputCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         inputPort = new Port(false, this);
         inputPort.onConnection = (w) -> { inputWaveform = w; transformedWaveform.source = w; sound.reload(); };
