@@ -1,5 +1,8 @@
 package gamelogic;
 
+import sound.SoundManager;
+import graphics.VolumeSlider;
+import sound.CustomSound;
 import slide.Tween;
 import utilities.Utilities.clamp;
 import utilities.Vector2D;
@@ -172,6 +175,9 @@ typedef TargetJson = {
     var switchEndX: Float;
     var switchEndY: Float;
     var switchMaxLag: Float;
+
+    var sliderX: Float;
+    var sliderY: Float;
 }
 
 class TargetOscilloscope extends Object implements Updateable
@@ -208,6 +214,9 @@ class TargetOscilloscope extends Object implements Updateable
 
     var handle: Handle;
     var targetSwitch: TargetSwitch;
+
+    var slider: VolumeSlider;
+    var sound: CustomSound;
 
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
@@ -274,20 +283,19 @@ class TargetOscilloscope extends Object implements Updateable
         
         targetWaveform = targets[0];
         targetWaveformGraphics = new Graphics(this);
-        targetWaveformGraphics.filter = new Group([new Glow(colOne, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
-        
-        // inputWaveform = new Sine();
         inputWaveformGraphics = new Graphics(this);
-        inputWaveformGraphics.filter = new Group([new Glow(colTwo, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
-        
         combinedWaveformGraphics = new Graphics(this);
-        combinedWaveformGraphics.filter = new Group([new Glow(colThree, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
         
         port = new Port(false, this);
         port.onConnection = (w: Waveform) -> {inputWaveform = w;};
         port.onDisconnect = () -> {inputWaveform = null;};
         
         handle = new Handle(this);
+
+        // TODO make this more distinct with an overtone or something
+        var sound_channel = SoundManager.addWaveform(targetWaveform);
+        sound = sound_channel.sound;
+        slider = new VolumeSlider(sound_channel.channel, this);
         
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Target.entry);
@@ -321,6 +329,9 @@ class TargetOscilloscope extends Object implements Updateable
         handle.x = params.handleX;
         handle.y = params.handleY;
 
+        slider.x = params.sliderX;
+        slider.y = params.sliderY;
+
         targetSwitch.updateGraphics();
     }
 
@@ -349,6 +360,7 @@ class TargetOscilloscope extends Object implements Updateable
         if (puzzlesComplete >= targets.length)
             puzzlesComplete = 0;
         targetWaveform = targets[puzzlesComplete];
+        sound.reload();
     }
 
     function checkSolution() {

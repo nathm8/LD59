@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.60372767"
-     inkscape:cx="832.32891"
-     inkscape:cy="285.72485"
+     inkscape:zoom="0.78576418"
+     inkscape:cx="1135.2006"
+     inkscape:cy="266.61943"
      inkscape:window-width="1920"
      inkscape:window-height="1080"
      inkscape:window-x="1080"
@@ -4223,7 +4223,10 @@
     </g>
     <g
        id="g334"
-       transform="translate(3.7186701,82.120631)">
+       transform="translate(3.7186701,82.120631)"
+       inkscape:export-filename="res/img/Invert.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286">
       <rect
          style="fill:#0e123d;fill-opacity:1;stroke-width:1.70087;stroke-miterlimit:3.3;paint-order:markers stroke fill"
          id="rect218"
@@ -4304,7 +4307,10 @@
        id="path338"
        style="fill:#808080;stroke-width:0.319858;paint-order:markers stroke fill"
        d="m 100.41614,-24.648824 v 1.02064 c 0,0.74836 -1.950456,1.35083 -4.373226,1.35083 H 44.742415 c -2.422765,0 -4.373232,-0.60247 -4.373232,-1.35083 v -1.02064 c 0,-0.74836 1.950467,-1.35083 4.373232,-1.35083 h 51.300499 c 2.42277,0 4.373226,0.60247 4.373226,1.35083 z"
-       sodipodi:nodetypes="sssssssss" />
+       sodipodi:nodetypes="sssssssss"
+       inkscape:export-filename="assets.png"
+       inkscape:export-xdpi="86.840286"
+       inkscape:export-ydpi="86.840286" />
     <g
        id="g341"
        transform="translate(17.865081,-74.859145)">
@@ -4407,7 +4413,7 @@
     </g>
     <g
        id="g354"
-       transform="matrix(1,0,0,0.99328472,227.63385,96.513176)"
+       transform="matrix(1,0,0,0.99328472,226.04634,96.513176)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286">
@@ -4426,7 +4432,7 @@
     </g>
     <g
        id="g356"
-       transform="matrix(1,0,0,0.99328472,227.63385,153.30662)"
+       transform="matrix(1,0,0,0.99328472,226.04634,153.30662)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286">
@@ -4445,7 +4451,7 @@
     </g>
     <g
        id="g369"
-       transform="matrix(1,0,0,0.99328472,377.51517,125.87589)"
+       transform="matrix(1,0,0,0.99328472,379.10268,125.87589)"
        inkscape:export-filename="res/img/Oscillo.png"
        inkscape:export-xdpi="86.840286"
        inkscape:export-ydpi="86.840286">

@@ -4,9 +4,11 @@
   "outputWaveformGraphicsX": -106,
   "outputWaveformGraphicsY": 0,
   "inputPortX": -128,
-  "inputPortY": 41,
+  "inputPortY": 10,
   "outputPortX": 128,
-  "outputPortY": 41,
+  "outputPortY": 10,
   "handleX": -70,
-  "handleY": 66
+  "handleY": 80,
+  "sliderX": 0,
+  "sliderY": -79
 }

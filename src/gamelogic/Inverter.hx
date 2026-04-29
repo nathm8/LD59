@@ -1,5 +1,8 @@
 package gamelogic;
 
+import sound.SoundManager;
+import sound.CustomSound;
+import graphics.VolumeSlider;
 import graphics.Handle;
 import haxe.Json;
 import hxd.fs.FileEntry;
@@ -30,6 +33,9 @@ typedef InverterJson = {
 
     var handleX: Float;
     var handleY: Float;
+
+    var sliderX: Float;
+    var sliderY: Float;
 }
 
 class Inverter extends Object implements MessageListener
@@ -52,6 +58,9 @@ class Inverter extends Object implements MessageListener
 
     var params: InverterJson;
 
+    var slider: VolumeSlider;
+    var sound: CustomSound;
+
 
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
@@ -66,6 +75,8 @@ class Inverter extends Object implements MessageListener
         outputPort.y = params.outputPortY;
         handle.x = params.handleX;
         handle.y = params.handleY;
+        slider.x = params.sliderX;
+        slider.y = params.sliderY;
     }
 
     public function new(?p: Object) {
@@ -82,13 +93,17 @@ class Inverter extends Object implements MessageListener
         outputWaveformGraphics.filter = new Group([new Glow(outputCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         inputPort = new Port(false, this);
-        inputPort.onConnection = (w) -> {inputWaveform = w; transformedWaveform.source = w;};
-        inputPort.onDisconnect = () -> {inputWaveform = null; transformedWaveform.source = null;};
+        inputPort.onConnection = (w) -> { inputWaveform = w; transformedWaveform.source = w; sound.reload(); };
+        inputPort.onDisconnect = () ->  { inputWaveform = null; transformedWaveform.source = null; sound.reload(); };
         
         outputPort = new Port(true, this);
         outputPort.getOutput = () -> {return transformedWaveform;};
 
         handle = new Handle(this);
+
+        var sound_channel = SoundManager.addWaveform(transformedWaveform);
+        sound = sound_channel.sound;
+        slider = new VolumeSlider(sound_channel.channel, this);
 
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Inverter.entry);

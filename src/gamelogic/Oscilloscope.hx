@@ -80,8 +80,6 @@ class Oscilloscope extends Object implements Updateable
         phaseDial = new Dial(Math.round(waveform.phase*8), () -> {waveform.backup(); waveform.phase = phaseDial.value/8; sound.reload();}, sprite);
 
         waveformGraphics = new Graphics(this);
-        waveformGraphics.filter = new Group([new Glow(col, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
-
         col = colors[RNGManager.random(colors.length)];
         
         port = new Port(true, this);
@@ -92,7 +90,6 @@ class Oscilloscope extends Object implements Updateable
         var sound_channel = SoundManager.addWaveform(waveform);
         sound = sound_channel.sound;
         slider = new VolumeSlider(sound_channel.channel, this);
-        slider.mute();
         
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Oscilloscope.entry);

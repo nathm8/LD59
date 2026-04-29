@@ -1,5 +1,8 @@
 package gamelogic;
 
+import sound.SoundManager;
+import sound.CustomSound;
+import graphics.VolumeSlider;
 import graphics.Handle;
 import haxe.Json;
 import hxd.Res;
@@ -43,6 +46,9 @@ typedef CombinatorJson = {
 
     var handleX: Float;
     var handleY: Float;
+
+    var sliderX: Float;
+    var sliderY: Float;
 }
 
 class Combinator extends Object implements MessageListener
@@ -63,16 +69,20 @@ class Combinator extends Object implements MessageListener
     var transformedWaveform: WaveformCombination;
 
     var inputWaveformOne: Waveform;
-    var inputWaveformGraphicsOne: Graphics;
-    var inputOneCol = 0xFF00FF;
     var inputWaveformTwo: Waveform;
+    
+    var inputWaveformGraphicsOne: Graphics;
     var inputWaveformGraphicsTwo: Graphics;
-    var inputTwoCol = 0x00FFFF;
-
     var outputWaveformGraphics: Graphics;
-    var outputCol = 0x00FFFF;
+
+    var inputOneCol: Int;
+    var inputTwoCol: Int;
+    var outputCol: Int;
 
     var params: CombinatorJson;
+
+    var slider: VolumeSlider;
+    var sound: CustomSound;    
 
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
@@ -93,8 +103,12 @@ class Combinator extends Object implements MessageListener
         outputPort.y = params.outputPortY;
         handle.x = params.handleX;
         handle.y = params.handleY;
-        dial.x = params.dialX;
-        dial.y = params.dialY;
+        if (!isAnd) {
+            dial.x = params.dialX;
+            dial.y = params.dialY;
+        }
+        slider.x = params.sliderX;
+        slider.y = params.sliderY;
     }
 
     public function new(a: Bool, ?p: Object) {
@@ -106,7 +120,8 @@ class Combinator extends Object implements MessageListener
         else
             sprite = new Bitmap(Res.img.Or.toTile().center(), this);
 
-        dial = new Dial(4, () -> {transformedWaveform.weight = dial.value/8;}, this);
+        if (!isAnd)
+            dial = new Dial(4, () -> {transformedWaveform.weight = dial.value/8;}, this);
 
         var cols = RNGManager.randoms(colors.length, 3, true);
         inputOneCol = colors[cols[0]];
@@ -116,25 +131,25 @@ class Combinator extends Object implements MessageListener
         transformedWaveform = new WaveformCombination(isAnd);
 
         outputWaveformGraphics = new Graphics(this);
-
         inputWaveformGraphicsOne = new Graphics(this);
-        inputWaveformGraphicsOne.filter = new Group([new Glow(inputOneCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
-
         inputWaveformGraphicsTwo = new Graphics(this);
-        inputWaveformGraphicsTwo.filter = new Group([new Glow(inputTwoCol, 1, 10, 1, 1, true), new Blur(60, 1.1)]);
 
         inputPortOne = new Port(false, this);
-        inputPortOne.onConnection = (w) -> {inputWaveformOne = w; transformedWaveform.sourceOne = w;};
-        inputPortOne.onDisconnect = () -> {inputWaveformOne = null; transformedWaveform.sourceOne = null;};
+        inputPortOne.onConnection = (w) -> { inputWaveformOne = w; transformedWaveform.sourceOne = w; sound.reload(); };
+        inputPortOne.onDisconnect = () ->  { inputWaveformOne = null; transformedWaveform.sourceOne = null; sound.reload(); };
 
         inputPortTwo = new Port(false, this);
-        inputPortTwo.onConnection = (w) -> {inputWaveformTwo = w; transformedWaveform.sourceTwo = w;};
-        inputPortTwo.onDisconnect = () -> {inputWaveformTwo = null; transformedWaveform.sourceTwo = null;};
+        inputPortTwo.onConnection = (w) -> { inputWaveformTwo = w; transformedWaveform.sourceTwo = w; sound.reload(); };
+        inputPortTwo.onDisconnect = () ->  { inputWaveformTwo = null; transformedWaveform.sourceTwo = null; sound.reload(); };
         
         outputPort = new Port(true, this);
         outputPort.getOutput = () -> {return transformedWaveform;};
 
         handle = new Handle(this);
+
+        var sound_channel = SoundManager.addWaveform(transformedWaveform);
+        sound = sound_channel.sound;
+        slider = new VolumeSlider(sound_channel.channel, this);
 
         MessageManager.addListener(this);
 
@@ -157,7 +172,7 @@ class Combinator extends Object implements MessageListener
         outputWaveformGraphics.clear();
         transformedWaveform?.draw(outputWaveformGraphics, params.outputWaveformGraphicsWidth, params.outputWaveformGraphicsHeight, totalTimeThree, outputCol);
 
-        dial.update(dt);
+        dial?.update(dt);
         return false;
     }
 

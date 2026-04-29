@@ -12,13 +12,15 @@
   "outputWaveformGraphicsX": -106,
   "outputWaveformGraphicsY": 81,
   "dialX": 0,
-  "dialY": -63,
-  "inputPortOneX": -299.5,
-  "inputPortOneY": -112,
-  "inputPortTwoX": -299.5,
-  "inputPortTwoY": -32,
-  "outputPortX": 299.5,
-  "outputPortY": -32,
+  "dialY": -73,
+  "inputPortOneX": -300,
+  "inputPortOneY": -120,
+  "inputPortTwoX": -300,
+  "inputPortTwoY": -42,
+  "outputPortX": 130,
+  "outputPortY": 97,
   "handleX": -70,
-  "handleY": -157
+  "handleY": -168,
+  "sliderX": 0,
+  "sliderY": 6
 }

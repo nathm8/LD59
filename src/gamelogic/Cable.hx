@@ -73,7 +73,6 @@ class CableHead extends Object implements MessageListener implements Updateable 
         return false;
     }
 
-    // public function snapTo(pos: Vector2D, port: Port): Bool {
     public function snapTo(port: Port): Bool {
         if (snapImmunity > 0) return false;
         connectedPort = port;

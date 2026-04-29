@@ -6,7 +6,7 @@
 # -lib hlopenal
 -cp src
 -D windowSize=1600x900
--D windowTitle=Finicky Fourier Toy
+-D windowTitle=FinickyFourierToy
 -hl bin/game.hl
 -main Main
 -debug

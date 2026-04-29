@@ -14,11 +14,13 @@
   "dialX": -122,
   "dialY": 6,
   "inputPortOneX": -250,
-  "inputPortOneY": -155.5,
+  "inputPortOneY": -125,
   "inputPortTwoX": -250,
-  "inputPortTwoY": 160.5,
+  "inputPortTwoY": 130,
   "outputPortX": 250,
-  "outputPortY": 10,
+  "outputPortY": 7,
   "handleX": -192,
-  "handleY": -200.5
+  "handleY": -172,
+  "sliderX": -122,
+  "sliderY": 3
 }

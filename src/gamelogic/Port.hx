@@ -43,13 +43,8 @@ class Port extends Object implements MessageListener
             var q = cable_head.globalToLocal(p);
             var c1 = new Circle(q.x, q.y, 15);
             
-            // var q = cable_head.getAbsPos().getPosition();
-            // var c2 = new Circle(q.x, q.y, 40);
-
             if (cable_head.collider.collideCircle(c1)) {
-            // if (c2.collideCircle(c1)) {
                 isConnected = cable_head.snapTo(this);
-                // isConnected = cable_head.snapTo(new Vector2D(sprite.x, sprite.y), this);
                 // hack for tutorial progression, but shouldn't matter elsewhere
                 if (isConnected) {
                     if (isOutput)

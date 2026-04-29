@@ -25,5 +25,7 @@
   "switchStartY": 173,
   "switchEndX": -99,
   "switchEndY": 173,
-  "switchMaxLag": 10
+  "switchMaxLag": 10,
+  "sliderX": -173,
+  "sliderY": -33
 }

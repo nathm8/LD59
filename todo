@@ -11,9 +11,17 @@ have oscilloscope shader
 put in guards to prevent dragging components off-screen
     and out of bounds when zoomed out\panned far out
 
+set window icon
+    https://github.com/HaxeFoundation/hashlink/blob/master/libs/sdl/sdl/Surface.hx
+    https://github.com/HaxeFoundation/hashlink/blob/master/libs/sdl/sdl/Window.hx
+    https://github.com/HeapsIO/heaps/blob/master/hxd/Window.hl.hx
+and just favicon for js target
+
 cables - allow click-drag mode
 
 add noise warning
+
+add black outline to interactables, or otherwise improve their greyscale visibility
 
 cache square wave calcs
 
