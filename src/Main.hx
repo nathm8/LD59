@@ -41,6 +41,10 @@ class Main extends UIApp implements MessageListener {
         // filewatchers
         hxd.Res.data.Oscilloscope.watch(() -> { MessageManager.send(new UpdateOscilloscope(hxd.Res.data.Oscilloscope.entry)); });
         hxd.Res.data.Target.watch(() -> { MessageManager.send(new UpdateTarget(hxd.Res.data.Target.entry)); });
+        hxd.Res.data.Inverter.watch(() -> { MessageManager.send(new UpdateInvert(hxd.Res.data.Inverter.entry)); });
+        hxd.Res.data.And.watch(() -> { MessageManager.send(new UpdateAnd(hxd.Res.data.And.entry)); });
+        hxd.Res.data.Or.watch(() -> { MessageManager.send(new UpdateOr(hxd.Res.data.Or.entry)); });
+        hxd.Res.data.Splitter.watch(() -> { MessageManager.send(new UpdateSplitter(hxd.Res.data.Splitter.entry)); });
     }
     
     override function update(dt:Float) {

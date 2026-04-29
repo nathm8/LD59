@@ -73,7 +73,8 @@ class CableHead extends Object implements MessageListener implements Updateable 
         return false;
     }
 
-    public function snapTo(pos: Vector2D, port: Port): Bool {
+    // public function snapTo(pos: Vector2D, port: Port): Bool {
+    public function snapTo(port: Port): Bool {
         if (snapImmunity > 0) return false;
         connectedPort = port;
         cable.newConnection();
@@ -82,12 +83,13 @@ class CableHead extends Object implements MessageListener implements Updateable 
         remove();
         port.parent.addChildAt(this, 0);
 
-        var s = sprite.getSize();
-        var w = port.isOutput ? s.width : -s.width;
-        var h = port.isOutput ? -s.height : s.height;
-        x = port.x + pos.x + h/2;
-        y = port.y + pos.y + w/2;
         rotation = port.isOutput ? -Math.PI/2 : Math.PI/2;
+        rotation += port.rotation;
+        var s = sprite.getSize();
+        var offset = new Vector2D(s.width/2, s.height/2);
+        offset.rotate(rotation);
+        x = port.x - offset.x;
+        y = port.y - offset.y;
         return true;
     }
 

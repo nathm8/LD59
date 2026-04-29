@@ -59,6 +59,10 @@ class UpdateInvert extends Message {
     public var json: FileEntry;
     public function new(j: FileEntry) {super(); json = j;}
 }
+class UpdateSplitter extends Message {
+    public var json: FileEntry;
+    public function new(j: FileEntry) {super(); json = j;}
+}
 class UpdateTarget extends Message {
     public var json: FileEntry;
     public function new(j: FileEntry) {super(); json = j;}

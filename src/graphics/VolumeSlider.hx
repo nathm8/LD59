@@ -66,9 +66,10 @@ class VolumeSlider extends Object implements MessageListener {
     }
 
     public function mute() {
-        // TODO tween
         tween?.stop();
-        tween = Main.tweenManager.animateTo(channel, { volume: 0}, 1);
+        tween = Main.tweenManager.animateTo(channel, { volume: 0}, 0.5).onUpdate(
+            () -> {slider.x = (1 - channel.volume)*startPos.x + channel.volume*endPos.x;}
+        );
         tween.start();
     }
 }

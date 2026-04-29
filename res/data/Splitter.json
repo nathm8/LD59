@@ -1,10 +1,10 @@
 {
   "inputPortX": -78,
-  "inputPortY": 20,
-  "outputPortOneX": 78,
-  "outputPortOneY": -20,
-  "outputPortTwoX": 78,
-  "outputPortTwoY": 20,
+  "inputPortY": -5,
+  "outputPortOneX": -53.5,
+  "outputPortOneY": 42,
+  "outputPortTwoX": 56,
+  "outputPortTwoY": 42,
   "handleX": -70,
   "handleY": -38
 }

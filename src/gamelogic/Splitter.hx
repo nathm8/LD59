@@ -77,9 +77,11 @@ class Splitter extends Object implements MessageListener
         };
         
         outputPortOne = new Port(true, this);
+        outputPortOne.rotation = Math.PI/2;
         outputPortOne.getOutput = () -> {return waveform;};
-
+        
         outputPortTwo = new Port(true, this);
+        outputPortTwo.rotation = Math.PI/2;
         outputPortTwo.getOutput = () -> {return waveform;};
 
         handle = new Handle(this);
@@ -94,6 +96,11 @@ class Splitter extends Object implements MessageListener
     }
 
     public function receive(msg:Message):Bool {
+        if (Std.isOfType(msg, UpdateSplitter)) {
+            var params: UpdateSplitter = cast(msg, UpdateSplitter);
+            fromJson(params.json);
+            updateGraphics();
+        }
 		return false;
 	}
 }

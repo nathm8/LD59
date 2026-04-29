@@ -25,7 +25,6 @@ class SoundDataGenerator extends hxd.snd.Data
 
     // called from hxd.snd.Data.decode
     public override function decodeBuffer(out:Bytes, outPos:Int, sampleStart:Int, sampleCount:Int) {
-        trace(out.length);
         for (i in outPos...out.length) {
             var r = i/out.length;
             // todo, random up this multiplier

@@ -92,6 +92,7 @@ class Oscilloscope extends Object implements Updateable
         var sound_channel = SoundManager.addWaveform(waveform);
         sound = sound_channel.sound;
         slider = new VolumeSlider(sound_channel.channel, this);
+        slider.mute();
         
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Oscilloscope.entry);
