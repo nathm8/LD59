@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.Utilities.clamp;
 import utilities.Assert.assert;
 import h2d.col.Circle;
 import utilities.MessageManager;
@@ -13,6 +14,8 @@ import h2d.Interactive;
 import h2d.Object;
 import h2d.Bitmap;
 import hxd.Res;
+
+final selectedTimeLimit = 0.2;
 
 class Dial extends Object implements MessageListener implements Updateable {
     // between 1 and 8
@@ -45,7 +48,7 @@ class Dial extends Object implements MessageListener implements Updateable {
             moveImmune = 0.25;
         }
         interactive.onClick = (e:Event) -> {
-            if (selectedTime < 0.1) {
+            if (selectedTime < selectedTimeLimit) {
                 if (e.button == 0)
                     value++;
                 else
@@ -66,8 +69,7 @@ class Dial extends Object implements MessageListener implements Updateable {
             var params = cast(msg, MouseMove);
             var v = new Vector2D(x, y);
             var p = sprite.getAbsPos().getPosition();
-            var u = new Vector2D(p.x, p.y);
-            var r = normaliseRadian((params.scenePosition - u).angle() + 1.5*Math.PI/8);
+            var r = normaliseRadian((params.scenePosition - p).angle() + 1.5*Math.PI/8);
             value = Math.round(r/(Math.PI/4)) + 1;
             value = value == 9 ? 1 : value;
             rotation = value*2*Math.PI/8;
@@ -79,6 +81,49 @@ class Dial extends Object implements MessageListener implements Updateable {
     public function update(dt:Float):Bool {
         if (moveImmune > 0 && isSelected) moveImmune -= dt;
         if (isSelected) selectedTime += dt;
+        return false;
+    }
+}
+
+class OrDial extends Dial {
+
+    final startRot = 9*2*Math.PI/8;
+
+    public function new(v: Int, f: Void -> Void, p: Object) {
+        super(v, f, p);
+        interactive.onClick = (e:Event) -> {
+            if (selectedTime < selectedTimeLimit) {
+                if (e.button == 0)
+                    value++;
+                else
+                    value--;
+            }
+            if (value == -1) value = 6;
+            if (value == 7) value = 0;
+            value = Math.round(clamp(value, 0, 6));
+            rotation = startRot + (value+4)*2*Math.PI/8;
+            callback();
+        };
+        rotation = startRot + (value+4)*2*Math.PI/8;
+    }
+
+    override public function receive(msg:Message):Bool {
+        if (Std.isOfType(msg, MouseMove)) {
+            if (!isSelected) return false;
+            if (moveImmune > 0) return false;
+            var params = cast(msg, MouseMove);
+            var v = new Vector2D(x, y);
+            var p = sprite.getAbsPos().getPosition();
+            var r = normaliseRadian((params.scenePosition - p).angle() + Math.PI/2);
+            var t = r/(2*Math.PI) - 0.6;
+            if (t < 0) t += 1;
+            var v = Math.round(8*t);
+            v = v == 8 ? 0 : v == 7 ? 6 : v;
+
+            value = v;
+            rotation = startRot + (value+4)*2*Math.PI/8;
+            callback();
+        }
         return false;
     }
 }

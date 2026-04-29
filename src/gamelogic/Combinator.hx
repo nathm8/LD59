@@ -1,5 +1,6 @@
 package gamelogic;
 
+import gamelogic.Dial.OrDial;
 import sound.SoundManager;
 import sound.CustomSound;
 import graphics.VolumeSlider;
@@ -121,7 +122,7 @@ class Combinator extends Object implements MessageListener
             sprite = new Bitmap(Res.img.Or.toTile().center(), this);
 
         if (!isAnd)
-            dial = new Dial(4, () -> {transformedWaveform.weight = dial.value/8;}, this);
+            dial = new OrDial(3, () -> {transformedWaveform.weight = dial.value/6;}, this);
 
         var cols = RNGManager.randoms(colors.length, 3, true);
         inputOneCol = colors[cols[0]];
