@@ -1,4 +1,4 @@
-package graphics;
+package graphics.shaders;
 
 import h3d.shader.Base2d;
 
@@ -32,7 +32,7 @@ class WaveformShader extends hxsl.Shader {
             // var x = 1.1*(input.position.x - 0.05);
             var y = 1.1*(input.position.y - 0.05);
 
-            var w = sampleY(x + time);
+            var w = sampleY(x + 0.5*time);
             var p = plot(y, w);
 
             output.color = vec4(0.0, 0.0, 0.0, 0.5) + 

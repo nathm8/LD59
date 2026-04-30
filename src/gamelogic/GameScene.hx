@@ -2,7 +2,8 @@ package gamelogic;
 
 import hxsl.Types.Vec4;
 import h2d.Tile;
-import graphics.WaveformShader;
+import graphics.shaders.WaveformShader;
+import graphics.shaders.PeriodicAlphaShader;
 import h2d.Bitmap;
 import utilities.RNGManager;
 import gamelogic.Waveform.Square;
@@ -60,6 +61,8 @@ class GameScene extends Scene implements MessageListener {
                 , 0, 0, 0);
         }
         square.addShader(w);
+        var p = new PeriodicAlphaShader();
+        square.addShader(p);
     }
     
     public function update(dt:Float) {
