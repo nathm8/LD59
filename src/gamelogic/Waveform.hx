@@ -1,7 +1,10 @@
 package gamelogic;
 
+import haxe.ds.Vector;
 import utilities.RNGManager;
 import h2d.Graphics;
+
+final WAVEFORM_CACHE_LENGTH = 100;
 
 class Waveform {
 
@@ -16,21 +19,20 @@ class Waveform {
         phase = p;
     }
 
-    var previous: Waveform;
+    var cache: Vector<Float>;
 
     /**
         t in [0,1]
         return in [0,1]
     **/
     public function sample(t:Float, ?d:Int=0, ?sound=false):Float {return 0.5;}
-    public function samplePreviousWeighted(t:Float, w:Float):Float {return 0.5;}
 
     public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?drawing_samples=100): Void {
         target.lineStyle(5, col);
-        target.moveTo(0, samplePreviousWeighted(phase_delta, 0.1)*height);
+        target.moveTo(0, sample(phase_delta)*height);
         for (i in 0...drawing_samples) {
             var x = i/drawing_samples*4;
-            var y = samplePreviousWeighted(x + phase_delta, 0.1);
+            var y = sample(x + phase_delta);
             if (RNGManager.random(5000) == 0) {
                 y += RNGManager.srand(0.1);
                 if (RNGManager.random(1000) == 0)
@@ -44,11 +46,6 @@ class Waveform {
             y = y < -0.5 ? -0.5: y > 0.5 ? 0.5 : y;
             target.lineTo(x*.25*width, y*height);
         }
-        // this lerp is framerate dependant on how many times draw is called, but it's a visual effect only so that's fine
-        if (previous == null) return;
-        previous.amplitude = 0.99*previous.amplitude + 0.01*amplitude;
-        previous.frequency = 0.99*previous.frequency + 0.01*frequency;
-        previous.phase     = 0.99*previous.phase + 0.01*phase;
     }
 
     public function match(o: Waveform): Bool {
@@ -60,15 +57,9 @@ class Waveform {
         }
         return true;
     }
-
-    public function backup(): Void {};
 }
 
 class Sine extends Waveform {
-
-    override public function backup() {
-        previous = new Sine(amplitude, frequency, phase);
-    }
 
     public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
         t -= p*Math.PI;
@@ -77,12 +68,6 @@ class Sine extends Waveform {
 
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
         return staticSample(t, amplitude, frequency, phase);
-    }
-
-    override public function samplePreviousWeighted(t:Float, w:Float):Float {
-        if (previous == null)
-            return sample(t);
-        return w*Sine.staticSample(t, amplitude, frequency, phase) + (1-w)*Sine.staticSample(t, previous.amplitude, previous.frequency, previous.phase);
     }
 
 }
@@ -94,10 +79,6 @@ function sign(v: Float): Int {
 }
 
 class Square extends Waveform {
-
-    override public function backup() {
-        previous = new Square(amplitude, frequency, phase);
-    }
 
     public static function staticSample(t:Float, a:Float, f:Float, p:Float, ?sound=false):Float {
         t -= p*Math.PI;
@@ -113,19 +94,9 @@ class Square extends Waveform {
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
         return staticSample(t, amplitude, frequency, phase, sound);
     }
-
-    override public function samplePreviousWeighted(t:Float, w:Float):Float {
-        if (previous == null)
-            return sample(t);
-        return w*Square.staticSample(t, amplitude, frequency, phase) + (1-w)*Square.staticSample(t, previous.amplitude, previous.frequency, previous.phase);
-    }
 }
 
 class Triangle extends Waveform {
-
-    override public function backup() {
-        previous = new Triangle(amplitude, frequency, phase);
-    }
 
     public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
         t -= p*Math.PI;
@@ -134,12 +105,6 @@ class Triangle extends Waveform {
 
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
         return staticSample(t, amplitude, frequency, phase);
-    }
-
-    override public function samplePreviousWeighted(t:Float, w:Float):Float {
-        if (previous == null)
-            return sample(t);
-        return w*Triangle.staticSample(t, amplitude, frequency, phase) + (1-w)*Triangle.staticSample(t, previous.amplitude, previous.frequency, previous.phase);
     }
 }
 
@@ -169,10 +134,6 @@ class WaveformCombination extends Waveform {
         return y;
     }
 
-    override public function samplePreviousWeighted(t:Float, w:Float):Float {
-        return sample(t);
-    }
-
     override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?drawing_samples=100): Void {
         if (sample(0) == -1) return;
         super.draw(target, width, height, phase_delta, col, drawing_samples);
@@ -183,18 +144,10 @@ class WaveformInverter extends Waveform {
 
     public var source: Waveform;
 
-    public function new() {
-        super();
-    }
-
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
         if (d == 100) return -1;
         if (source == null || source.sample(0, d+1) == -1) return -1;
         return -source.sample(t, d+1);
-    }
-
-    override public function samplePreviousWeighted(t:Float, w:Float):Float {
-        return sample(t);
     }
 
     override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?drawing_samples=100): Void {

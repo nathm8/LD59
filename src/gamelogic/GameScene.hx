@@ -1,5 +1,9 @@
 package gamelogic;
 
+import hxsl.Types.Vec4;
+import h2d.Tile;
+import graphics.WaveformShader;
+import h2d.Bitmap;
 import utilities.RNGManager;
 import gamelogic.Waveform.Square;
 import gamelogic.Waveform.Triangle;
@@ -38,11 +42,24 @@ class GameScene extends Scene implements MessageListener {
 
         MessageManager.addListener(this);
 
-        var target = new TargetOscilloscope(this);
-        target.x = 400;
-        target.y = -200;
+        // var target = new TargetOscilloscope(this);
+        // target.x = 400;
+        // target.y = -200;
 
-        updateables.push(target);
+        // updateables.push(target);
+
+        var square = new Bitmap(Tile.fromColor(0x000000, 500, 500, 0), this);
+        square.x -= 250; square.y -= 250;
+        var w = new WaveformShader();
+        w.samples = new Array<Vec4>();
+        w.thickness = 0.015;
+        var samples = 500;
+        for (x in 0...samples) {
+            w.samples[x] = new Vec4(
+                    0.5*(Math.sin(2*Math.PI * x/samples)) + 0.5
+                , 0, 0, 0);
+        }
+        square.addShader(w);
     }
     
     public function update(dt:Float) {
