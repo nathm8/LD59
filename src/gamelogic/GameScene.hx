@@ -1,5 +1,8 @@
 package gamelogic;
 
+import h2d.filter.Blur;
+import h3d.shader.ScreenShader;
+import graphics.shaders.BackgroundGridShader;
 import hxsl.Types.Vec4;
 import h2d.Tile;
 import graphics.shaders.WaveformShader;
@@ -48,6 +51,10 @@ class GameScene extends Scene implements MessageListener {
         // target.y = -200;
 
         // updateables.push(target);
+
+        var squarebg = new Bitmap(Tile.fromColor(0x000000, 500, 500, 0), this);
+        squarebg.x -= 250; squarebg.y -= 250;
+        squarebg.addShader(new BackgroundGridShader());
 
         var square = new Bitmap(Tile.fromColor(0x000000, 500, 500, 0), this);
         square.x -= 250; square.y -= 250;
