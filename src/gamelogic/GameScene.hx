@@ -1,22 +1,21 @@
 package gamelogic;
 
+import h2d.filter.Group;
+import h2d.filter.Bloom;
 import h2d.filter.Blur;
-import h3d.shader.ScreenShader;
-import graphics.shaders.BackgroundGridShader;
-import hxsl.Types.Vec4;
+import h2d.filter.Shader;
+import h2d.col.Point;
+import h2d.Scene;
 import h2d.Tile;
-import graphics.shaders.WaveformShader;
-import graphics.shaders.PeriodicAlphaShader;
 import h2d.Bitmap;
-import utilities.RNGManager;
+import hxd.Key;
+import hxsl.Types.Vec4;
 import gamelogic.Waveform.Square;
 import gamelogic.Waveform.Triangle;
 import gamelogic.Waveform.Sine;
-import hxd.Key;
-import h2d.col.Point;
-import h2d.Scene;
 import gamelogic.Updateable;
 import gamelogic.physics.PhysicalWorld;
+import utilities.RNGManager;
 import utilities.MessageManager;
 
 class GameScene extends Scene implements MessageListener {
@@ -46,36 +45,17 @@ class GameScene extends Scene implements MessageListener {
 
         MessageManager.addListener(this);
 
-        // var target = new TargetOscilloscope(this);
-        // target.x = 400;
-        // target.y = -200;
+        var target = new TargetOscilloscope(this);
+        target.x = 400;
+        target.y = -200;
 
-        // updateables.push(target);
-
-        var squarebg = new Bitmap(Tile.fromColor(0x000000, 500, 500, 0), this);
-        squarebg.x -= 250; squarebg.y -= 250;
-        squarebg.addShader(new BackgroundGridShader());
-
-        var square = new Bitmap(Tile.fromColor(0x000000, 500, 500, 0), this);
-        square.x -= 250; square.y -= 250;
-        var w = new WaveformShader();
-        w.samples = new Array<Vec4>();
-        w.thickness = 0.015;
-        var samples = 500;
-        for (x in 0...samples) {
-            w.samples[x] = new Vec4(
-                    0.5*(Math.sin(2*Math.PI * x/samples)) + 0.5
-                , 0, 0, 0);
-        }
-        square.addShader(w);
-        var p = new PeriodicAlphaShader();
-        square.addShader(p);
+        updateables.push(target);
     }
     
     public function update(dt:Float) {
         PhysicalWorld.update(dt);
         cameraControl();
-        
+
         var to_remove = new Array<Updateable>();
         for (u in updateables)
             if (u.update(dt))
