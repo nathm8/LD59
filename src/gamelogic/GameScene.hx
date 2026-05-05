@@ -1,5 +1,6 @@
 package gamelogic;
 
+import graphics.WaveformGraphics;
 import h2d.filter.Group;
 import h2d.filter.Bloom;
 import h2d.filter.Blur;
@@ -48,8 +49,10 @@ class GameScene extends Scene implements MessageListener {
         var target = new TargetOscilloscope(this);
         target.x = 400;
         target.y = -200;
-
         updateables.push(target);
+        
+        var wg = new WaveformGraphics(new Sine(4/8, 1/8, 1/8), this);
+        updateables.push(wg);
     }
     
     public function update(dt:Float) {

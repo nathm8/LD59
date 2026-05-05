@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.36887033"
-     inkscape:cx="1270.094"
-     inkscape:cy="69.129984"
+     inkscape:zoom="2.9509626"
+     inkscape:cx="-336.50036"
+     inkscape:cy="58.116629"
      inkscape:window-width="1920"
      inkscape:window-height="1080"
      inkscape:window-x="1080"
@@ -4466,6 +4466,21 @@
            inkscape:export-xdpi="86.840286"
            inkscape:export-ydpi="86.840286" />
       </g>
+    </g>
+    <g
+       id="g6"
+       transform="matrix(0,1,-0.99328472,0,26.265542,-16.420602)"
+       style="fill:#ffffff;stroke:none"
+       inkscape:transform-center-y="-2.3853805"
+       inkscape:export-filename="res/img/Dot.png"
+       inkscape:export-xdpi="87.147202"
+       inkscape:export-ydpi="87.147202">
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke-width:2;stroke-miterlimit:3.3;paint-order:markers stroke fill;stroke:none"
+         id="circle1"
+         cx="35.368618"
+         cy="111.83501"
+         r="4.6949039" />
     </g>
   </g>
 </svg>
