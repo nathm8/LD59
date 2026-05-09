@@ -1,5 +1,8 @@
 package gamelogic;
 
+import graphics.shaders.WaveformShader;
+import graphics.shaders.PeriodicAlphaShader;
+import h2d.Graphics;
 import graphics.WaveformGraphics;
 import h2d.filter.Group;
 import h2d.filter.Bloom;
@@ -36,6 +39,8 @@ class GameScene extends Scene implements MessageListener {
     var cameraMaxScale = 1.0;
     var cameraBounds = 2500.0;
 
+    var w: Waveform;
+
     public function new() {
         super();
 
@@ -46,10 +51,26 @@ class GameScene extends Scene implements MessageListener {
 
         MessageManager.addListener(this);
 
-        var target = new TargetOscilloscope(this);
-        target.x = 400;
-        target.y = -200;
-        updateables.push(target);
+        // var target = new TargetOscilloscope(this);
+        // target.x = 400;
+        // target.y = -200;
+        // updateables.push(target);
+
+        var square = new Bitmap(Tile.fromColor(0x000000, 500, 500, 0), this);
+        square.x -= 250; square.y -= 250;
+
+        w = new Sine(1,1,1);
+        var ws = new WaveformShader();
+        ws.samples = new Array<Vec4>();
+        var samples = 500;
+        for (x in 0...samples) {
+            ws.samples[x] = new Vec4(
+                    0.5*(Math.sin(2*Math.PI * x/samples)) + 0.5
+                , 0, 0, 0);
+        }
+
+        square.addShader(ws);
+        square.addShader(new PeriodicAlphaShader());
     }
     
     public function update(dt:Float) {

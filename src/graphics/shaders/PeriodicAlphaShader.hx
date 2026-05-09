@@ -15,12 +15,12 @@ class PeriodicAlphaShader extends hxsl.Shader {
         @param var refreshRate : Float;
 
         function fragment() {
-            var x = input.position.x + refreshRate*time;
+            var x = input.position.x - refreshRate*time;
             x = fract(x);
             
             var p = 0.0;
-            if (x > 0.5)
-                p = 4*pow(abs(x - 1.0), 2.0);
+            if (x < 0.5)
+                p = 4*pow(x, 2.0);
 
             output.color.a *= p;
         }
