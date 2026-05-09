@@ -96,6 +96,10 @@ class WaveformGraphics extends Object implements Updateable {
     public var width: Int;
     public var height: Int;
 
+    // detect discontinuities to render them better
+    var prevX = 0.0;
+    var prevY = 0.0;
+
     public function new(w:Int, h: Int, c: Int, wave: Waveform, ?p: Object) {
         super(p);
         waveform = wave;
@@ -120,10 +124,10 @@ class WaveformGraphics extends Object implements Updateable {
         periodicShader = new PeriodicAlphaShader();
         lines.addShader(periodicShader);
 
-        // batch.filter = new Blur(60, 1.4);
+        batch.filter = new Blur(60, 1.1);
 
-        var bs = new BulgeShader();
-        filter = new Shader(bs);
+        // var bs = new BulgeShader();
+        // filter = new Shader(bs);
     }
 
     public function resample() {
@@ -138,7 +142,7 @@ class WaveformGraphics extends Object implements Updateable {
     
     
     public function update(dt: Float): Bool {
-        var samples = 3;
+        var samples = 10;
         var phase_increment = 0.25;
         var noise_proc = 200; // chance of 1 in noise_proc
         var noise_amount = 0.1;
@@ -152,6 +156,23 @@ class WaveformGraphics extends Object implements Updateable {
             var p = new WaveformParticle(colour);
             p.x = totalTime % 1;
             p.y = waveform.sample(4*(totalTime % 1 + phaseMod));
+            
+            // discontinuity
+            if (Math.abs(prevY - p.y) > 0.3) {
+                for (i in 0...10) {
+                    var r = i/10;
+                    var q = new WaveformParticle(colour);
+                    q.x = prevX * r + p.x * (1-r);
+                    q.y = prevY * r + p.y * (1-r);
+                    q.x *= width;
+                    q.y *= height;
+                    batch.add(q);        
+                }
+            }
+
+            prevX = p.x;
+            prevY = p.y;
+
             if (RNGManager.random(noise_proc) == 0) {
                 p.y += RNGManager.srand(noise_amount);
                 if (RNGManager.random(noise_proc) == 0)
