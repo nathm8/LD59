@@ -1,5 +1,7 @@
 package graphics;
 
+import graphics.shaders.PeriodicAlphaShader;
+import h2d.Graphics;
 import utilities.Utilities.clamp;
 import utilities.RNGManager;
 import h2d.filter.Blur;
@@ -17,6 +19,13 @@ typedef ColourTuple = {
     var a: Float;
 }
 
+function colourTupleFromInt(c: Int): ColourTuple {
+    var r = ((c >> 16) & 0xFF) / 255;
+    var g = ((c >> 8) & 0xFF) / 255;
+    var b = (c & 0xFF) / 255;
+    return {r: r, g: g, b: b, a: 1.0};
+}
+
 class WaveformParticle extends BatchElement {
 
     var lifetime = 0.0;
@@ -26,11 +35,19 @@ class WaveformParticle extends BatchElement {
     var startColour: ColourTuple;
     var endColour: ColourTuple;
 
-    public function new() {
+    public function new(c: Int) {
         super(Res.img.Dot16.toTile().center());
-        startColour = {r: 1, g: 0, b: 0, a: 1};
-        endColour   = {r: 0.5, g: 0, b: 0, a: 0.008};
+        setColours(c);
         colourInterp(1);
+    }
+
+    public function setColours(c: Int) {
+        startColour = colourTupleFromInt(c);
+        endColour = {
+            r: startColour.r* 0.5, 
+            g: startColour.g* 0.5, 
+            b: startColour.b* 0.5, 
+            a: 0.01};
     }
 
     function colourInterp(ratio: Float) {
@@ -58,23 +75,31 @@ class WaveformParticle extends BatchElement {
 class WaveformGraphics extends Object implements Updateable {
     
     var waveform: Waveform;
+    var lines: Graphics;
     var batch: SpriteBatch;
     var totalTime = 0.0;
     var phaseMod = 0.0;
     var speed = 0.75;
 
-    var width: Float;
-    var height: Float;
+    var colour: Int;
+    public var width: Float;
+    public var height: Float;
 
-    public function new(w: Waveform, ?p: Object) {
+    public function new(w:Float, h: Float, c: Int, wave: Waveform, ?p: Object) {
         super(p);
-        waveform = w;
+        waveform = wave;
+        colour = c;
+        width = w;
+        height = h;
         batch = new SpriteBatch(Res.img.Dot16.toTile().center(), this);
         batch.hasUpdate = true;
         batch.smooth = true;
         batch.tileWrap = true;
 
-        filter = new Blur(60, 1.4);
+        lines = new Graphics(this);
+        lines.addShader(new PeriodicAlphaShader());
+
+        batch.filter = new Blur(60, 1.4);
     }
     
     
@@ -90,7 +115,7 @@ class WaveformGraphics extends Object implements Updateable {
                 phaseMod += phase_increment;
                 totalTime -= 1;
             }
-            var p = new WaveformParticle();
+            var p = new WaveformParticle(colour);
             p.x = totalTime % 1;
             p.y = waveform.sample(4*(totalTime % 1 + phaseMod));
             if (RNGManager.random(noise_proc) == 0) {
@@ -110,13 +135,16 @@ class WaveformGraphics extends Object implements Updateable {
             // particleNum++;
         }
 
-        var blur = cast(filter, Blur);
+        var blur = cast(batch.filter, Blur);
         if (RNGManager.random(noise_proc) == 0)
             blur.radius = clamp(blur.radius + RNGManager.srand(1), 50, 80);
         if (RNGManager.random(noise_proc) == 0)
             blur.gain = clamp(blur.gain + RNGManager.srand(noise_amount), 1.1, 1.5);
             
         speed = clamp(speed + RNGManager.srand(noise_amount), 0.5, 1.0);
+
+        lines.clear();
+        waveform.draw(lines, width, height, 4*phaseMod, colour);
 
         return false;
     }

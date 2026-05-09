@@ -1,5 +1,6 @@
 package gamelogic;
 
+import graphics.WaveformGraphics;
 import sound.CustomSound;
 import hxd.snd.Channel;
 import sound.SoundManager;
@@ -50,7 +51,7 @@ class Oscilloscope extends Object implements Updateable
     var params: OscilloscopeJson;
 
     public var waveform: Waveform;
-    var waveformGraphics: Graphics;
+    var waveformGraphics: WaveformGraphics;
 
     var sprite: Bitmap;
     var handle: Handle;
@@ -71,7 +72,8 @@ class Oscilloscope extends Object implements Updateable
 
     public function new(w: Waveform, p: Object) {
         super(p);
-
+        fromJson(hxd.Res.data.Oscilloscope.entry);
+        
         waveform = w;
 
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
@@ -79,8 +81,8 @@ class Oscilloscope extends Object implements Updateable
         freqDial = new Dial(Math.round(waveform.frequency*8), () -> {waveform.frequency = freqDial.value/8; sound.reload();}, sprite);
         phaseDial = new Dial(Math.round(waveform.phase*8), () -> {waveform.phase = phaseDial.value/8; sound.reload();}, sprite);
 
-        waveformGraphics = new Graphics(this);
         col = colors[RNGManager.random(colors.length)];
+        waveformGraphics = new WaveformGraphics(params.waveformGraphicsWidth, params.waveformGraphicsHeight, col, waveform, this);
         
         port = new Port(true, this);
         port.getOutput = () -> {slider.mute(); return waveform;};
@@ -93,7 +95,6 @@ class Oscilloscope extends Object implements Updateable
         slider = new VolumeSlider(sound_channel.channel, this);
         
         MessageManager.addListener(this);
-        fromJson(hxd.Res.data.Oscilloscope.entry);
         updateGraphics();
     }
     
@@ -105,6 +106,8 @@ class Oscilloscope extends Object implements Updateable
         phaseDial.y = params.phaseDialY;
         waveformGraphics.x = params.waveformGraphicsX;
         waveformGraphics.y = params.waveformGraphicsY;
+        waveformGraphics.width = params.waveformGraphicsWidth;
+        waveformGraphics.height = params.waveformGraphicsHeight;
         port.x = params.portX;
         port.y = params.portY;
         handle.x = params.handleX;
@@ -115,8 +118,7 @@ class Oscilloscope extends Object implements Updateable
 
     public function update(dt:Float):Bool {
         totalTime += dt*0.5 + RNGManager.srand(0.01);
-        waveformGraphics.clear();
-        waveform.draw(waveformGraphics, params.waveformGraphicsWidth, params.waveformGraphicsHeight, totalTime, col);
+        waveformGraphics.update(dt);
 
         ampDial.update(dt);
         freqDial.update(dt);

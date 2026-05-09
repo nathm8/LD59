@@ -32,7 +32,7 @@ class SoundDataGenerator extends hxd.snd.Data
             else {
                 var r = i/out.length;
                 // todo, random up this multiplier
-                v = Math.round(50000*waveform.sample(r, 0, true));
+                v = Math.round(50000*waveform.sample(r, 0));
             }
             out.set(i, v);
         }
