@@ -82,11 +82,11 @@ class WaveformParticle extends BatchElement {
 
 class WaveformGraphics extends Object implements Updateable {
     
-    var waveform: Waveform;
+    public var waveform: Void -> Waveform;
     var batch: SpriteBatch;
-    var totalTime = 0.0;
-    var phaseMod = 0.0;
-    var speed = 0.75;
+    public var totalTime = 0.0;
+    public var phaseMod = 0.0;
+    public var speed = 0.75;
 
     var lines: Bitmap;
     var waveformShader: WaveformShader;
@@ -100,7 +100,7 @@ class WaveformGraphics extends Object implements Updateable {
     var prevX = 0.0;
     var prevY = 0.0;
 
-    public function new(w:Int, h: Int, c: Int, wave: Waveform, ?p: Object) {
+    public function new(w:Int, h: Int, c: Int, wave: Void -> Waveform, ?p: Object) {
         super(p);
         waveform = wave;
         colour = c;
@@ -132,16 +132,26 @@ class WaveformGraphics extends Object implements Updateable {
 
     public function resample() {
         waveformShader.samples = new Array<Vec4>();
+        if (waveform() == null) {
+            lines.visible = false;
+            return;
+        }
+        lines.visible = true;
         var samples = 500;
         for (x in 0...samples) {
             waveformShader.samples[x] = new Vec4(
-                waveform.sample(4*x/samples),
+                waveform().sample(4*x/samples),
                 0, 0, 0);
         }
     }
     
     
     public function update(dt: Float): Bool {
+        if (waveform() == null) return false;
+
+        // this doesn't need to be called so often, but setting it up to be lazy will be annoying
+        resample();
+
         var samples = 3;
         var phase_increment = 0.25;
         var noise_proc = 200; // chance of 1 in noise_proc
@@ -155,7 +165,7 @@ class WaveformGraphics extends Object implements Updateable {
             }
             var p = new WaveformParticle(colour);
             p.x = totalTime % 1;
-            p.y = waveform.sample(4*(totalTime % 1 + phaseMod));
+            p.y = waveform().sample(4*(totalTime % 1 + phaseMod));
             
             // discontinuity
             // allow back-to-start trail one in 10 times

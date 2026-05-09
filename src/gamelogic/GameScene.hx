@@ -51,26 +51,10 @@ class GameScene extends Scene implements MessageListener {
 
         MessageManager.addListener(this);
 
-        // var target = new TargetOscilloscope(this);
-        // target.x = 400;
-        // target.y = -200;
-        // updateables.push(target);
-
-        // var square = new Bitmap(Tile.fromColor(0x000000, 500, 500, 0.5), this);
-        // square.x -= 250; square.y -= 250;
-
-        // w = new Sine(1,1,1);
-        // var ws = new WaveformShader();
-        // ws.samples = new Array<Vec4>();
-        // var samples = 500;
-        // for (x in 0...samples) {
-        //     ws.samples[x] = new Vec4(
-        //             w.sample(x/samples)
-        //         , 0, 0, 0);
-        // }
-
-        // square.addShader(ws);
-        // square.addShader(new PeriodicAlphaShader());
+        var target = new TargetOscilloscope(this);
+        target.x = 400;
+        target.y = -200;
+        updateables.push(target);
     }
     
     public function update(dt:Float) {

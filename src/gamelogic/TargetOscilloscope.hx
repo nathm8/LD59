@@ -1,5 +1,6 @@
 package gamelogic;
 
+import graphics.WaveformGraphics;
 import sound.SoundManager;
 import graphics.VolumeSlider;
 import sound.CustomSound;
@@ -144,16 +145,16 @@ class TargetSwitch extends Object implements MessageListener {
 }
 
 typedef TargetJson = {
-    var inputWaveformGraphicsWidth: Float;
-    var inputWaveformGraphicsHeight: Float;
+    var inputWaveformGraphicsWidth: Int;
+    var inputWaveformGraphicsHeight: Int;
     var inputWaveformGraphicsX: Float;
     var inputWaveformGraphicsY: Float;
-    var targetWaveformGraphicsWidth: Float;
-    var targetWaveformGraphicsHeight: Float;
+    var targetWaveformGraphicsWidth: Int;
+    var targetWaveformGraphicsHeight: Int;
     var targetWaveformGraphicsX: Float;
     var targetWaveformGraphicsY: Float;
-    var combinedWaveformGraphicsWidth: Float;
-    var combinedWaveformGraphicsHeight: Float;
+    var combinedWaveformGraphicsWidth: Int;
+    var combinedWaveformGraphicsHeight: Int;
     var combinedWaveformGraphicsX: Float;
     var combinedWaveformGraphicsY: Float;
 
@@ -199,20 +200,17 @@ class TargetOscilloscope extends Object implements Updateable
     var glowThree: Bitmap;
 
     public var inputWaveform: Waveform;
-    var inputWaveformGraphics: Graphics;
     var targetWaveform: Waveform;
-    var targetWaveformGraphics: Graphics;
-    var combinedWaveformGraphics: Graphics;
+
+    var inputWaveformGraphics: WaveformGraphics;
+    var targetWaveformGraphics: WaveformGraphics;
+    var combinedWaveformGraphicsOne: WaveformGraphics;
+    var combinedWaveformGraphicsTwo: WaveformGraphics;
 
     var port: Port;
 
-    var inputTotalTime = 0.0;
-    var targetTotalTime = 0.0;
-    var combinedTotalTime = 0.0;
-
     var colOne: Int;
     var colTwo: Int;
-    var colThree: Int;
 
     var handle: Handle;
     var targetSwitch: TargetSwitch;
@@ -228,6 +226,8 @@ class TargetOscilloscope extends Object implements Updateable
 
     public function new(p: Object) {
         super(p);
+
+        fromJson(hxd.Res.data.Target.entry);
 
         // ugly place to put this, target init
         {
@@ -265,11 +265,11 @@ class TargetOscilloscope extends Object implements Updateable
 
         targets = [targetOne, targetTwo, targetThree, targetFour, targetFive, targetSix];
         }
+        
         //
-        var cols = RNGManager.randoms(colors.length, 3, true);
+        var cols = RNGManager.randoms(colors.length, 2, true);
         colOne = colors[cols[0]];
         colTwo = colors[cols[1]];
-        colThree = colors[cols[2]];
 
         sprite = new Bitmap(Res.img.OscilloOut.toTile().center(), this);
         
@@ -286,13 +286,25 @@ class TargetOscilloscope extends Object implements Updateable
         targetSwitch = new TargetSwitch(checkSolution, this);
         
         targetWaveform = targets[0];
-        targetWaveformGraphics = new Graphics(this);
-        inputWaveformGraphics = new Graphics(this);
-        combinedWaveformGraphics = new Graphics(this);
+        targetWaveformGraphics = new WaveformGraphics(params.targetWaveformGraphicsWidth, params.targetWaveformGraphicsHeight, colOne, () -> targetWaveform, this);
+        inputWaveformGraphics = new WaveformGraphics(params.inputWaveformGraphicsWidth, params.inputWaveformGraphicsHeight, colTwo, () -> inputWaveform, this);
+        combinedWaveformGraphicsOne = new WaveformGraphics(params.combinedWaveformGraphicsWidth, params.combinedWaveformGraphicsHeight, colOne, () -> targetWaveform, this);
+        combinedWaveformGraphicsTwo = new WaveformGraphics(params.combinedWaveformGraphicsWidth, params.combinedWaveformGraphicsHeight, colTwo, () -> inputWaveform, this);
         
         port = new Port(false, this);
-        port.onConnection = (w: Waveform) -> {inputWaveform = w; soundTwo.waveform = w; soundTwo.reload(); };
-        port.onDisconnect = () -> {inputWaveform = null; soundTwo.reload();};
+        port.onConnection = (w: Waveform) -> {
+            inputWaveform = w;
+            inputWaveformGraphics.resample();
+            combinedWaveformGraphicsTwo.resample();
+            soundTwo.waveform = w;
+            soundTwo.reload();
+        };
+        port.onDisconnect = () -> {
+            inputWaveform = null;
+            inputWaveformGraphics.resample();
+            combinedWaveformGraphicsTwo.resample();
+            soundTwo.reload();
+        };
         
         handle = new Handle(this);
 
@@ -306,7 +318,6 @@ class TargetOscilloscope extends Object implements Updateable
         sliderTwo = new VolumeSlider(sound_channel.channel, this);
         
         MessageManager.addListener(this);
-        fromJson(hxd.Res.data.Target.entry);
         updateGraphics();
     }
     
@@ -326,10 +337,20 @@ class TargetOscilloscope extends Object implements Updateable
 
         targetWaveformGraphics.x = params.targetWaveformGraphicsX;
         targetWaveformGraphics.y = params.targetWaveformGraphicsY;
+        targetWaveformGraphics.width = params.targetWaveformGraphicsWidth;
+        targetWaveformGraphics.height = params.targetWaveformGraphicsHeight;
         inputWaveformGraphics.x = params.inputWaveformGraphicsX;
         inputWaveformGraphics.y = params.inputWaveformGraphicsY;
-        combinedWaveformGraphics.x = params.combinedWaveformGraphicsX;
-        combinedWaveformGraphics.y = params.combinedWaveformGraphicsY;
+        inputWaveformGraphics.width = params.inputWaveformGraphicsWidth;
+        inputWaveformGraphics.height = params.inputWaveformGraphicsHeight;
+        combinedWaveformGraphicsOne.x = params.combinedWaveformGraphicsX;
+        combinedWaveformGraphicsOne.y = params.combinedWaveformGraphicsY;
+        combinedWaveformGraphicsOne.width = params.combinedWaveformGraphicsWidth;
+        combinedWaveformGraphicsOne.height = params.combinedWaveformGraphicsHeight;
+        combinedWaveformGraphicsTwo.x = params.combinedWaveformGraphicsX;
+        combinedWaveformGraphicsTwo.y = params.combinedWaveformGraphicsY;
+        combinedWaveformGraphicsTwo.width = params.combinedWaveformGraphicsWidth;
+        combinedWaveformGraphicsTwo.height = params.combinedWaveformGraphicsHeight;
 
         port.x = params.portX;
         port.y = params.portY;
@@ -346,16 +367,15 @@ class TargetOscilloscope extends Object implements Updateable
     }
 
     public function update(dt:Float):Bool {
-        targetTotalTime += dt*0.5 + RNGManager.srand(0.01);
-        inputTotalTime += dt*0.5 + RNGManager.srand(0.01);
-        combinedTotalTime += dt*0.5 + RNGManager.srand(0.01);
-        targetWaveformGraphics.clear();
-        inputWaveformGraphics.clear();
-        combinedWaveformGraphics.clear();
-        targetWaveform.draw(targetWaveformGraphics, params.targetWaveformGraphicsWidth, params.targetWaveformGraphicsHeight, targetTotalTime, colOne);
-        inputWaveform?.draw(inputWaveformGraphics, params.inputWaveformGraphicsWidth, params.inputWaveformGraphicsHeight, inputTotalTime, colTwo);
-        targetWaveform.draw(combinedWaveformGraphics, params.combinedWaveformGraphicsWidth, params.combinedWaveformGraphicsHeight, combinedTotalTime, colOne);
-        inputWaveform?.draw(combinedWaveformGraphics, params.combinedWaveformGraphicsWidth, params.combinedWaveformGraphicsHeight, combinedTotalTime, colTwo);
+        dt *= 0.25;
+        inputWaveformGraphics.update(dt);
+        targetWaveformGraphics.update(dt);
+        combinedWaveformGraphicsOne.update(dt);
+        combinedWaveformGraphicsTwo.update(dt);
+
+        combinedWaveformGraphicsTwo.totalTime = combinedWaveformGraphicsOne.totalTime;
+        combinedWaveformGraphicsTwo.phaseMod = combinedWaveformGraphicsOne.phaseMod;
+        combinedWaveformGraphicsTwo.speed = combinedWaveformGraphicsOne.speed;
         return false;
     }
 

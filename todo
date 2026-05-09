@@ -3,6 +3,8 @@ Signals
 
 Post-jam MVP
 -----------------------------------
+animate the target oscillo's input volume slider
+
 put in guards to prevent dragging components off-screen
     and out of bounds when zoomed out\panned far out
 

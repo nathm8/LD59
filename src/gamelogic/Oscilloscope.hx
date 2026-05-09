@@ -2,17 +2,12 @@ package gamelogic;
 
 import graphics.WaveformGraphics;
 import sound.CustomSound;
-import hxd.snd.Channel;
 import sound.SoundManager;
 import graphics.VolumeSlider;
 import graphics.Handle;
 import haxe.Json;
 import hxd.fs.FileEntry;
 import hxd.Res;
-import h2d.filter.Group;
-import h2d.filter.Glow;
-import h2d.filter.Blur;
-import h2d.Graphics;
 import h2d.Object;
 import h2d.Bitmap;
 
@@ -82,7 +77,7 @@ class Oscilloscope extends Object implements Updateable
         phaseDial = new Dial(Math.round(waveform.phase*8),     () -> { waveform.phase = phaseDial.value/8;    sound.reload(); waveformGraphics.resample(); }, sprite);
 
         col = colors[RNGManager.random(colors.length)];
-        waveformGraphics = new WaveformGraphics(params.waveformGraphicsWidth, params.waveformGraphicsHeight, col, waveform, this);
+        waveformGraphics = new WaveformGraphics(params.waveformGraphicsWidth, params.waveformGraphicsHeight, col, () -> waveform, this);
         
         port = new Port(true, this);
         port.getOutput = () -> {slider.mute(); return waveform;};
