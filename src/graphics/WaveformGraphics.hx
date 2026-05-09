@@ -1,5 +1,7 @@
 package graphics;
 
+import h2d.filter.Shader;
+import graphics.shaders.BulgeShader;
 import hxsl.Types.Vec;
 import h3d.Vector4;
 import hxsl.Types.Vec4;
@@ -118,7 +120,10 @@ class WaveformGraphics extends Object implements Updateable {
         periodicShader = new PeriodicAlphaShader();
         lines.addShader(periodicShader);
 
-        batch.filter = new Blur(60, 1.4);
+        // batch.filter = new Blur(60, 1.4);
+
+        var bs = new BulgeShader();
+        filter = new Shader(bs);
     }
 
     public function resample() {
@@ -166,7 +171,6 @@ class WaveformGraphics extends Object implements Updateable {
 
         waveformShader.phase = phaseMod;
         var f = (totalTime + 0.5) % 1 ;
-        // f -= Math.floor(f);
         periodicShader.delta = f;
 
         if (batch.filter != null) {

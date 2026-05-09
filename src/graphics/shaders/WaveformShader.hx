@@ -30,20 +30,12 @@ class WaveformShader extends hxsl.Shader {
             return r*samples[x1].x + (1-r)*samples[x2].x + 0.5;
         }
 
-        // function gauss(x: Float): Float {
-        //     var s = 0.1;
-        //     var m = 0.5;
-        //     var pi = 3.14159;
-        //     var mult = 0.25 * 1/(s*sqrt(2*pi));
-        //     return mult * exp(-(x-m)*(x-m)/(s*s));
-        // }
-
         function fragment() {
             // zoom in at center so blur isn't cut off by edge
             // var x = 1.3*(input.position.x - 0.5) + 0.5;
-            // var y = 1.3*(input.position.y - 0.5) + 0.5;
+            var y = 1.3*(input.position.y - 0.5) + 0.5;
             var x = input.position.x;
-            var y = input.position.y;
+            // var y = input.position.y;
 
             // var wave_y = sampleY(x + speed*time);
             var wave_y = sampleY(x + phase);
