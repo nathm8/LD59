@@ -12,7 +12,7 @@ class BulgeShader extends ScreenShader {
 
         function curve(uv:Vec2) : Vec2 {
 			var out = uv*2 - 1;
-            var curvature = vec2(1.5, 2.0);
+            var curvature = vec2(2.5, 5.0);
 
 			var offset = abs(out.yx) / curvature;
 			out = out + out * offset * offset;

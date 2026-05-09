@@ -3,8 +3,6 @@ Signals
 
 Post-jam MVP
 -----------------------------------
-have oscilloscope shader
-
 put in guards to prevent dragging components off-screen
     and out of bounds when zoomed out\panned far out
 
@@ -19,8 +17,6 @@ cables - allow click-drag mode
 add noise warning
 
 add black outline to interactables, or otherwise improve their greyscale visibility
-
-cache square wave calcs
 
 implement window resizing for hashlink target
 
@@ -38,7 +34,7 @@ main menu. level select
 physically simulate cable wire (just put control point on spring between the heads)
 
 physically simulate components. to prevent overlapping
-    have them rotatable by knocking, but slowing "righted" while held
+    have them rotatable by knocking, but slowly "righted" while held
 
 add trashcan
 
@@ -74,6 +70,9 @@ Done
 
 Post-jam MVP
 -----------------------------------
+cache square wave calcs
+    everything's cached now
+have oscilloscope shader
 fix dial step skip
 add generative sounds
 clean up cable hitboxes

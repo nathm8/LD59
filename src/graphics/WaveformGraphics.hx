@@ -126,8 +126,8 @@ class WaveformGraphics extends Object implements Updateable {
 
         batch.filter = new Blur(60, 1.1);
 
-        // var bs = new BulgeShader();
-        // filter = new Shader(bs);
+        var bs = new BulgeShader();
+        filter = new Shader(bs);
     }
 
     public function resample() {
@@ -142,7 +142,7 @@ class WaveformGraphics extends Object implements Updateable {
     
     
     public function update(dt: Float): Bool {
-        var samples = 10;
+        var samples = 3;
         var phase_increment = 0.25;
         var noise_proc = 200; // chance of 1 in noise_proc
         var noise_amount = 0.1;
@@ -158,9 +158,11 @@ class WaveformGraphics extends Object implements Updateable {
             p.y = waveform.sample(4*(totalTime % 1 + phaseMod));
             
             // discontinuity
-            if (Math.abs(prevY - p.y) > 0.3) {
-                for (i in 0...10) {
-                    var r = i/10;
+            // allow back-to-start trail one in 10 times
+            if (Math.abs(prevY - p.y) > 0.3 &&
+                (Math.abs(prevX - p.x) < 0.3 || RNGManager.random(10) == 0)) {
+                for (i in 0...samples*4) {
+                    var r = i/(samples*4);
                     var q = new WaveformParticle(colour);
                     q.x = prevX * r + p.x * (1-r);
                     q.y = prevY * r + p.y * (1-r);
