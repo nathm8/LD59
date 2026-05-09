@@ -1,5 +1,11 @@
 package graphics;
 
+import hxsl.Types.Vec;
+import h3d.Vector4;
+import hxsl.Types.Vec4;
+import graphics.shaders.WaveformShader;
+import h2d.Tile;
+import h2d.Bitmap;
 import graphics.shaders.PeriodicAlphaShader;
 import h2d.Graphics;
 import utilities.Utilities.clamp;
@@ -75,17 +81,20 @@ class WaveformParticle extends BatchElement {
 class WaveformGraphics extends Object implements Updateable {
     
     var waveform: Waveform;
-    var lines: Graphics;
     var batch: SpriteBatch;
     var totalTime = 0.0;
     var phaseMod = 0.0;
     var speed = 0.75;
 
-    var colour: Int;
-    public var width: Float;
-    public var height: Float;
+    var lines: Bitmap;
+    var waveformShader: WaveformShader;
+    var periodicShader: PeriodicAlphaShader;
 
-    public function new(w:Float, h: Float, c: Int, wave: Waveform, ?p: Object) {
+    var colour: Int;
+    public var width: Int;
+    public var height: Int;
+
+    public function new(w:Int, h: Int, c: Int, wave: Waveform, ?p: Object) {
         super(p);
         waveform = wave;
         colour = c;
@@ -96,15 +105,35 @@ class WaveformGraphics extends Object implements Updateable {
         batch.smooth = true;
         batch.tileWrap = true;
 
-        lines = new Graphics(this);
-        lines.addShader(new PeriodicAlphaShader());
+        lines = new Bitmap(Tile.fromColor(0x000000, width, height, 0), this);
+        // lines.x += width/2;
+        lines.y -= height/2;
+        waveformShader = new WaveformShader();
+        var ct = colourTupleFromInt(c);
+        waveformShader.colour.r = ct.r;
+        waveformShader.colour.g = ct.g;
+        waveformShader.colour.b = ct.b;
+        resample();
+        lines.addShader(waveformShader);
+        periodicShader = new PeriodicAlphaShader();
+        lines.addShader(periodicShader);
 
         batch.filter = new Blur(60, 1.4);
+    }
+
+    public function resample() {
+        waveformShader.samples = new Array<Vec4>();
+        var samples = 500;
+        for (x in 0...samples) {
+            waveformShader.samples[x] = new Vec4(
+                waveform.sample(4*x/samples),
+                0, 0, 0);
+        }
     }
     
     
     public function update(dt: Float): Bool {
-        var samples = 10;
+        var samples = 3;
         var phase_increment = 0.25;
         var noise_proc = 200; // chance of 1 in noise_proc
         var noise_amount = 0.1;
@@ -135,16 +164,20 @@ class WaveformGraphics extends Object implements Updateable {
             // particleNum++;
         }
 
-        var blur = cast(batch.filter, Blur);
-        if (RNGManager.random(noise_proc) == 0)
-            blur.radius = clamp(blur.radius + RNGManager.srand(1), 50, 80);
-        if (RNGManager.random(noise_proc) == 0)
-            blur.gain = clamp(blur.gain + RNGManager.srand(noise_amount), 1.1, 1.5);
+        waveformShader.phase = phaseMod;
+        var f = (totalTime + 0.5) % 1 ;
+        // f -= Math.floor(f);
+        periodicShader.delta = f;
+
+        if (batch.filter != null) {
+            var blur = cast(batch.filter, Blur);
+            if (RNGManager.random(noise_proc) == 0)
+                blur.radius = clamp(blur.radius + RNGManager.srand(1), 50, 80);
+            if (RNGManager.random(noise_proc) == 0)
+                blur.gain = clamp(blur.gain + RNGManager.srand(noise_amount), 1.1, 1.5);
+        }
             
         speed = clamp(speed + RNGManager.srand(noise_amount), 0.5, 1.0);
-
-        lines.clear();
-        waveform.draw(lines, width, height, 4*phaseMod, colour);
 
         return false;
     }

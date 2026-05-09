@@ -30,8 +30,8 @@ typedef OscilloscopeJson = {
     var phaseDialX: Float;
     var phaseDialY: Float;
 
-    var waveformGraphicsWidth: Float;
-    var waveformGraphicsHeight: Float;
+    var waveformGraphicsWidth: Int;
+    var waveformGraphicsHeight: Int;
     var waveformGraphicsX: Float;
     var waveformGraphicsY: Float;
 
@@ -77,9 +77,9 @@ class Oscilloscope extends Object implements Updateable
         waveform = w;
 
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
-        ampDial = new Dial(Math.round(waveform.amplitude*8), () -> {waveform.amplitude = ampDial.value/8; sound.reload();}, sprite);
-        freqDial = new Dial(Math.round(waveform.frequency*8), () -> {waveform.frequency = freqDial.value/8; sound.reload();}, sprite);
-        phaseDial = new Dial(Math.round(waveform.phase*8), () -> {waveform.phase = phaseDial.value/8; sound.reload();}, sprite);
+        ampDial   = new Dial(Math.round(waveform.amplitude*8), () -> { waveform.amplitude = ampDial.value/8;  sound.reload(); waveformGraphics.resample(); }, sprite);
+        freqDial  = new Dial(Math.round(waveform.frequency*8), () -> { waveform.frequency = freqDial.value/8; sound.reload(); waveformGraphics.resample(); }, sprite);
+        phaseDial = new Dial(Math.round(waveform.phase*8),     () -> { waveform.phase = phaseDial.value/8;    sound.reload(); waveformGraphics.resample(); }, sprite);
 
         col = colors[RNGManager.random(colors.length)];
         waveformGraphics = new WaveformGraphics(params.waveformGraphicsWidth, params.waveformGraphicsHeight, col, waveform, this);
