@@ -294,16 +294,14 @@ class TargetOscilloscope extends Object implements Updateable
         port = new Port(false, this);
         port.onConnection = (w: Waveform) -> {
             inputWaveform = w;
-            inputWaveformGraphics.resample();
-            combinedWaveformGraphicsTwo.resample();
             soundTwo.waveform = w;
             soundTwo.reload();
+            sliderTwo.restore();
         };
         port.onDisconnect = () -> {
             inputWaveform = null;
-            inputWaveformGraphics.resample();
-            combinedWaveformGraphicsTwo.resample();
             soundTwo.reload();
+            sliderTwo.mute();
         };
         
         handle = new Handle(this);
@@ -316,6 +314,7 @@ class TargetOscilloscope extends Object implements Updateable
         sound_channel = SoundManager.addWaveform(inputWaveform);
         soundTwo = sound_channel.sound;
         sliderTwo = new VolumeSlider(sound_channel.channel, this);
+        sliderTwo.mute();
         
         MessageManager.addListener(this);
         updateGraphics();

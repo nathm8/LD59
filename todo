@@ -3,8 +3,6 @@ Signals
 
 Post-jam MVP
 -----------------------------------
-animate the target oscillo's input volume slider
-
 put in guards to prevent dragging components off-screen
     and out of bounds when zoomed out\panned far out
 
@@ -72,6 +70,7 @@ Done
 
 Post-jam MVP
 -----------------------------------
+animate the target oscillo's input volume slider
 cache square wave calcs
     everything's cached now
 have oscilloscope shader
