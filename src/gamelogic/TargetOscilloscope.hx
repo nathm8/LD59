@@ -374,7 +374,7 @@ class TargetOscilloscope extends Object implements Updateable
     }
 
     public function update(dt:Float):Bool {
-        dt *= 0.25;
+        dt *= 0.5;
         inputWaveformGraphics.update(dt);
         targetWaveformGraphics.update(dt);
         combinedWaveformGraphicsOne.update(dt);

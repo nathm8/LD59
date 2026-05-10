@@ -1,7 +1,7 @@
 package graphics;
 
 import h2d.filter.Shader;
-import graphics.shaders.BulgeShader;
+import graphics.shaders.BulgeFilter;
 import hxsl.Types.Vec;
 import h3d.Vector4;
 import hxsl.Types.Vec4;
@@ -126,8 +126,23 @@ class WaveformGraphics extends Object implements Updateable {
 
         batch.filter = new Blur(60, 1.1);
 
-        var bs = new BulgeShader();
+        var bs = new BulgeFilter();
         filter = new Shader(bs);
+
+        // lines using waveform.draw and PeriodicAlphaFilter instead
+        // will look better on discontinuities
+        // // init
+        // g = new Graphics(this);
+        // g.x -= 250;
+        // w = new Sine();
+        // paf = new PeriodicAlphaFilter();
+        // g.filter = new Group([new Shader(paf), new Blur(50, 1.2)]);
+
+        // // update
+        // g.clear();
+        // w.draw(g, 500, 500, 0);
+        // tt += dt;
+        // paf.delta = tt % 1;
     }
 
     public function resample() {

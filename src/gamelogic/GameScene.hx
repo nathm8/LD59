@@ -1,19 +1,13 @@
 package gamelogic;
 
-import graphics.shaders.WaveformShader;
-import graphics.shaders.PeriodicAlphaShader;
-import h2d.Graphics;
-import graphics.WaveformGraphics;
 import h2d.filter.Group;
-import h2d.filter.Bloom;
 import h2d.filter.Blur;
 import h2d.filter.Shader;
+import graphics.shaders.PeriodicAlphaFilter;
+import h2d.Graphics;
 import h2d.col.Point;
 import h2d.Scene;
-import h2d.Tile;
-import h2d.Bitmap;
 import hxd.Key;
-import hxsl.Types.Vec4;
 import gamelogic.Waveform.Square;
 import gamelogic.Waveform.Triangle;
 import gamelogic.Waveform.Sine;
@@ -38,8 +32,6 @@ class GameScene extends Scene implements MessageListener {
     var cameraMinScale = 0.1;
     var cameraMaxScale = 1.0;
     var cameraBounds = 2500.0;
-
-    var w: Waveform;
 
     public function new() {
         super();

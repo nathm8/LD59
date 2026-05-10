@@ -1,11 +1,9 @@
 package graphics.shaders;
 
 import h3d.shader.ScreenShader;
-import h3d.shader.Base2d;
 
 // UwU
-class BulgeShader extends ScreenShader {
-
+class BulgeFilter extends ScreenShader {
     
     static var SRC = {
         @param var texture : Sampler2D;
