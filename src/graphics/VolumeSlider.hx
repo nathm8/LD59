@@ -61,6 +61,7 @@ class VolumeSlider extends Object implements MessageListener {
             r = clamp(r, 0, 1);
 
             channel.volume = 1 - r;
+            savedVolume = channel.volume;
 
             slider.x = r*startPos.x + (1-r)*endPos.x;
         }

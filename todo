@@ -1,8 +1,17 @@
 Signals
 ===================================
 
+Bugs
+-----------------------------------
+Or combinator outputting invalid waveform to target
+Target Oscillo generally not clearly empty inputs properly
+
 Post-jam MVP
 -----------------------------------
+tweak volume slider restore to only happen on disconnect
+
+have global mute button
+
 put in guards to prevent dragging components off-screen
     and out of bounds when zoomed out\panned far out
 

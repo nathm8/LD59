@@ -233,21 +233,28 @@ class TargetOscilloscope extends Object implements Updateable
         {
         var targetOne = new Sine(4/8, 6/8, 1/8);
         
+        // redo this as something more intuitive
         var targetTwo = new WaveformCombination(false);
         targetTwo.weight = 3/6;
-        targetTwo.sourceOne = targetOne;
-        targetTwo.sourceTwo = new Square(0.5, 0.5, 0.5);
+        targetTwo.sourceOne = new Sine(1.0, 7/8, 1.0);
+        targetTwo.sourceTwo = targetOne;
 
+        // saw wave
         var targetThree = new WaveformCombination(true);
-        targetThree.sourceOne = new Triangle(0.5, 0.5, 4/8);
+        targetThree.sourceOne = new Triangle(0.5, 0.5, 6/8);
         targetThree.sourceTwo = new Square(0.5, 0.5, 0.5);
         
+        // ^U^
         var and = new WaveformCombination(true);
         and.sourceOne = new Triangle(0.5, 3/8, 0.5);
         and.sourceTwo = and.sourceOne;
         var targetFour = new WaveformInverter();
         targetFour.source = and;
 
+        // ideas
+        // amplifier
+
+        // replace
         var targetFive = new WaveformCombination(false);
         targetFive.weight = 4/8;
         targetFive.sourceOne = new Sine(0.5, 2/8, 2/8);
@@ -257,6 +264,7 @@ class TargetOscilloscope extends Object implements Updateable
         or.sourceTwo = new Square(4/8, 0.5, 2/8);
         targetFive.sourceTwo = or;
 
+        // this is fine
         var targetSix = new WaveformCombination(true);
         targetSix.sourceOne = new Square(1/8, 0.5, 0.5);
         var invert = new WaveformInverter();

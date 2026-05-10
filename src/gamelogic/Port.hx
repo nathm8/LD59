@@ -58,9 +58,9 @@ class Port extends Object implements MessageListener
     }
 
     function set_isConnected(value) {
-        isConnected = value;
-        if (!isConnected && onDisconnect != null)
+        if (isConnected && !value && onDisconnect != null)
             onDisconnect();
+        isConnected = value;
         return isConnected;
     }
 }

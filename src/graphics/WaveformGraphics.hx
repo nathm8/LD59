@@ -132,11 +132,13 @@ class WaveformGraphics extends Object implements Updateable {
 
     public function resample() {
         waveformShader.samples = new Array<Vec4>();
-        if (waveform() == null) {
+        if (waveform() == null || waveform().sample(0) == -1) {
             lines.visible = false;
+            batch.visible = false;
             return;
         }
         lines.visible = true;
+        batch.visible = true;
         var samples = 500;
         for (x in 0...samples) {
             waveformShader.samples[x] = new Vec4(
