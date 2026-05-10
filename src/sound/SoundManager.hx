@@ -36,6 +36,10 @@ class SoundManager implements MessageListener{
         var sound = new CustomSound(w);
         var channel = manager.play(sound, waveformChannelGroup, waveformSoundGroup);
         channel.loop = true;
+        // sync all channels after the first to the first's position
+        // as they're all one second loops, this should harmonise
+        if (waveformChannels.length > 0)
+            channel.position = waveformChannels[0].position;
         waveformChannels.push(channel);
         dynamicEQ();
         return {sound: sound, channel: channel};

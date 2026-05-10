@@ -389,6 +389,7 @@ class TargetOscilloscope extends Object implements Updateable
         if (puzzlesComplete >= targets.length)
             puzzlesComplete = 0;
         targetWaveform = targets[puzzlesComplete];
+        soundOne.waveform = targetWaveform;
         soundOne.reload();
     }
 
