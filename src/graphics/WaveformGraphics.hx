@@ -1,26 +1,19 @@
 package graphics;
 
-import h2d.filter.Group;
-import graphics.shaders.PeriodicAlphaFilter;
-import h2d.filter.Shader;
-import graphics.shaders.BulgeFilter;
-import hxsl.Types.Vec;
-import h3d.Vector4;
-import hxsl.Types.Vec4;
-import graphics.shaders.WaveformShader;
-import h2d.Tile;
-import h2d.Bitmap;
-import graphics.shaders.PeriodicAlphaShader;
 import h2d.Graphics;
-import utilities.Utilities.clamp;
-import utilities.RNGManager;
-import h2d.filter.Blur;
-import gamelogic.Waveform;
-import gamelogic.Updateable;
-import hxd.Res;
+import h2d.Object;
 import h2d.SpriteBatch;
 import h2d.SpriteBatch.BatchElement;
-import h2d.Object;
+import h2d.filter.Blur;
+import h2d.filter.Group;
+import h2d.filter.Shader;
+import hxd.Res;
+import utilities.Utilities.clamp;
+import utilities.RNGManager;
+import gamelogic.Updateable;
+import gamelogic.Waveform;
+import graphics.shaders.BulgeFilter;
+import graphics.shaders.PeriodicAlphaFilter;
 
 typedef ColourTuple = {
     var r: Float;
@@ -86,9 +79,8 @@ class WaveformGraphics extends Object implements Updateable {
     
     public var waveform: Void -> Waveform;
     var batch: SpriteBatch;
-    public var totalTime = 0.0;
-    public var phaseMod = 0.0;
-    public var speed = 0.75;
+    var totalTime = 0.0;
+    var speed = 0.75;
 
     var lines: Graphics;
     var periodicFilter: PeriodicAlphaFilter;
@@ -116,10 +108,15 @@ class WaveformGraphics extends Object implements Updateable {
         batch.smooth = true;
         batch.tileWrap = true;
 
-        blur = new Blur(60, 1.1);
+        blur = new Blur(60, 1.15);
         periodicFilter = new PeriodicAlphaFilter();
         lines.filter = new Shader(periodicFilter);
         filter = new Group([new Shader(new BulgeFilter()), blur]);
+    }
+
+    public function timeSpeedSync(o: WaveformGraphics) {
+        totalTime = o.totalTime;
+        speed = o.speed;
     }
 
     public function update(dt: Float): Bool {
@@ -168,7 +165,7 @@ class WaveformGraphics extends Object implements Updateable {
         if (RNGManager.random(noise_proc) == 0)
             blur.radius = clamp(blur.radius + RNGManager.srand(1), 50, 80);
         if (RNGManager.random(noise_proc) == 0)
-            blur.gain = clamp(blur.gain + RNGManager.srand(noise_amount), 1.1, 1.5);
+            blur.gain = clamp(blur.gain + RNGManager.srand(noise_amount), 1.1, 1.3);
         
         speed = clamp(speed + RNGManager.srand(noise_amount), 0.5, 1.0);
 

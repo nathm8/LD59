@@ -1,10 +1,8 @@
 {
-  "ampDialX": -81,
+  "ampDialX": -51.5,
   "ampDialY": 97,
-  "freqDialX": 0,
+  "freqDialX": 51.5,
   "freqDialY": 97,
-  "phaseDialX": 81,
-  "phaseDialY": 97,
   "waveformGraphicsWidth": 212,
   "waveformGraphicsHeight": 114,
   "waveformGraphicsX": -108,

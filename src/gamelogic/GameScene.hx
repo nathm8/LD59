@@ -100,15 +100,14 @@ class GameScene extends Scene implements MessageListener {
             var n = params.componentName;
             var amp = 1/8*(3 + RNGManager.random(3));
             var freq = 1/8*(3 + RNGManager.random(3));
-            var phase = 1/8*(3 + RNGManager.random(3));
             if (n == "Wire")
                 updateables.push(new Cable(this));
             if (n == "Sine")
-                updateables.push(new Oscilloscope(new Sine(amp, freq, phase), this));
+                updateables.push(new Oscilloscope(new Sine(amp, freq), this));
             if (n == "Square")
-                updateables.push(new Oscilloscope(new Square(amp, freq, phase), this));
+                updateables.push(new Oscilloscope(new Square(amp, freq), this));
             if (n == "Triangle")
-                updateables.push(new Oscilloscope(new Triangle(amp, freq, phase), this));
+                updateables.push(new Oscilloscope(new Triangle(amp, freq), this));
             if (n == "And")
                 updateables.push(new Combinator(true, this));
             if (n == "Or")

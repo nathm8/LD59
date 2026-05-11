@@ -11,12 +11,10 @@ class Waveform {
     // period assumed to be 1.0
     public var amplitude:Float;
     public var frequency:Float;
-    public var phase:Float;
 
-    public function new(a=0.5, f=0.5, p=0.5) {
+    public function new(a=0.5, f=0.5) {
         amplitude = a;
         frequency = f;
-        phase = p;
     }
 
     var cache: Vector<Float>;
@@ -61,13 +59,12 @@ class Waveform {
 
 class Sine extends Waveform {
 
-    public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
-        t -= p*Math.PI;
+    public static function staticSample(t:Float, a:Float, f:Float):Float {
         return 0.5*a*Math.sin( f*4*Math.PI*t );
     }
 
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
-        return staticSample(t, amplitude, frequency, phase);
+        return staticSample(t, amplitude, frequency);
     }
 
 }
@@ -80,8 +77,7 @@ function sign(v: Float): Int {
 
 class Square extends Waveform {
 
-    public static function staticSample(t:Float, a:Float, f:Float, p:Float, ?sound=false):Float {
-        t -= p*Math.PI;
+    public static function staticSample(t:Float, a:Float, f:Float, ?sound=false):Float {
         if (!sound)
             return 0.5*a*sign( Math.sin(f*4*Math.PI*t) );
 
@@ -92,19 +88,18 @@ class Square extends Waveform {
     }
 
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
-        return staticSample(t, amplitude, frequency, phase, sound);
+        return staticSample(t, amplitude, frequency, sound);
     }
 }
 
 class Triangle extends Waveform {
 
-    public static function staticSample(t:Float, a:Float, f:Float, p:Float):Float {
-        t -= p*Math.PI;
+    public static function staticSample(t:Float, a:Float, f:Float):Float {
         return a/Math.PI*Math.asin( Math.sin(f*4*Math.PI*t) );
     }
 
     override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
-        return staticSample(t, amplitude, frequency, phase);
+        return staticSample(t, amplitude, frequency);
     }
 }
 

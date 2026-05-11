@@ -52,7 +52,6 @@ class Oscilloscope extends Object implements Updateable
     var handle: Handle;
     var ampDial: Dial;
     var freqDial: Dial;
-    var phaseDial: Dial;
     var port: Port;
     var slider: VolumeSlider;
     var sound: CustomSound;
@@ -74,7 +73,6 @@ class Oscilloscope extends Object implements Updateable
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
         ampDial   = new Dial(Math.round(waveform.amplitude*8), () -> { waveform.amplitude = ampDial.value/8;  sound.reload(); }, sprite);
         freqDial  = new Dial(Math.round(waveform.frequency*8), () -> { waveform.frequency = freqDial.value/8; sound.reload(); }, sprite);
-        phaseDial = new Dial(Math.round(waveform.phase*8),     () -> { waveform.phase = phaseDial.value/8;    sound.reload(); }, sprite);
 
         col = colors[RNGManager.random(colors.length)];
         waveformGraphics = new WaveformGraphics(params.waveformGraphicsWidth, params.waveformGraphicsHeight, col, () -> waveform, this);
@@ -96,9 +94,8 @@ class Oscilloscope extends Object implements Updateable
     function updateGraphics() {
         ampDial.x = params.ampDialX;
         ampDial.y = params.ampDialY;
+        freqDial.x = params.freqDialX;
         freqDial.y = params.freqDialY;
-        phaseDial.x = params.phaseDialX;
-        phaseDial.y = params.phaseDialY;
         waveformGraphics.x = params.waveformGraphicsX;
         waveformGraphics.y = params.waveformGraphicsY;
         waveformGraphics.width = params.waveformGraphicsWidth;
@@ -117,7 +114,6 @@ class Oscilloscope extends Object implements Updateable
 
         ampDial.update(dt);
         freqDial.update(dt);
-        phaseDial.update(dt);
         return false;
     }
 
