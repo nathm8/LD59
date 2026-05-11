@@ -56,10 +56,6 @@ class Oscilloscope extends Object implements Updateable
     var slider: VolumeSlider;
     var sound: CustomSound;
     
-    var col: Int;
-    
-    var totalTime = 0.0;
-    
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
     }
@@ -71,10 +67,10 @@ class Oscilloscope extends Object implements Updateable
         waveform = w;
 
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
-        ampDial   = new Dial(Math.round(waveform.amplitude*8), () -> { waveform.amplitude = ampDial.value/8;  sound.reload(); }, sprite);
-        freqDial  = new Dial(Math.round(waveform.frequency*8), () -> { waveform.frequency = freqDial.value/8; sound.reload(); }, sprite);
+        ampDial   = new Dial(Math.round(waveform.amplitude*8), () -> { waveform.amplitude = ampDial.value/8;  sound.reload(waveform); }, sprite);
+        freqDial  = new Dial(Math.round(waveform.frequency*8), () -> { waveform.frequency = freqDial.value/8; sound.reload(waveform); }, sprite);
 
-        col = colors[RNGManager.random(colors.length)];
+        var col = colors[RNGManager.random(colors.length)];
         waveformGraphics = new WaveformGraphics(params.waveformGraphicsWidth, params.waveformGraphicsHeight, col, () -> waveform, this);
         
         port = new Port(true, this);
@@ -109,9 +105,7 @@ class Oscilloscope extends Object implements Updateable
     }
 
     public function update(dt:Float):Bool {
-        totalTime += dt*0.5 + RNGManager.srand(0.01);
         waveformGraphics.update(dt);
-
         ampDial.update(dt);
         freqDial.update(dt);
         return false;

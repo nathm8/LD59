@@ -1,5 +1,6 @@
 package gamelogic;
 
+import graphics.WaveformGraphics;
 import sound.SoundManager;
 import sound.CustomSound;
 import graphics.VolumeSlider;
@@ -18,10 +19,10 @@ import utilities.MessageManager;
 import utilities.MessageManager.MessageListener;
 
 typedef InverterJson = {
-    var outputWaveformGraphicsWidth: Float;
-    var outputWaveformGraphicsHeight: Float;
-    var outputWaveformGraphicsX: Float;
-    var outputWaveformGraphicsY: Float;
+    var waveformGraphicsWidth: Int;
+    var waveformGraphicsHeight: Int;
+    var waveformGraphicsX: Float;
+    var waveformGraphicsY: Float;
 
     var inputPortX: Float;
     var inputPortY: Float;
@@ -38,34 +39,29 @@ typedef InverterJson = {
 class Inverter extends Object implements MessageListener
                               implements Updateable {
 
+    var params: InverterJson;
+
     var sprite: Bitmap;
     var inputPort: Port;
     var outputPort: Port;
-
-    var totalTime = 0.0;
-
+    var handle: Handle;
+    var waveformGraphics: WaveformGraphics;
+    var slider: VolumeSlider;
+    
+    var inputWaveform: Waveform;
     var transformedWaveform: WaveformInverter;
 
-    var inputWaveform: Waveform;
-    
-    var outputWaveformGraphics: Graphics;
-    var outputCol: Int;
-
-    var handle: Handle;
-
-    var params: InverterJson;
-
-    var slider: VolumeSlider;
     var sound: CustomSound;
-
 
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
     }
 
     function updateGraphics() {
-        outputWaveformGraphics.x = params.outputWaveformGraphicsX;
-        outputWaveformGraphics.y = params.outputWaveformGraphicsY;
+        waveformGraphics.x = params.waveformGraphicsX;
+        waveformGraphics.y = params.waveformGraphicsY;
+        waveformGraphics.width = params.waveformGraphicsWidth;
+        waveformGraphics.height = params.waveformGraphicsHeight;
         inputPort.x = params.inputPortX;
         inputPort.y = params.inputPortY;
         outputPort.x = params.outputPortX;
@@ -78,19 +74,17 @@ class Inverter extends Object implements MessageListener
 
     public function new(?p: Object) {
         super(p);
+        fromJson(hxd.Res.data.Inverter.entry);
 
         sprite = new Bitmap(Res.img.Invert.toTile().center(), this);
-        var size = sprite.getSize();
-
-        outputCol = colors[RNGManager.random(colors.length)];
 
         transformedWaveform = new WaveformInverter();
-
-        outputWaveformGraphics = new Graphics(this);
+        
+        waveformGraphics = new WaveformGraphics(params.waveformGraphicsWidth, params.waveformGraphicsHeight, colors[RNGManager.random(colors.length)], () -> transformedWaveform, this);
 
         inputPort = new Port(false, this);
-        inputPort.onConnection = (w) -> { inputWaveform = w; transformedWaveform.source = w; sound.reload(); };
-        inputPort.onDisconnect = () ->  { inputWaveform = null; transformedWaveform.source = null; sound.reload(); };
+        inputPort.onConnection = (w) -> { inputWaveform = w; transformedWaveform.source = w; sound.reload(w); };
+        inputPort.onDisconnect = () ->  { inputWaveform = null; transformedWaveform.source = null; sound.reload(null); };
         
         outputPort = new Port(true, this);
         outputPort.getOutput = () -> { slider.mute(); return transformedWaveform; };
@@ -104,14 +98,11 @@ class Inverter extends Object implements MessageListener
         slider.mute();
 
         MessageManager.addListener(this);
-        fromJson(hxd.Res.data.Inverter.entry);
         updateGraphics();
     }
 
     public function update(dt:Float):Bool {
-        totalTime += dt*0.5;
-        outputWaveformGraphics.clear();
-        transformedWaveform?.draw(outputWaveformGraphics, params.outputWaveformGraphicsWidth, params.outputWaveformGraphicsHeight, totalTime, outputCol);
+        waveformGraphics.update(dt);
         return false;
     }
 

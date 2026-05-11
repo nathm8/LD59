@@ -302,13 +302,12 @@ class TargetOscilloscope extends Object implements Updateable
         port = new Port(false, this);
         port.onConnection = (w: Waveform) -> {
             inputWaveform = w;
-            soundTwo.waveform = w;
-            soundTwo.reload();
+            soundTwo.reload(w);
             sliderTwo.restore();
         };
         port.onDisconnect = () -> {
             inputWaveform = null;
-            soundTwo.reload();
+            soundTwo.reload(null);
             sliderTwo.mute();
         };
         
@@ -396,8 +395,7 @@ class TargetOscilloscope extends Object implements Updateable
         if (puzzlesComplete >= targets.length)
             puzzlesComplete = 0;
         targetWaveform = targets[puzzlesComplete];
-        soundOne.waveform = targetWaveform;
-        soundOne.reload();
+        soundOne.reload(targetWaveform);
     }
 
     function checkSolution() {

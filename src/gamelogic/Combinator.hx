@@ -1,5 +1,6 @@
 package gamelogic;
 
+import graphics.WaveformGraphics;
 import gamelogic.Dial.OrDial;
 import sound.SoundManager;
 import sound.CustomSound;
@@ -9,11 +10,7 @@ import haxe.Json;
 import hxd.Res;
 import hxd.fs.FileEntry;
 import h2d.Bitmap;
-import h2d.Graphics;
 import h2d.Object;
-import h2d.filter.Blur;
-import h2d.filter.Glow;
-import h2d.filter.Group;
 import utilities.Utilities.colors;
 import utilities.RNGManager;
 import utilities.MessageManager;
@@ -22,16 +19,16 @@ import utilities.MessageManager.MessageListener;
 import gamelogic.Waveform.WaveformCombination;
 
 typedef CombinatorJson = {
-    var inputWaveformGraphicsOneWidth: Float;
-    var inputWaveformGraphicsOneHeight: Float;
+    var inputWaveformGraphicsOneWidth: Int;
+    var inputWaveformGraphicsOneHeight: Int;
     var inputWaveformGraphicsOneX: Float;
     var inputWaveformGraphicsOneY: Float;
-    var inputWaveformGraphicsTwoWidth: Float;
-    var inputWaveformGraphicsTwoHeight: Float;
+    var inputWaveformGraphicsTwoWidth: Int;
+    var inputWaveformGraphicsTwoHeight: Int;
     var inputWaveformGraphicsTwoX: Float;
     var inputWaveformGraphicsTwoY: Float;
-    var outputWaveformGraphicsWidth: Float;
-    var outputWaveformGraphicsHeight: Float;
+    var outputWaveformGraphicsWidth: Int;
+    var outputWaveformGraphicsHeight: Int;
     var outputWaveformGraphicsX: Float;
     var outputWaveformGraphicsY: Float;
 
@@ -72,9 +69,9 @@ class Combinator extends Object implements MessageListener
     var inputWaveformOne: Waveform;
     var inputWaveformTwo: Waveform;
     
-    var inputWaveformGraphicsOne: Graphics;
-    var inputWaveformGraphicsTwo: Graphics;
-    var outputWaveformGraphics: Graphics;
+    var inputWaveformGraphicsOne: WaveformGraphics;
+    var inputWaveformGraphicsTwo: WaveformGraphics;
+    var outputWaveformGraphics: WaveformGraphics;
 
     var inputOneCol: Int;
     var inputTwoCol: Int;
@@ -92,10 +89,16 @@ class Combinator extends Object implements MessageListener
     function updateGraphics() {
         outputWaveformGraphics.x = params.outputWaveformGraphicsX;
         outputWaveformGraphics.y = params.outputWaveformGraphicsY;
+        outputWaveformGraphics.width = params.outputWaveformGraphicsWidth;
+        outputWaveformGraphics.height = params.outputWaveformGraphicsHeight;
         inputWaveformGraphicsOne.x = params.inputWaveformGraphicsOneX;
         inputWaveformGraphicsOne.y = params.inputWaveformGraphicsOneY;
+        inputWaveformGraphicsTwo.width = params.inputWaveformGraphicsTwoWidth;
+        inputWaveformGraphicsTwo.height = params.inputWaveformGraphicsTwoHeight;
         inputWaveformGraphicsTwo.x = params.inputWaveformGraphicsTwoX;
         inputWaveformGraphicsTwo.y = params.inputWaveformGraphicsTwoY;
+        inputWaveformGraphicsTwo.width = params.inputWaveformGraphicsTwoWidth;
+        inputWaveformGraphicsTwo.height = params.inputWaveformGraphicsTwoHeight;
         inputPortOne.x = params.inputPortOneX;
         inputPortOne.y = params.inputPortOneY;
         inputPortTwo.x = params.inputPortTwoX;
@@ -115,6 +118,10 @@ class Combinator extends Object implements MessageListener
     public function new(a: Bool, ?p: Object) {
         super(p);
         isAnd = a;
+        if (isAnd)
+            fromJson(hxd.Res.data.And.entry);
+        else
+            fromJson(hxd.Res.data.Or.entry);
 
         if (isAnd)
             sprite = new Bitmap(Res.img.And.toTile().center(), this);
@@ -124,24 +131,21 @@ class Combinator extends Object implements MessageListener
         if (!isAnd)
             dial = new OrDial(3, () -> {transformedWaveform.weight = dial.value/6;}, this);
 
-        var cols = RNGManager.randoms(colors.length, 3, true);
-        inputOneCol = colors[cols[0]];
-        inputTwoCol = colors[cols[1]];
-        outputCol = colors[cols[2]];
-
+        
         transformedWaveform = new WaveformCombination(isAnd);
-
-        outputWaveformGraphics = new Graphics(this);
-        inputWaveformGraphicsOne = new Graphics(this);
-        inputWaveformGraphicsTwo = new Graphics(this);
+        
+        var cols = RNGManager.randoms(colors.length, 3, true);
+        outputWaveformGraphics = new WaveformGraphics(params.outputWaveformGraphicsWidth, params.outputWaveformGraphicsHeight, colors[cols[0]], () -> transformedWaveform, this);
+        inputWaveformGraphicsOne = new WaveformGraphics(params.inputWaveformGraphicsOneWidth, params.inputWaveformGraphicsOneHeight, colors[cols[1]], () -> transformedWaveform.sourceOne, this);
+        inputWaveformGraphicsTwo = new WaveformGraphics(params.inputWaveformGraphicsTwoWidth, params.inputWaveformGraphicsTwoHeight, colors[cols[2]], () -> transformedWaveform.sourceTwo, this);
 
         inputPortOne = new Port(false, this);
-        inputPortOne.onConnection = (w) -> { inputWaveformOne = w; transformedWaveform.sourceOne = w; sound.reload(); };
-        inputPortOne.onDisconnect = () ->  { inputWaveformOne = null; transformedWaveform.sourceOne = null; sound.reload(); };
+        inputPortOne.onConnection = (w) -> { inputWaveformOne = w; transformedWaveform.sourceOne = w; sound.reload(w); };
+        inputPortOne.onDisconnect = () ->  { inputWaveformOne = null; transformedWaveform.sourceOne = null; sound.reload(null); };
 
         inputPortTwo = new Port(false, this);
-        inputPortTwo.onConnection = (w) -> { inputWaveformTwo = w; transformedWaveform.sourceTwo = w; sound.reload(); };
-        inputPortTwo.onDisconnect = () ->  { inputWaveformTwo = null; transformedWaveform.sourceTwo = null; sound.reload(); };
+        inputPortTwo.onConnection = (w) -> { inputWaveformTwo = w; transformedWaveform.sourceTwo = w; sound.reload(w); };
+        inputPortTwo.onDisconnect = () ->  { inputWaveformTwo = null; transformedWaveform.sourceTwo = null; sound.reload(null); };
         
         outputPort = new Port(true, this);
         outputPort.getOutput = () -> { slider.mute(); return transformedWaveform; };
@@ -155,25 +159,13 @@ class Combinator extends Object implements MessageListener
 
         MessageManager.addListener(this);
 
-        if (isAnd)
-            fromJson(hxd.Res.data.And.entry);
-        else
-            fromJson(hxd.Res.data.Or.entry);
         updateGraphics();
     }
 
     public function update(dt:Float):Bool {
-        totalTimeOne   += dt*0.5 + RNGManager.srand(0.01);
-        totalTimeTwo   += dt*0.5 + RNGManager.srand(0.01);
-        totalTimeThree += dt*0.5 + RNGManager.srand(0.01);
-        
-        inputWaveformGraphicsOne.clear();
-        inputWaveformOne?.draw(inputWaveformGraphicsOne, params.inputWaveformGraphicsOneWidth, params.inputWaveformGraphicsOneHeight, totalTimeOne, inputOneCol);
-        inputWaveformGraphicsTwo.clear();
-        inputWaveformTwo?.draw(inputWaveformGraphicsTwo, params.inputWaveformGraphicsTwoWidth, params.inputWaveformGraphicsTwoHeight, totalTimeTwo, inputTwoCol);
-        outputWaveformGraphics.clear();
-        transformedWaveform?.draw(outputWaveformGraphics, params.outputWaveformGraphicsWidth, params.outputWaveformGraphicsHeight, totalTimeThree, outputCol);
-
+        outputWaveformGraphics.update(dt);
+        inputWaveformGraphicsOne.update(dt);
+        inputWaveformGraphicsTwo.update(dt);
         dial?.update(dt);
         return false;
     }

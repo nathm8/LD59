@@ -1,5 +1,6 @@
 package gamelogic;
 
+import graphics.WaveformGraphics;
 import gamelogic.Waveform.WaveformPhase;
 import sound.SoundManager;
 import sound.CustomSound;
@@ -19,8 +20,8 @@ import utilities.MessageManager;
 import utilities.MessageManager.MessageListener;
 
 typedef PhaseJson = {
-    var waveformGraphicsWidth: Float;
-    var waveformGraphicsHeight: Float;
+    var waveformGraphicsWidth: Int;
+    var waveformGraphicsHeight: Int;
     var waveformGraphicsX: Float;
     var waveformGraphicsY: Float;
 
@@ -42,27 +43,20 @@ typedef PhaseJson = {
 class Phase extends Object implements MessageListener
                               implements Updateable {
 
+    var params: PhaseJson;
+
     var sprite: Bitmap;
     var inputPort: Port;
     var outputPort: Port;
-
-    var totalTime = 0.0;
+    var waveformGraphics: WaveformGraphics;
+    var dial: Dial;
+    var handle: Handle;
+    var slider: VolumeSlider;
 
     var transformedWaveform: WaveformPhase;
-
     var inputWaveform: Waveform;
     
-    var waveformGraphics: Graphics;
-    var outputCol: Int;
-
-    var handle: Handle;
-    var dial: Dial;
-
-    var params: PhaseJson;
-
-    var slider: VolumeSlider;
     var sound: CustomSound;
-
 
     function fromJson(j: FileEntry) {
         params = Json.parse(j.getText());
@@ -71,6 +65,8 @@ class Phase extends Object implements MessageListener
     function updateGraphics() {
         waveformGraphics.x = params.waveformGraphicsX;
         waveformGraphics.y = params.waveformGraphicsY;
+        waveformGraphics.width = params.waveformGraphicsWidth;
+        waveformGraphics.height = params.waveformGraphicsHeight;
         inputPort.x = params.inputPortX;
         inputPort.y = params.inputPortY;
         outputPort.x = params.outputPortX;
@@ -85,26 +81,24 @@ class Phase extends Object implements MessageListener
 
     public function new(?p: Object) {
         super(p);
+        fromJson(hxd.Res.data.Phase.entry);
 
         sprite = new Bitmap(Res.img.Phase.toTile().center(), this);
-        var size = sprite.getSize();
-
-        outputCol = colors[RNGManager.random(colors.length)];
 
         transformedWaveform = new WaveformPhase(0.0);
 
-        waveformGraphics = new Graphics(this);
+        waveformGraphics = new WaveformGraphics(params.waveformGraphicsWidth, params.waveformGraphicsHeight, colors[RNGManager.random(colors.length)], () -> transformedWaveform, this);
 
         inputPort = new Port(false, this);
-        inputPort.onConnection = (w) -> { inputWaveform = w; transformedWaveform.source = w; sound.reload(); };
-        inputPort.onDisconnect = () ->  { inputWaveform = null; transformedWaveform.source = null; sound.reload(); };
+        inputPort.onConnection = (w) -> { inputWaveform = w; transformedWaveform.source = w; sound.reload(w); };
+        inputPort.onDisconnect = () ->  { inputWaveform = null; transformedWaveform.source = null; sound.reload(null); };
         
         outputPort = new Port(true, this);
         outputPort.getOutput = () -> { slider.mute(); return transformedWaveform; };
         outputPort.onDisconnect = () -> { slider.restore(); };
 
         handle = new Handle(this);
-        dial = new Dial(0, () -> { transformedWaveform.phase = dial.value/8;  sound.reload(); }, sprite);
+        dial = new Dial(0, () -> { transformedWaveform.phase = dial.value/8;  sound.reload(transformedWaveform); }, sprite);
 
         var sound_channel = SoundManager.addWaveform(transformedWaveform);
         sound = sound_channel.sound;
@@ -112,14 +106,11 @@ class Phase extends Object implements MessageListener
         slider.mute();
 
         MessageManager.addListener(this);
-        fromJson(hxd.Res.data.Phase.entry);
         updateGraphics();
     }
 
     public function update(dt:Float):Bool {
-        totalTime += dt*0.5;
-        waveformGraphics.clear();
-        transformedWaveform?.draw(waveformGraphics, params.waveformGraphicsWidth, params.waveformGraphicsHeight, totalTime, outputCol);
+        waveformGraphics.update(dt);
         return false;
     }
 

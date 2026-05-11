@@ -63,7 +63,8 @@ class CustomSound extends Sound {
         return "Waveform sound generator";
     }
 
-    public function reload() {
+    public function reload(w: Waveform) {
+        waveform = w;
         var d = cast(data, SoundDataGenerator);
         d.reload();
     }
