@@ -1,5 +1,6 @@
 package gamelogic;
 
+import gamelogic.Waveform.WaveformPhase;
 import sound.SoundManager;
 import sound.CustomSound;
 import graphics.VolumeSlider;
@@ -17,11 +18,11 @@ import utilities.Utilities.colors;
 import utilities.MessageManager;
 import utilities.MessageManager.MessageListener;
 
-typedef InverterJson = {
-    var outputWaveformGraphicsWidth: Float;
-    var outputWaveformGraphicsHeight: Float;
-    var outputWaveformGraphicsX: Float;
-    var outputWaveformGraphicsY: Float;
+typedef PhaseJson = {
+    var waveformGraphicsWidth: Float;
+    var waveformGraphicsHeight: Float;
+    var waveformGraphicsX: Float;
+    var waveformGraphicsY: Float;
 
     var inputPortX: Float;
     var inputPortY: Float;
@@ -33,9 +34,12 @@ typedef InverterJson = {
 
     var sliderX: Float;
     var sliderY: Float;
+
+    var dialX: Float;
+    var dialY: Float;
 }
 
-class Inverter extends Object implements MessageListener
+class Phase extends Object implements MessageListener
                               implements Updateable {
 
     var sprite: Bitmap;
@@ -44,16 +48,17 @@ class Inverter extends Object implements MessageListener
 
     var totalTime = 0.0;
 
-    var transformedWaveform: WaveformInverter;
+    var transformedWaveform: WaveformPhase;
 
     var inputWaveform: Waveform;
     
-    var outputWaveformGraphics: Graphics;
+    var waveformGraphics: Graphics;
     var outputCol: Int;
 
     var handle: Handle;
+    var dial: Dial;
 
-    var params: InverterJson;
+    var params: PhaseJson;
 
     var slider: VolumeSlider;
     var sound: CustomSound;
@@ -64,8 +69,8 @@ class Inverter extends Object implements MessageListener
     }
 
     function updateGraphics() {
-        outputWaveformGraphics.x = params.outputWaveformGraphicsX;
-        outputWaveformGraphics.y = params.outputWaveformGraphicsY;
+        waveformGraphics.x = params.waveformGraphicsX;
+        waveformGraphics.y = params.waveformGraphicsY;
         inputPort.x = params.inputPortX;
         inputPort.y = params.inputPortY;
         outputPort.x = params.outputPortX;
@@ -74,19 +79,21 @@ class Inverter extends Object implements MessageListener
         handle.y = params.handleY;
         slider.x = params.sliderX;
         slider.y = params.sliderY;
+        dial.x = params.dialX;
+        dial.y = params.dialY;
     }
 
     public function new(?p: Object) {
         super(p);
 
-        sprite = new Bitmap(Res.img.Invert.toTile().center(), this);
+        sprite = new Bitmap(Res.img.Phase.toTile().center(), this);
         var size = sprite.getSize();
 
         outputCol = colors[RNGManager.random(colors.length)];
 
-        transformedWaveform = new WaveformInverter();
+        transformedWaveform = new WaveformPhase(0.0);
 
-        outputWaveformGraphics = new Graphics(this);
+        waveformGraphics = new Graphics(this);
 
         inputPort = new Port(false, this);
         inputPort.onConnection = (w) -> { inputWaveform = w; transformedWaveform.source = w; sound.reload(); };
@@ -97,6 +104,7 @@ class Inverter extends Object implements MessageListener
         outputPort.onDisconnect = () -> { slider.restore(); };
 
         handle = new Handle(this);
+        dial = new Dial(0, () -> { transformedWaveform.phase = dial.value/8;  sound.reload(); }, sprite);
 
         var sound_channel = SoundManager.addWaveform(transformedWaveform);
         sound = sound_channel.sound;
@@ -104,20 +112,20 @@ class Inverter extends Object implements MessageListener
         slider.mute();
 
         MessageManager.addListener(this);
-        fromJson(hxd.Res.data.Inverter.entry);
+        fromJson(hxd.Res.data.Phase.entry);
         updateGraphics();
     }
 
     public function update(dt:Float):Bool {
         totalTime += dt*0.5;
-        outputWaveformGraphics.clear();
-        transformedWaveform?.draw(outputWaveformGraphics, params.outputWaveformGraphicsWidth, params.outputWaveformGraphicsHeight, totalTime, outputCol);
+        waveformGraphics.clear();
+        transformedWaveform?.draw(waveformGraphics, params.waveformGraphicsWidth, params.waveformGraphicsHeight, totalTime, outputCol);
         return false;
     }
 
     public function receive(msg:Message):Bool {
-        if (Std.isOfType(msg, UpdateInvert)) {
-            var params: UpdateInvert = cast(msg, UpdateInvert);
+        if (Std.isOfType(msg, UpdatePhase)) {
+            var params: UpdatePhase = cast(msg, UpdatePhase);
             fromJson(params.json);
             updateGraphics();
         }

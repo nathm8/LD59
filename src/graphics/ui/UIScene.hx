@@ -1,5 +1,7 @@
 package graphics.ui;
 
+import h2d.Object;
+import h2d.Bitmap;
 import hxd.res.Loader;
 import hxd.fs.EmbedFileSystem;
 import graphics.ui.BitmapButton.ComponentButton;
@@ -58,10 +60,18 @@ class UIScene extends Scene implements MessageListener {
         componentFlow.horizontalSpacing = 10;
         componentFlow.padding = 20; 
 
-        var hidden = ["Split", "Square", "Triangle", "And", "Or", "Invert"];
-        for (name in ["Wire", "Split", "Sine", "Square", "Triangle", "And", "Or", "Invert"]) {
-            var b = new ComponentButton(name, componentFlow, () -> {MessageManager.send(new SpawnComponent(name));});
-            b.name = name;
+        var hidden = ["Split", "Square", "Triangle", "And", "Or", "Invert", "UIBreak1", "UIBreak2", "Phase"];
+        var num = 0;
+        for (name in ["Wire", "Split", "UIBreak", "Sine", "Square", "Triangle", "UIBreak", "Phase", "And", "Or", "Invert"]) {
+            var b: Object;
+            if (name == "UIBreak") {
+                b = new Bitmap(Res.img.ui.UIBreak.toTile(), componentFlow);
+                b.name = 'UIBreak$num';
+                // b.visible = num == 0;
+                num++;
+            } else {
+                b = new ComponentButton(name, componentFlow, () -> {MessageManager.send(new SpawnComponent(name));});
+            }
             // if (hidden.contains(name))
             //     b.visible = false;
         }
@@ -108,7 +118,7 @@ class UIScene extends Scene implements MessageListener {
             tutorialText.text = "If you need more room:\nYou can zoom in and out with the mouse wheel, or Q and E.\nDragging the middle mouse button or WASD can pan the camera.";
             tutorialText.x = width/2;
             tutorialText.y -= 50;
-            for (n in ["Or", "Square"])
+            for (n in ["Or", "Square", "UIBreak1"])
                 componentFlow.getObjectByName(n).visible = true;
             componentFlow.x = width/2 - componentFlow.outerWidth/2;
             Main.tweenManager.animateTo(tutorialText, {alpha: 1}, 2.0).start();

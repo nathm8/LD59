@@ -116,6 +116,8 @@ class GameScene extends Scene implements MessageListener {
                 updateables.push(new Inverter(this));
             if (n == "Split")
                 updateables.push(new Splitter(this));
+            if (n == "Phase")
+                updateables.push(new Phase(this));
         }
         // graphics
         return false;

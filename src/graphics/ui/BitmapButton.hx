@@ -63,5 +63,6 @@ class ComponentButton extends BitmapButton {
               tiles[2],
               tiles[3],
               p, onClick);
+        name = button_name;
     }
 }

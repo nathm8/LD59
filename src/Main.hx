@@ -45,6 +45,7 @@ class Main extends UIApp implements MessageListener {
         hxd.Res.data.And.watch(() -> { MessageManager.send(new UpdateAnd(hxd.Res.data.And.entry)); });
         hxd.Res.data.Or.watch(() -> { MessageManager.send(new UpdateOr(hxd.Res.data.Or.entry)); });
         hxd.Res.data.Splitter.watch(() -> { MessageManager.send(new UpdateSplitter(hxd.Res.data.Splitter.entry)); });
+        hxd.Res.data.Phase.watch(() -> { MessageManager.send(new UpdatePhase(hxd.Res.data.Phase.entry)); });
     }
     
     override function update(dt:Float) {

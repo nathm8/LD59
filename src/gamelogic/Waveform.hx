@@ -6,7 +6,11 @@ import h2d.Graphics;
 
 final WAVEFORM_CACHE_LENGTH = 100;
 
-class Waveform {
+////////////////////////////////////////////////////////
+// base
+////////////////////////////////////////////////////////
+
+abstract class Waveform {
 
     // period assumed to be 1.0
     public var amplitude:Float;
@@ -57,6 +61,10 @@ class Waveform {
     }
 }
 
+////////////////////////////////////////////////////////
+// generators
+////////////////////////////////////////////////////////
+
 class Sine extends Waveform {
 
     public static function staticSample(t:Float, a:Float, f:Float):Float {
@@ -103,7 +111,18 @@ class Triangle extends Waveform {
     }
 }
 
-class WaveformCombination extends Waveform {
+////////////////////////////////////////////////////////
+// modifiers
+////////////////////////////////////////////////////////
+
+abstract class WaveformModifier extends Waveform {
+    override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?drawing_samples=100): Void {
+        if (sample(0) == -1) return;
+        super.draw(target, width, height, phase_delta, col, drawing_samples);
+    }
+}
+
+class WaveformCombination extends WaveformModifier {
 
     public var sourceOne: Waveform;
     public var sourceTwo: Waveform;
@@ -128,14 +147,9 @@ class WaveformCombination extends Waveform {
         y = y > 0.5 ? 0.5 : y < -0.5 ? -0.5 : y;
         return y;
     }
-
-    override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?drawing_samples=100): Void {
-        if (sample(0) == -1) return;
-        super.draw(target, width, height, phase_delta, col, drawing_samples);
-    }
 }
 
-class WaveformInverter extends Waveform {
+class WaveformInverter extends WaveformModifier {
 
     public var source: Waveform;
 
@@ -144,9 +158,23 @@ class WaveformInverter extends Waveform {
         if (source == null || source.sample(0, d+1) == -1) return -1;
         return -source.sample(t, d+1);
     }
+}
 
-    override public function draw(target:Graphics, width:Float, height:Float, ?phase_delta:Float, ?col:Int=0x00FF00, ?drawing_samples=100): Void {
-        if (sample(0) == -1) return;
-        super.draw(target, width, height, phase_delta, col, drawing_samples);
+class WaveformPhase extends WaveformModifier {
+
+    // [0, 1], in 1/8th steps
+    public var phase = 0.0;
+
+    public function new(p: Float) {
+        super();
+        phase = p;
+    }
+
+    public var source: Waveform;
+
+    override public function sample(t:Float, ?d:Int=0, ?sound=false):Float {
+        if (d == 100) return -1;
+        if (source == null || source.sample(0, d+1) == -1) return -1;
+        return source.sample(t + phase, d+1);
     }
 }

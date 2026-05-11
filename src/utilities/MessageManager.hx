@@ -67,6 +67,10 @@ class UpdateTarget extends Message {
     public var json: FileEntry;
     public function new(j: FileEntry) {super(); json = j;}
 }
+class UpdatePhase extends Message {
+    public var json: FileEntry;
+    public function new(j: FileEntry) {super(); json = j;}
+}
 
 interface MessageListener {
     public function receive(msg: Message): Bool;
