@@ -1,5 +1,7 @@
 package graphics;
 
+import h2d.filter.Group;
+import graphics.shaders.PeriodicAlphaFilter;
 import h2d.filter.Shader;
 import graphics.shaders.BulgeFilter;
 import hxsl.Types.Vec;
@@ -88,9 +90,9 @@ class WaveformGraphics extends Object implements Updateable {
     public var phaseMod = 0.0;
     public var speed = 0.75;
 
-    var lines: Bitmap;
-    var waveformShader: WaveformShader;
-    var periodicShader: PeriodicAlphaShader;
+    var lines: Graphics;
+    var periodicFilter: PeriodicAlphaFilter;
+    var blur: Blur;
 
     var colour: Int;
     public var width: Int;
@@ -106,99 +108,39 @@ class WaveformGraphics extends Object implements Updateable {
         colour = c;
         width = w;
         height = h;
+
+        lines = new Graphics(this);
+
         batch = new SpriteBatch(Res.img.Dot16.toTile().center(), this);
         batch.hasUpdate = true;
         batch.smooth = true;
         batch.tileWrap = true;
 
-        lines = new Bitmap(Tile.fromColor(0x000000, width, height, 0), this);
-        // lines.x += width/2;
-        lines.y -= height/2;
-        waveformShader = new WaveformShader();
-        var ct = colourTupleFromInt(c);
-        waveformShader.colour.r = ct.r;
-        waveformShader.colour.g = ct.g;
-        waveformShader.colour.b = ct.b;
-        resample();
-        lines.addShader(waveformShader);
-        periodicShader = new PeriodicAlphaShader();
-        lines.addShader(periodicShader);
-
-        batch.filter = new Blur(60, 1.1);
-
-        var bs = new BulgeFilter();
-        filter = new Shader(bs);
-
-        // lines using waveform.draw and PeriodicAlphaFilter instead
-        // will look better on discontinuities
-        // // init
-        // g = new Graphics(this);
-        // g.x -= 250;
-        // w = new Sine();
-        // paf = new PeriodicAlphaFilter();
-        // g.filter = new Group([new Shader(paf), new Blur(50, 1.2)]);
-
-        // // update
-        // g.clear();
-        // w.draw(g, 500, 500, 0);
-        // tt += dt;
-        // paf.delta = tt % 1;
+        blur = new Blur(60, 1.1);
+        periodicFilter = new PeriodicAlphaFilter();
+        lines.filter = new Shader(periodicFilter);
+        filter = new Group([new Shader(new BulgeFilter()), blur]);
     }
 
-    public function resample() {
-        waveformShader.samples = new Array<Vec4>();
+    public function update(dt: Float): Bool {
         if (waveform() == null || waveform().sample(0) == -1) {
             lines.visible = false;
             batch.visible = false;
-            return;
+            return false;
         }
         lines.visible = true;
         batch.visible = true;
-        var samples = 500;
-        for (x in 0...samples) {
-            waveformShader.samples[x] = new Vec4(
-                waveform().sample(4*x/samples),
-                0, 0, 0);
-        }
-    }
-    
-    
-    public function update(dt: Float): Bool {
-        if (waveform() == null) return false;
 
-        // this doesn't need to be called so often, but setting it up to be lazy will be annoying
-        resample();
-
-        var samples = 3;
-        var phase_increment = 0.25;
+        var samples = 6;
         var noise_proc = 200; // chance of 1 in noise_proc
         var noise_amount = 0.1;
 
         for (_ in 0...samples) {
             totalTime += speed*dt/samples;
-            if (totalTime > 1) {
-                phaseMod += phase_increment;
-                totalTime -= 1;
-            }
             var p = new WaveformParticle(colour);
-            p.x = totalTime % 1;
-            p.y = waveform().sample(4*(totalTime % 1 + phaseMod));
+            p.x = 4 * (totalTime % 1);
+            p.y = waveform().sample(p.x + totalTime);
             
-            // discontinuity
-            // allow back-to-start trail one in 10 times
-            if (Math.abs(prevY - p.y) > 0.3 &&
-                (Math.abs(prevX - p.x) < 0.3 || RNGManager.random(10) == 0)) {
-                for (i in 0...samples*4) {
-                    var r = i/(samples*4);
-                    var q = new WaveformParticle(colour);
-                    q.x = prevX * r + p.x * (1-r);
-                    q.y = prevY * r + p.y * (1-r);
-                    q.x *= width;
-                    q.y *= height;
-                    batch.add(q);        
-                }
-            }
-
             prevX = p.x;
             prevY = p.y;
 
@@ -213,24 +155,21 @@ class WaveformGraphics extends Object implements Updateable {
                     p.y += RNGManager.srand(noise_amount);
             }
 
-            p.x *= width;
+            p.x *= width * 0.25;
             p.y *= height;
             batch.add(p);
             // particleNum++;
         }
 
-        waveformShader.phase = phaseMod;
-        var f = (totalTime + 0.5) % 1 ;
-        periodicShader.delta = f;
+        lines.clear();
+        waveform().draw(lines, width, height, totalTime, colour);
+        periodicFilter.delta = (totalTime + 0.5) % 1;
 
-        if (batch.filter != null) {
-            var blur = cast(batch.filter, Blur);
-            if (RNGManager.random(noise_proc) == 0)
-                blur.radius = clamp(blur.radius + RNGManager.srand(1), 50, 80);
-            if (RNGManager.random(noise_proc) == 0)
-                blur.gain = clamp(blur.gain + RNGManager.srand(noise_amount), 1.1, 1.5);
-        }
-            
+        if (RNGManager.random(noise_proc) == 0)
+            blur.radius = clamp(blur.radius + RNGManager.srand(1), 50, 80);
+        if (RNGManager.random(noise_proc) == 0)
+            blur.gain = clamp(blur.gain + RNGManager.srand(noise_amount), 1.1, 1.5);
+        
         speed = clamp(speed + RNGManager.srand(noise_amount), 0.5, 1.0);
 
         return false;

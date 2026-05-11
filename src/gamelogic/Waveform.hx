@@ -33,12 +33,12 @@ class Waveform {
         for (i in 0...drawing_samples) {
             var x = i/drawing_samples*4;
             var y = sample(x + phase_delta);
-            if (RNGManager.random(5000) == 0) {
+            if (RNGManager.random(2000) == 0) {
                 y += RNGManager.srand(0.1);
                 if (RNGManager.random(1000) == 0)
                     x += RNGManager.srand(0.1);
             }
-            if (RNGManager.random(5000) == 0) {
+            if (RNGManager.random(2000) == 0) {
                 x += RNGManager.srand(0.1);
                 if (RNGManager.random(1000) == 0)
                     y += RNGManager.srand(0.1);
