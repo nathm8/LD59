@@ -8,22 +8,8 @@ Post-jam MVP
 -----------------------------------
 have global mute button
 
-have cable heads render on top of everything until plugged in
-
 put in guards to prevent dragging components off-screen
     and out of bounds when zoomed out\panned far out
-
-set window icon
-    https://github.com/HaxeFoundation/hashlink/blob/master/libs/sdl/sdl/Surface.hx
-    https://github.com/HaxeFoundation/hashlink/blob/master/libs/sdl/sdl/Window.hx
-    https://github.com/HeapsIO/heaps/blob/master/hxd/Window.hl.hx
-and just favicon for js target
-
-cables - allow click-drag mode
-
-add noise warning
-
-add black outline to interactables, or otherwise improve their greyscale visibility
 
 implement window resizing for hashlink target
 
@@ -31,14 +17,13 @@ figure out a better way of spawning in components than dumping them at 0, 0
 
 add generative sounds. Try to have them not be totally awful
     harmonise when getting solution - overtone? needs some research
+    try just slapping reverb or pitch on it
 
 add SFX for cables, dials, switch and lights
     have each light actually correspond to something (correctish phase/freq/amp, perhaps?)
         only need two "approx", last is for complete match. Amp range is an easy one. Just do a really loose match for light two
 
-main menu. level select
-
-physically simulate cable wire (just put control point on spring between the heads)
+main menu. level select. global volume slider. disable waveform graphics shaders
 
 physically simulate components. to prevent overlapping
     have them rotatable by knocking, but slowly "righted" while held
@@ -46,31 +31,11 @@ physically simulate components. to prevent overlapping
 add trashcan
 
 design more puzzles
-    DIY square and triangle (or close to) before unlocking them
 introduce each tool seperately with tutorial
 
 tooltips for components in menu
 
-Sounds
------------------------------------
-for generating the "goal" tone:
-
-https://en.wikipedia.org/wiki/Envelope_(music)
-https://en.wikipedia.org/wiki/Overtone
-https://en.wikipedia.org/wiki/Harmony#Tonal_fusion
-https://en.wikipedia.org/wiki/Harmonic_series_(music)
-
-further extensions
------------------------------------
-Implement memory cell and parameterised freq\amp\phase
-    or parameterised envelope
-additional generators
-    noise, constant
-additional modifiers/combinators
-    envelope, gating, limiter, hystersis, phase shift
-saveable solutions (e.g. reuse saw-tooth)
 random gen'd puzzles, import\exportable seed
-some kind of highscore metrics. Number of components used
 
 Done
 ===================================
@@ -95,7 +60,8 @@ fix cable head-port collision detection
 implement new Device switch
 have volume control on every component which emits sound
     have it tween to zero once it's plugged into another sound emitter
-    
+have cable heads render on top of everything until plugged in    
+
 Todo
 -----------------------------------
 make UI with drag-droppable elements

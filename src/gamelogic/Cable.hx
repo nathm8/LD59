@@ -31,9 +31,9 @@ class CableHead extends Object implements MessageListener implements Updateable 
     var snapImmunity = 0.0;
 
     public function new(c: Cable, ?p: Object) {
-        super();
-        // ensure cable is always behind other sprites
-        p.addChildAt(this, 0);
+        super(p);
+        // ensure cable is always in front of other sprites
+        getScene()?.over(this);
         
         cable = c;
         var t = Res.img.CableHead.toTile();
@@ -112,6 +112,7 @@ class CableHead extends Object implements MessageListener implements Updateable 
         var p = getAbsPos().getPosition();
         remove();
         s.addChildAt(this, 0);
+        getScene()?.over(this);
         x = p.x; y = p.y;
     }
 

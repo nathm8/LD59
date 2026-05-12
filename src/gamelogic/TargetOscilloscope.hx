@@ -1,5 +1,8 @@
 package gamelogic;
 
+import hxd.snd.effect.LowPass;
+import hxd.snd.effect.Pitch;
+import hxd.snd.effect.Reverb;
 import graphics.WaveformGraphics;
 import sound.SoundManager;
 import graphics.VolumeSlider;
@@ -313,7 +316,6 @@ class TargetOscilloscope extends Object implements Updateable
         
         handle = new Handle(this);
 
-        // TODO make this more distinct with an overtone or something
         var sound_channel = SoundManager.addWaveform(targetWaveform);
         soundOne = sound_channel.sound;
         sliderOne = new VolumeSlider(sound_channel.channel, this);
