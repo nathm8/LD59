@@ -60,9 +60,9 @@ class UIScene extends Scene implements MessageListener {
         componentFlow.horizontalSpacing = 10;
         componentFlow.padding = 20; 
 
-        var hidden = ["Split", "Square", "Triangle", "And", "Or", "Invert", "UIBreak1", "UIBreak2", "Phase"];
+        var hidden = ["Split", "Square", "Triangle", "And", "Or", "Invert", "UIBreak1", "UIBreak2", "UIBreak3", "Phase"];
         var num = 0;
-        for (name in ["Wire", "Split", "UIBreak", "Sine", "Square", "Triangle", "UIBreak", "Phase", "And", "Or", "Invert"]) {
+        for (name in ["Wire", "Split", "UIBreak", "Sine", "Square", "Triangle", "UIBreak", "Phase", "And", "Or", "Invert", "UIBreak", "Bin"]) {
             var b: Object;
             if (name == "UIBreak") {
                 b = new Bitmap(Res.img.ui.UIBreak.toTile(), componentFlow);
