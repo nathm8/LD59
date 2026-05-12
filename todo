@@ -6,19 +6,6 @@ Bugs
 
 Post-jam MVP
 -----------------------------------
-have global mute button
-
-put in guards to prevent dragging components off-screen
-    and out of bounds when zoomed out\panned far out
-
-implement window resizing for hashlink target
-
-figure out a better way of spawning in components than dumping them at 0, 0
-
-add generative sounds. Try to have them not be totally awful
-    harmonise when getting solution - overtone? needs some research
-    try just slapping reverb or pitch on it
-
 add SFX for cables, dials, switch and lights
     have each light actually correspond to something (correctish phase/freq/amp, perhaps?)
         only need two "approx", last is for complete match. Amp range is an easy one. Just do a really loose match for light two
@@ -42,6 +29,7 @@ Done
 
 Post-jam MVP
 -----------------------------------
+have global mute button
 animate the target oscillo's input volume slider
 cache square wave calcs
     everything's cached now

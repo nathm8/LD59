@@ -1,11 +1,10 @@
 package graphics.ui;
 
-import h2d.Interactive;
 import utilities.MessageManager;
 import hxd.res.Loader;
 import hxd.Timer;
-import h2d.col.PixelsCollider;
 import hxd.Event;
+import h2d.Interactive;
 import h2d.Object;
 import h2d.Tile;
 import h2d.Bitmap;
@@ -87,12 +86,12 @@ class MuteButton extends Object {
                 mute.visible = false;
                 unmute.visible = true;
             }
-            );
+        );
         unmute = new ComponentButton("Unmute", this, null, () -> {
-            MessageManager.send(new Mute());
-            mute.visible = true;
-            unmute.visible = false;
-        }
+                MessageManager.send(new Mute());
+                mute.visible = true;
+                unmute.visible = false;
+            }
         );
         unmute.visible = false;
         scale(0.5);

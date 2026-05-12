@@ -39,7 +39,7 @@ class WaveformParticle extends BatchElement {
     var endColour: ColourTuple;
 
     public function new(c: Int) {
-        super(Res.img.Dot16.toTile().center());
+        super(Res.img.Dot.toTile().center());
         setColours(c);
         colourInterp(1);
     }
@@ -103,7 +103,7 @@ class WaveformGraphics extends Object implements Updateable {
 
         lines = new Graphics(this);
 
-        batch = new SpriteBatch(Res.img.Dot16.toTile().center(), this);
+        batch = new SpriteBatch(Res.img.Dot.toTile().center(), this);
         batch.hasUpdate = true;
         batch.smooth = true;
         batch.tileWrap = true;
