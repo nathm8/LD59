@@ -71,6 +71,7 @@ class UpdatePhase extends Message {
     public var json: FileEntry;
     public function new(j: FileEntry) {super(); json = j;}
 }
+class Mute extends Message {}
 
 interface MessageListener {
     public function receive(msg: Message): Bool;

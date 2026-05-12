@@ -1,5 +1,6 @@
 package graphics.ui;
 
+import graphics.ui.BitmapButton.MuteButton;
 import h2d.Object;
 import h2d.Bitmap;
 import hxd.res.Loader;
@@ -70,13 +71,17 @@ class UIScene extends Scene implements MessageListener {
                 // b.visible = num == 0;
                 num++;
             } else {
-                b = new ComponentButton(name, componentFlow, () -> {MessageManager.send(new SpawnComponent(name));});
+                b = new ComponentButton(name, componentFlow, () -> MessageManager.send(new SpawnComponent(name)), null);
             }
             // if (hidden.contains(name))
             //     b.visible = false;
         }
         componentFlow.x = width/2 - componentFlow.outerWidth/2;
         componentFlow.y = height - componentFlow.outerHeight;
+
+        var muteButton = new MuteButton(this);
+        muteButton.x = width - 80;
+        muteButton.y = 10;
 
         tutorialText = new h2d.Text(hxd.res.DefaultFont.get(), this);
         tutorialText.textAlign = Center;

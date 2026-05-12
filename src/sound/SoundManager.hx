@@ -16,6 +16,9 @@ class SoundManager implements MessageListener{
     static var waveformSoundGroup: SoundGroup;
     static var waveformChannels: Array<Channel>;
 
+    static var isMuted = false;
+    static var savedVolume: Float;
+
     static public function initialise() {
         reset();
     }
@@ -23,6 +26,7 @@ class SoundManager implements MessageListener{
     static public function reset() {
         manager?.dispose();
         manager = Manager.get();
+        savedVolume = manager.masterVolume;
         waveformChannels = new Array<Channel>();
         waveformChannelGroup = new ChannelGroup("Waveform");
         waveformSoundGroup = new SoundGroup("Waveform");
@@ -55,6 +59,14 @@ class SoundManager implements MessageListener{
     }
     
     public function receive(msg:Message):Bool {
+        if (Std.isOfType(msg, Mute)) {
+            if (!isMuted) {
+                savedVolume = manager.masterVolume;
+                manager.masterVolume = 0;
+            } else 
+                manager.masterVolume = savedVolume;
+            isMuted = !isMuted;
+        }
         return false;
     }
 }
