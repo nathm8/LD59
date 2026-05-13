@@ -73,8 +73,6 @@ class WaveformParticle extends BatchElement {
     }
 }
 
-// var particleNum = 0;
-
 class WaveformGraphics extends Object implements Updateable {
     
     public var waveform: Void -> Waveform;
@@ -89,10 +87,6 @@ class WaveformGraphics extends Object implements Updateable {
     var colour: Int;
     public var width: Int;
     public var height: Int;
-
-    // detect discontinuities to render them better
-    var prevX = 0.0;
-    var prevY = 0.0;
 
     public function new(w:Int, h: Int, c: Int, wave: Void -> Waveform, ?p: Object) {
         super(p);
@@ -138,9 +132,6 @@ class WaveformGraphics extends Object implements Updateable {
             p.x = 4 * (totalTime % 1);
             p.y = waveform().sample(p.x + totalTime);
             
-            prevX = p.x;
-            prevY = p.y;
-
             if (RNGManager.random(noise_proc) == 0) {
                 p.y += RNGManager.srand(noise_amount);
                 if (RNGManager.random(noise_proc) == 0)
@@ -155,7 +146,6 @@ class WaveformGraphics extends Object implements Updateable {
             p.x *= width * 0.25;
             p.y *= height;
             batch.add(p);
-            // particleNum++;
         }
 
         lines.clear();

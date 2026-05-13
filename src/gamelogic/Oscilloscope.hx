@@ -1,5 +1,9 @@
 package gamelogic;
 
+import utilities.Vector2D;
+import gamelogic.physics.PolygonalPhysicalGameObject;
+import utilities.Polygons.OscilloPolgonCentred;
+import utilities.Polygons.getScaledPolygon;
 import graphics.WaveformGraphics;
 import sound.CustomSound;
 import sound.SoundManager;
@@ -45,6 +49,8 @@ class Oscilloscope extends Object implements Updateable
     
     var params: OscilloscopeJson;
 
+    var physics: PolygonalPhysicalGameObject;
+
     public var waveform: Waveform;
     var waveformGraphics: WaveformGraphics;
 
@@ -63,7 +69,10 @@ class Oscilloscope extends Object implements Updateable
     public function new(w: Waveform, p: Object) {
         super(p);
         fromJson(hxd.Res.data.Oscilloscope.entry);
-        
+
+        var poly = getScaledPolygon(OscilloPolgonCentred);
+        physics = new PolygonalPhysicalGameObject(new Vector2D(), poly, this);
+
         waveform = w;
 
         sprite = new Bitmap(Res.img.Oscillo.toTile().center(), this);
@@ -77,7 +86,7 @@ class Oscilloscope extends Object implements Updateable
         port.getOutput = () -> {slider.mute(); return waveform;};
         port.onDisconnect = () -> {slider.restore();};
         
-        handle = new Handle(this);
+        handle = new PhysicalHandle(physics.body, this);
 
         var sound_channel = SoundManager.addWaveform(waveform);
         sound = sound_channel.sound;
@@ -105,6 +114,10 @@ class Oscilloscope extends Object implements Updateable
     }
 
     public function update(dt:Float):Bool {
+        var p: Vector2D = physics.body.getPosition();
+        x = p.x; y = p.y;
+        rotation = physics.body.getAngle();
+
         waveformGraphics.update(dt);
         ampDial.update(dt);
         freqDial.update(dt);

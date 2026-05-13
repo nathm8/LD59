@@ -3,6 +3,9 @@ Signals
 
 Bugs
 -----------------------------------
+handle grab offsets not handling rotation from physics correctly
+    it's not that bad
+cable draw offsets not handling rotation from physics correctly
 
 Post-jam MVP
 -----------------------------------
@@ -12,8 +15,10 @@ add SFX for cables, dials, switch and lights
 
 main menu. level select. global volume slider. disable waveform graphics shaders
 
+
 physically simulate components. to prevent overlapping
     have them rotatable by knocking, but slowly "righted" while held
+physically clear a location before spawnin a physical component there
 
 add trashcan
 
