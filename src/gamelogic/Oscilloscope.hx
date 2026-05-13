@@ -55,7 +55,7 @@ class Oscilloscope extends Object implements Updateable
     var waveformGraphics: WaveformGraphics;
 
     var sprite: Bitmap;
-    var handle: Handle;
+    var handle: PhysicalHandle;
     var ampDial: Dial;
     var freqDial: Dial;
     var port: Port;
@@ -118,6 +118,7 @@ class Oscilloscope extends Object implements Updateable
         x = p.x; y = p.y;
         rotation = physics.body.getAngle();
 
+        handle.update(dt);
         waveformGraphics.update(dt);
         ampDial.update(dt);
         freqDial.update(dt);

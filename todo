@@ -5,7 +5,9 @@ Bugs
 -----------------------------------
 handle grab offsets not handling rotation from physics correctly
     it's not that bad
+
 cable draw offsets not handling rotation from physics correctly
+
 
 Post-jam MVP
 -----------------------------------

@@ -1,5 +1,6 @@
 package graphics;
 
+import gamelogic.Updateable;
 import box2D.dynamics.B2Body;
 import gamelogic.physics.PhysicalWorld;
 import box2D.dynamics.joints.B2MouseJointDef;
@@ -50,7 +51,7 @@ class Handle extends Object implements MessageListener {
     }
 }
 
-class PhysicalHandle extends Handle {
+class PhysicalHandle extends Handle implements Updateable {
  
     var mouseJoint: B2MouseJoint;
 
@@ -79,13 +80,20 @@ class PhysicalHandle extends Handle {
             var y = params.scenePosition.y + selectedOffset.y;
             mouseJoint.setTarget(new Vector2D(x, y));
             mouseJoint.setMaxForce(10000);
+        }
+        return false;
+    }
 
+    public function update(dt:Float):Bool {
+        // right selected component if it's rotated
+        if (isSelected) {
             var b = mouseJoint.getBodyB();
             var a = mouseJoint.getBodyB().getAngle();
+            var mod = Math.abs(Math.round(a/0.01)) * 0.1;
             if (a > 0.005)
-                b.applyTorque(-1000);
+                b.applyTorque(mod*-1000);
             else if (a < -0.005)
-                b.applyTorque(1000);
+                b.applyTorque(mod*1000);
         }
         return false;
     }

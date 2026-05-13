@@ -97,7 +97,7 @@ class CableHead extends Object implements MessageListener implements Updateable 
         var h = s.height;
         var w = s.width;
         var p: Vector2D = sprite.getAbsPos().getPosition();
-        return p - new Vector2D(-w/2, -h).rotate(rotation);
+        return p - new Vector2D(-w/2, -h).rotate(rotation + parent.rotation);
     }
 
     function disconnect() {

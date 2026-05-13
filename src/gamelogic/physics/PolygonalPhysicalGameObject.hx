@@ -30,7 +30,8 @@ class PolygonalPhysicalGameObject {
         var i = 0;
         while (i < tris.length) {
             var tri = B2PolygonShape.asArray([polygon[tris[i]]*PHYSICSCALEINVERT, polygon[tris[i+1]]*PHYSICSCALEINVERT, polygon[tris[i+2]]*PHYSICSCALEINVERT], 3);
-            // var tri = B2PolygonShape.asArray([polygon[tris[i+2]]*PHYSICSCALEINVERT, polygon[tris[i+1]]*PHYSICSCALEINVERT, polygon[tris[i]]*PHYSICSCALEINVERT], 3);
+            // extra radius to prevent components from sticking so much
+            tri.m_radius = 0.05;
             fixture_definition = new B2FixtureDef();
             fixture_definition.shape = tri;
             fixture_definition.friction = 0.5;
