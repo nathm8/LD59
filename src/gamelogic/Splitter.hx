@@ -1,5 +1,8 @@
 package gamelogic;
 
+import utilities.Polygons.SplitPolgonCentred;
+import utilities.Polygons.getScaledPolygon;
+import gamelogic.physics.PolygonalPhysicalGameObject;
 import utilities.Vector2D;
 import haxe.Json;
 import hxd.fs.FileEntry;
@@ -31,7 +34,9 @@ class Splitter extends Object implements MessageListener
 
     var waveform: Waveform;
 
-    var handle: Handle;
+    var physics: PolygonalPhysicalGameObject;
+
+    var handle: PhysicalHandle;
 
     var params: SplitterJson;
 
@@ -65,6 +70,8 @@ class Splitter extends Object implements MessageListener
 
         sprite = new Bitmap(Res.img.Split.toTile().center(), this);
 
+        physics = new PolygonalPhysicalGameObject(new Vector2D(), getScaledPolygon(SplitPolgonCentred), this);
+
         inputPort = new Port(false, this);
         inputPort.onConnection = (w) -> {
             waveform = w;
@@ -85,14 +92,19 @@ class Splitter extends Object implements MessageListener
         outputPortTwo.rotation = Math.PI/2;
         outputPortTwo.getOutput = () -> {return waveform;};
 
-        handle = new Handle(this);
+        handle = new PhysicalHandle(physics.body, this);
 
         MessageManager.addListener(this);
         fromJson(hxd.Res.data.Splitter.entry);
         updateGraphics();
+        physics.body.setPosition(pos);
     }
 
     public function update(dt:Float):Bool {
+        var p: Vector2D = physics.body.getPosition();
+        x = p.x; y = p.y;
+        rotation = physics.body.getAngle();
+        handle.update(dt);
         return false;
     }
 

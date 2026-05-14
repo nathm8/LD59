@@ -22,7 +22,7 @@ class PhysicalWorld {
 
     public static function setScene(scene: Scene) {
         debugDraw = new HeapsDebugDraw(scene);
-        // gameWorld.setDebugDraw(debugDraw);
+        gameWorld.setDebugDraw(debugDraw);
     }
 
     public static function update(dt: Float) {

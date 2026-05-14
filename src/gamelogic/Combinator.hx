@@ -1,5 +1,9 @@
 package gamelogic;
 
+import utilities.Polygons.OrPolgonCentred;
+import utilities.Polygons.AndPolgonCentred;
+import utilities.Polygons.getScaledPolygon;
+import gamelogic.physics.PolygonalPhysicalGameObject;
 import utilities.Vector2D;
 import graphics.WaveformGraphics;
 import gamelogic.Dial.OrDial;
@@ -59,7 +63,9 @@ class Combinator extends Object implements MessageListener
     var inputPortOne: Port;
     var inputPortTwo: Port;
     var outputPort: Port;
-    var handle: Handle;
+    
+    var physics: PolygonalPhysicalGameObject;
+    var handle: PhysicalHandle;
 
     var totalTimeOne = 0.0;
     var totalTimeTwo = 0.0;
@@ -119,19 +125,16 @@ class Combinator extends Object implements MessageListener
     public function new(pos: Vector2D, a: Bool, ?p: Object) {
         super(p);
         isAnd = a;
-        if (isAnd)
+        if (isAnd) {
             fromJson(hxd.Res.data.And.entry);
-        else
-            fromJson(hxd.Res.data.Or.entry);
-
-        if (isAnd)
             sprite = new Bitmap(Res.img.And.toTile().center(), this);
-        else
+            physics = new PolygonalPhysicalGameObject(new Vector2D(), getScaledPolygon(AndPolgonCentred), this);
+        } else {
+            fromJson(hxd.Res.data.Or.entry);
             sprite = new Bitmap(Res.img.Or.toTile().center(), this);
-
-        if (!isAnd)
+            physics = new PolygonalPhysicalGameObject(new Vector2D(), getScaledPolygon(OrPolgonCentred), this);
             dial = new OrDial(3, () -> {transformedWaveform.weight = dial.value/6;}, this);
-
+        }
         
         transformedWaveform = new WaveformCombination(isAnd);
         
@@ -152,18 +155,24 @@ class Combinator extends Object implements MessageListener
         outputPort.getOutput = () -> { slider.mute(); return transformedWaveform; };
         outputPort.onDisconnect = () -> { slider.restore(); };
 
-        handle = new Handle(this);
+        handle = new PhysicalHandle(physics.body, this);
 
         var sound_channel = SoundManager.addWaveform(transformedWaveform);
         sound = sound_channel.sound;
         slider = new VolumeSlider(sound_channel.channel, this);
+        slider.mute();
 
         MessageManager.addListener(this);
-
         updateGraphics();
+        physics.body.setPosition(pos);
     }
 
     public function update(dt:Float):Bool {
+        var p: Vector2D = physics.body.getPosition();
+        x = p.x; y = p.y;
+        rotation = physics.body.getAngle();
+        handle.update(dt);
+
         outputWaveformGraphics.update(dt);
         inputWaveformGraphicsOne.update(dt);
         inputWaveformGraphicsTwo.update(dt);

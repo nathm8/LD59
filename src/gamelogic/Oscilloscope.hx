@@ -14,7 +14,6 @@ import hxd.fs.FileEntry;
 import hxd.Res;
 import h2d.Object;
 import h2d.Bitmap;
-
 import utilities.Utilities.colors;
 import utilities.RNGManager;
 import utilities.MessageManager;
@@ -117,8 +116,8 @@ class Oscilloscope extends Object implements Updateable
         var p: Vector2D = physics.body.getPosition();
         x = p.x; y = p.y;
         rotation = physics.body.getAngle();
-
         handle.update(dt);
+
         waveformGraphics.update(dt);
         ampDial.update(dt);
         freqDial.update(dt);

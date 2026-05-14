@@ -1,5 +1,8 @@
 package gamelogic;
 
+import utilities.Polygons.InvertPolgonCentred;
+import utilities.Polygons.getScaledPolygon;
+import gamelogic.physics.PolygonalPhysicalGameObject;
 import utilities.Vector2D;
 import graphics.WaveformGraphics;
 import sound.SoundManager;
@@ -42,10 +45,12 @@ class Inverter extends Object implements MessageListener
 
     var params: InverterJson;
 
+    var physics: PolygonalPhysicalGameObject;
+
     var sprite: Bitmap;
     var inputPort: Port;
     var outputPort: Port;
-    var handle: Handle;
+    var handle: PhysicalHandle;
     var waveformGraphics: WaveformGraphics;
     var slider: VolumeSlider;
     
@@ -77,6 +82,8 @@ class Inverter extends Object implements MessageListener
         super(p);
         fromJson(hxd.Res.data.Inverter.entry);
 
+        physics = new PolygonalPhysicalGameObject(new Vector2D(), getScaledPolygon(InvertPolgonCentred), this);
+
         sprite = new Bitmap(Res.img.Invert.toTile().center(), this);
 
         transformedWaveform = new WaveformInverter();
@@ -91,7 +98,7 @@ class Inverter extends Object implements MessageListener
         outputPort.getOutput = () -> { slider.mute(); return transformedWaveform; };
         outputPort.onDisconnect = () -> { slider.restore(); };
 
-        handle = new Handle(this);
+        handle = new PhysicalHandle(physics.body, this);
 
         var sound_channel = SoundManager.addWaveform(transformedWaveform);
         sound = sound_channel.sound;
@@ -100,9 +107,14 @@ class Inverter extends Object implements MessageListener
 
         MessageManager.addListener(this);
         updateGraphics();
+        physics.body.setPosition(pos);
     }
 
     public function update(dt:Float):Bool {
+        var p: Vector2D = physics.body.getPosition();
+        x = p.x; y = p.y;
+        rotation = physics.body.getAngle();
+        handle.update(dt);
         waveformGraphics.update(dt);
         return false;
     }

@@ -1,5 +1,8 @@
 package gamelogic;
 
+import utilities.Polygons.PhasePolgonCentred;
+import utilities.Polygons.getScaledPolygon;
+import gamelogic.physics.PolygonalPhysicalGameObject;
 import utilities.Vector2D;
 import graphics.WaveformGraphics;
 import gamelogic.Waveform.WaveformPhase;
@@ -46,12 +49,14 @@ class Phase extends Object implements MessageListener
 
     var params: PhaseJson;
 
+    var physics: PolygonalPhysicalGameObject;
+
     var sprite: Bitmap;
     var inputPort: Port;
     var outputPort: Port;
     var waveformGraphics: WaveformGraphics;
     var dial: Dial;
-    var handle: Handle;
+    var handle: PhysicalHandle;
     var slider: VolumeSlider;
 
     var transformedWaveform: WaveformPhase;
@@ -84,6 +89,8 @@ class Phase extends Object implements MessageListener
         super(p);
         fromJson(hxd.Res.data.Phase.entry);
 
+        physics = new PolygonalPhysicalGameObject(new Vector2D(), getScaledPolygon(PhasePolgonCentred), this);
+
         sprite = new Bitmap(Res.img.Phase.toTile().center(), this);
 
         transformedWaveform = new WaveformPhase(0.0);
@@ -98,7 +105,7 @@ class Phase extends Object implements MessageListener
         outputPort.getOutput = () -> { slider.mute(); return transformedWaveform; };
         outputPort.onDisconnect = () -> { slider.restore(); };
 
-        handle = new Handle(this);
+        handle = new PhysicalHandle(physics.body, this);
         dial = new Dial(0, () -> { transformedWaveform.phase = dial.value/8;  sound.reload(transformedWaveform); }, sprite);
 
         var sound_channel = SoundManager.addWaveform(transformedWaveform);
@@ -108,9 +115,15 @@ class Phase extends Object implements MessageListener
 
         MessageManager.addListener(this);
         updateGraphics();
+        physics.body.setPosition(pos);
     }
 
     public function update(dt:Float):Bool {
+        var p: Vector2D = physics.body.getPosition();
+        x = p.x; y = p.y;
+        rotation = physics.body.getAngle();
+        handle.update(dt);
+        
         waveformGraphics.update(dt);
         return false;
     }
