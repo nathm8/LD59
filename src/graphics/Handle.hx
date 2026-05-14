@@ -2,7 +2,6 @@ package graphics;
 
 import h2d.Bitmap;
 import hxd.Res;
-import hxd.Window;
 import gamelogic.Updateable;
 import box2D.dynamics.B2Body;
 import gamelogic.physics.PhysicalWorld;
@@ -34,7 +33,6 @@ class Handle extends Object implements MessageListener {
             isSelected = true;
             
             var event_rel = new Vector2D(e.relX, e.relY);
-            interactive.syncPos();
             var i_abs = new Vector2D(interactive.absX, interactive.absY);
             var p_rel = new Vector2D(parent.x, parent.y);
             sprite.getSize();
