@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.Vector2D;
 import graphics.WaveformGraphics;
 import sound.SoundManager;
 import sound.CustomSound;
@@ -72,7 +73,7 @@ class Inverter extends Object implements MessageListener
         slider.y = params.sliderY;
     }
 
-    public function new(?p: Object) {
+    public function new(pos: Vector2D, ?p: Object) {
         super(p);
         fromJson(hxd.Res.data.Inverter.entry);
 

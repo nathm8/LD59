@@ -1,8 +1,8 @@
 package gamelogic;
 
-import hxd.snd.effect.LowPass;
-import hxd.snd.effect.Pitch;
-import hxd.snd.effect.Reverb;
+import utilities.Polygons.OscilloOutPolgonCentred;
+import utilities.Polygons.getScaledPolygon;
+import gamelogic.physics.PolygonalPhysicalGameObject;
 import graphics.WaveformGraphics;
 import sound.SoundManager;
 import graphics.VolumeSlider;
@@ -16,12 +16,8 @@ import hxd.fs.FileEntry;
 import hxd.Event;
 import hxd.Res;
 import h2d.Interactive;
-import h2d.Graphics;
 import h2d.Bitmap;
 import h2d.Object;
-import h2d.filter.Blur;
-import h2d.filter.Glow;
-import h2d.filter.Group;
 import gamelogic.Waveform.WaveformInverter;
 import gamelogic.Waveform.Triangle;
 import gamelogic.Waveform.WaveformCombination;
@@ -189,12 +185,14 @@ typedef TargetJson = {
 class TargetOscilloscope extends Object implements Updateable
                                         implements MessageListener {
     
-    var sprite: Bitmap;
-
+                                            
     var params: TargetJson;
     
+    var physics: PolygonalPhysicalGameObject;
+    
     var puzzlesComplete = 0;
-
+    
+    var sprite: Bitmap;
     var lightOne: Bitmap;
     var lightTwo: Bitmap;
     var lightThree: Bitmap;
@@ -215,7 +213,7 @@ class TargetOscilloscope extends Object implements Updateable
     var colOne: Int;
     var colTwo: Int;
 
-    var handle: Handle;
+    var handle: PhysicalHandle;
     var targetSwitch: TargetSwitch;
 
     var sliderOne: VolumeSlider;
@@ -227,10 +225,12 @@ class TargetOscilloscope extends Object implements Updateable
         params = Json.parse(j.getText());
     }
 
-    public function new(p: Object) {
+    public function new(pos: Vector2D, p: Object) {
         super(p);
 
         fromJson(hxd.Res.data.Target.entry);
+
+        physics = new PolygonalPhysicalGameObject(new Vector2D(), getScaledPolygon(OscilloOutPolgonCentred), this);
 
         // ugly place to put this, target init
         {
@@ -314,7 +314,7 @@ class TargetOscilloscope extends Object implements Updateable
             sliderTwo.mute();
         };
         
-        handle = new Handle(this);
+        handle = new PhysicalHandle(physics.body, this);
 
         var sound_channel = SoundManager.addWaveform(targetWaveform);
         soundOne = sound_channel.sound;
@@ -327,6 +327,7 @@ class TargetOscilloscope extends Object implements Updateable
         
         MessageManager.addListener(this);
         updateGraphics();
+        physics.body.setPosition(pos);
     }
     
     function updateGraphics() {
@@ -375,7 +376,12 @@ class TargetOscilloscope extends Object implements Updateable
     }
 
     public function update(dt:Float):Bool {
+        var p: Vector2D = physics.body.getPosition();
+        x = p.x; y = p.y;
+        rotation = physics.body.getAngle();
+
         dt *= 0.5;
+        handle.update(dt);
         inputWaveformGraphics.update(dt);
         targetWaveformGraphics.update(dt);
         combinedWaveformGraphicsOne.update(dt);

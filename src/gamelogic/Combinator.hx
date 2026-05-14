@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.Vector2D;
 import graphics.WaveformGraphics;
 import gamelogic.Dial.OrDial;
 import sound.SoundManager;
@@ -115,7 +116,7 @@ class Combinator extends Object implements MessageListener
         slider.y = params.sliderY;
     }
 
-    public function new(a: Bool, ?p: Object) {
+    public function new(pos: Vector2D, a: Bool, ?p: Object) {
         super(p);
         isAnd = a;
         if (isAnd)

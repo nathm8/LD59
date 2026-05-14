@@ -66,12 +66,11 @@ class Oscilloscope extends Object implements Updateable
         params = Json.parse(j.getText());
     }
 
-    public function new(w: Waveform, p: Object) {
+    public function new(pos: Vector2D, w: Waveform, p: Object) {
         super(p);
         fromJson(hxd.Res.data.Oscilloscope.entry);
 
-        var poly = getScaledPolygon(OscilloPolgonCentred);
-        physics = new PolygonalPhysicalGameObject(new Vector2D(), poly, this);
+        physics = new PolygonalPhysicalGameObject(new Vector2D(), getScaledPolygon(OscilloPolgonCentred), this);
 
         waveform = w;
 
@@ -94,6 +93,7 @@ class Oscilloscope extends Object implements Updateable
         
         MessageManager.addListener(this);
         updateGraphics();
+        physics.body.setPosition(pos);
     }
     
     function updateGraphics() {

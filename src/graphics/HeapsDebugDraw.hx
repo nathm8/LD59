@@ -23,6 +23,8 @@ class HeapsDebugDraw extends B2DebugDraw {
 
     override public function clear() {
         graphics.clear();
+        var p = cast(graphics.parent, Scene);
+        p.over(graphics);
     }
 
     /**

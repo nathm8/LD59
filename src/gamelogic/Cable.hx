@@ -129,14 +129,14 @@ class Cable implements Updateable {
     var headTwo: CableHead;
     var cable: Graphics;
 
-    public function new(?p: Object) {
+    public function new(pos: Vector2D, ?p: Object) {
         cable = new Graphics(p);
         headOne = new CableHead(this, p);
-        headOne.x -= 25 - RNGManager.random(25);
-        headOne.y+= -25 + RNGManager.random(50);
+        headOne.x -= pos.x + 25 - RNGManager.random(25);
+        headOne.y += pos.y - 25 + RNGManager.random(50);
         headTwo = new CableHead(this, p);
-        headTwo.x += 25 + RNGManager.random(25);
-        headTwo.y+= -25 + RNGManager.random(50);
+        headTwo.x += pos.x + 25 + RNGManager.random(25);
+        headTwo.y += pos.y - 25 + RNGManager.random(50);
     }
 
     public function update(dt:Float):Bool {

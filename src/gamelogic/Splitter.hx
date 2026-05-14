@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.Vector2D;
 import haxe.Json;
 import hxd.fs.FileEntry;
 import hxd.Res;
@@ -59,7 +60,7 @@ class Splitter extends Object implements MessageListener
         p.forceRecheck = f;
     }
 
-    public function new(?p: Object) {
+    public function new(pos: Vector2D, ?p: Object) {
         super(p);
 
         sprite = new Bitmap(Res.img.Split.toTile().center(), this);

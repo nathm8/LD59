@@ -1,5 +1,8 @@
 package graphics;
 
+import h2d.Bitmap;
+import hxd.Res;
+import hxd.Window;
 import gamelogic.Updateable;
 import box2D.dynamics.B2Body;
 import gamelogic.physics.PhysicalWorld;
@@ -11,11 +14,9 @@ import utilities.Vector2D;
 import utilities.MessageManager;
 import h2d.Object;
 
-final HANDLE_WIDTH = 141;
-final HANDLE_HEIGHT = 16;
-
 class Handle extends Object implements MessageListener {
  
+    var sprite: Bitmap;
     var isSelected = false;
     var selectedOffset = new Vector2D();
     var interactive: Interactive;
@@ -23,7 +24,12 @@ class Handle extends Object implements MessageListener {
     public function new(?p: Object) {
         super(p);
 
-        interactive = new Interactive(HANDLE_WIDTH, HANDLE_HEIGHT, this);
+        sprite = new Bitmap(Res.img.Handle.toTile(), this);
+        var size = sprite.getSize();
+        var width = size.width;
+        var height = size.height;
+
+        interactive = new Interactive(width, height, this);
         interactive.onPush = (e:Event) -> {
             isSelected = true;
             
@@ -31,9 +37,9 @@ class Handle extends Object implements MessageListener {
             interactive.syncPos();
             var i_abs = new Vector2D(interactive.absX, interactive.absY);
             var p_rel = new Vector2D(parent.x, parent.y);
-            var i_midpoint = new Vector2D(HANDLE_WIDTH/2, HANDLE_HEIGHT/2);
-            
-            selectedOffset = p_rel - i_abs - i_midpoint + -(event_rel - i_midpoint);
+            sprite.getSize();
+
+            selectedOffset = p_rel - i_abs - event_rel;
         }
         interactive.onRelease = (e:Event) -> {isSelected = false;}
 
@@ -89,7 +95,8 @@ class PhysicalHandle extends Handle implements Updateable {
         if (isSelected) {
             var b = mouseJoint.getBodyB();
             var a = mouseJoint.getBodyB().getAngle();
-            var mod = Math.abs(Math.round(a/0.01)) * 0.1;
+            // 81 being the mass of a standard generator oscilloscope
+            var mod = Math.abs(Math.round(a/0.01)) * 0.1 * b.getMass()/81;
             if (a > 0.005)
                 b.applyTorque(mod*-1000);
             else if (a < -0.005)

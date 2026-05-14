@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.Vector2D;
 import graphics.WaveformGraphics;
 import gamelogic.Waveform.WaveformPhase;
 import sound.SoundManager;
@@ -41,7 +42,7 @@ typedef PhaseJson = {
 }
 
 class Phase extends Object implements MessageListener
-                              implements Updateable {
+                           implements Updateable {
 
     var params: PhaseJson;
 
@@ -79,7 +80,7 @@ class Phase extends Object implements MessageListener
         dial.y = params.dialY;
     }
 
-    public function new(?p: Object) {
+    public function new(pos: Vector2D, ?p: Object) {
         super(p);
         fromJson(hxd.Res.data.Phase.entry);
 

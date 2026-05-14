@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.5"
-     inkscape:cx="1525"
-     inkscape:cy="1117"
+     inkscape:zoom="0.64302756"
+     inkscape:cx="871.65782"
+     inkscape:cy="100.30674"
      inkscape:window-width="1920"
      inkscape:window-height="1080"
      inkscape:window-x="1080"
@@ -5412,5 +5412,17 @@
            ry="0.17549956" />
       </g>
     </g>
+    <rect
+       style="fill:#c10000;fill-opacity:1;stroke:none;stroke-width:0.199327;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       id="rect14"
+       width="41.010418"
+       height="3.1536789"
+       x="-294.86365"
+       y="-1.9770206"
+       ry="1.5768394"
+       transform="scale(-1)"
+       inkscape:export-filename="res/img/Handle.png"
+       inkscape:export-xdpi="86.839996"
+       inkscape:export-ydpi="86.839996" />
   </g>
 </svg>

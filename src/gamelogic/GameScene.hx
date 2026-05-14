@@ -1,5 +1,6 @@
 package gamelogic;
 
+import utilities.Vector2D;
 import h2d.filter.Group;
 import h2d.filter.Blur;
 import h2d.filter.Shader;
@@ -43,10 +44,7 @@ class GameScene extends Scene implements MessageListener {
 
         MessageManager.addListener(this);
 
-        var target = new TargetOscilloscope(this);
-        target.x = 400;
-        target.y = -200;
-        updateables.push(target);
+        updateables.push(new TargetOscilloscope(new Vector2D(400, -200), this));
     }
     
     public function update(dt:Float) {
@@ -97,27 +95,26 @@ class GameScene extends Scene implements MessageListener {
         // components
         if (Std.isOfType(msg, SpawnComponent)) {
             var params = cast(msg, SpawnComponent);
-            var n = params.componentName;
             var amp = 1/8*(3 + RNGManager.random(3));
             var freq = 1/8*(3 + RNGManager.random(3));
-            if (n == "Wire")
-                updateables.push(new Cable(this));
-            if (n == "Sine")
-                updateables.push(new Oscilloscope(new Sine(amp, freq), this));
-            if (n == "Square")
-                updateables.push(new Oscilloscope(new Square(amp, freq), this));
-            if (n == "Triangle")
-                updateables.push(new Oscilloscope(new Triangle(amp, freq), this));
-            if (n == "And")
-                updateables.push(new Combinator(true, this));
-            if (n == "Or")
-                updateables.push(new Combinator(false, this));
-            if (n == "Invert")
-                updateables.push(new Inverter(this));
-            if (n == "Split")
-                updateables.push(new Splitter(this));
-            if (n == "Phase")
-                updateables.push(new Phase(this));
+            if (params.componentName == "Wire")
+                updateables.push(new Cable(new Vector2D(-200, 0), this));
+            if (params.componentName == "Sine")
+                updateables.push(new Oscilloscope(new Vector2D(-200, 0), new Sine(amp, freq), this));
+            if (params.componentName == "Square")
+                updateables.push(new Oscilloscope(new Vector2D(-200, 0), new Square(amp, freq), this));
+            if (params.componentName == "Triangle")
+                updateables.push(new Oscilloscope(new Vector2D(-200, 0), new Triangle(amp, freq), this));
+            if (params.componentName == "And")
+                updateables.push(new Combinator(new Vector2D(-200, 0), true, this));
+            if (params.componentName == "Or")
+                updateables.push(new Combinator(new Vector2D(-200, 0), false, this));
+            if (params.componentName == "Invert")
+                updateables.push(new Inverter(new Vector2D(-200, 0), this));
+            if (params.componentName == "Split")
+                updateables.push(new Splitter(new Vector2D(-200, 0), this));
+            if (params.componentName == "Phase")
+                updateables.push(new Phase(new Vector2D(-200, 0), this));
         }
         // graphics
         return false;

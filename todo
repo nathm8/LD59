@@ -4,10 +4,7 @@ Signals
 Bugs
 -----------------------------------
 handle grab offsets not handling rotation from physics correctly
-    it's not that bad
-
-cable draw offsets not handling rotation from physics correctly
-
+    it's not that bad, and the math is hard :(
 
 Post-jam MVP
 -----------------------------------
@@ -17,14 +14,16 @@ add SFX for cables, dials, switch and lights
 
 main menu. level select. global volume slider. disable waveform graphics shaders
 
-
 physically simulate components. to prevent overlapping
     have them rotatable by knocking, but slowly "righted" while held
 physically clear a location before spawnin a physical component there
+    test the spawn area, apply a random force to anything found, once the area is clear do the spawn. Will require some messaging between the component button and the physics world, with a timeout if it fails
 
 add trashcan
 
 design more puzzles
+    steal some?
+    https://ldjam.com/events/ludum-dare/59/patch-panel
 introduce each tool seperately with tutorial
 
 tooltips for components in menu
@@ -82,3 +81,7 @@ You can proceed with randomly generated puzzles, which should all be solveable.
 [Keep a running track in top right corner of puzzles solved and time taken.]
 
 Refactor waveform graphics to not be squashed\stretched but to have waveform.draw() take parameters for available space
+
+Bugs
+-----------------------------------
+cable draw offsets not handling rotation from physics correctly
