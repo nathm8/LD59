@@ -1,5 +1,7 @@
 package gamelogic;
 
+import gamelogic.Levels.initLevels;
+import gamelogic.Levels.levels;
 import utilities.Polygons.OscilloOutPolgonCentred;
 import utilities.Polygons.getScaledPolygon;
 import gamelogic.physics.PolygonalPhysicalGameObject;
@@ -27,8 +29,6 @@ import utilities.Utilities.colors;
 import utilities.RNGManager;
 import utilities.MessageManager;
 import graphics.Handle;
-
-var targets = new Array<Waveform>();
 
 class TargetSwitch extends Object implements MessageListener {
 
@@ -230,54 +230,10 @@ class TargetOscilloscope extends Object implements Updateable
 
         fromJson(hxd.Res.data.Target.entry);
 
+        initLevels();
+
         physics = new PolygonalPhysicalGameObject(new Vector2D(), getScaledPolygon(OscilloOutPolgonCentred), this);
 
-        // ugly place to put this, target init
-        {
-        var targetOne = new Sine(4/8, 6/8);
-        
-        // AM modulation
-        var targetTwo = new WaveformCombination(false);
-        targetTwo.weight = 3/6;
-        targetTwo.sourceOne = new Sine(1.0, 7/8);
-        targetTwo.sourceTwo = targetOne;
-
-        // saw wave, TODO
-        var targetThree = new WaveformCombination(true);
-        targetThree.sourceOne = new Triangle(0.5, 0.5);
-        targetThree.sourceTwo = new Square(0.5, 0.5);
-        
-        // ^U^
-        var and = new WaveformCombination(true);
-        and.sourceOne = new Triangle(0.5, 3/8);
-        and.sourceTwo = and.sourceOne;
-        var targetFour = new WaveformInverter();
-        targetFour.source = and;
-
-        // ideas
-        // amplifier
-
-        // replace
-        var targetFive = new WaveformCombination(false);
-        targetFive.weight = 4/8;
-        targetFive.sourceOne = new Sine(0.5, 2/8);
-        var or = new WaveformCombination(false);
-        or.weight = 4/8;
-        or.sourceOne = new Triangle(0.5, 1/8);
-        or.sourceTwo = new Square(4/8, 0.5);
-        targetFive.sourceTwo = or;
-
-        // this is fine
-        var targetSix = new WaveformCombination(true);
-        targetSix.sourceOne = new Square(1/8, 0.5);
-        var invert = new WaveformInverter();
-        invert.source = targetSix.sourceOne;
-        targetSix.sourceTwo = invert;
-
-        targets = [targetOne, targetTwo, targetThree, targetFour, targetFive, targetSix];
-        }
-        
-        //
         var cols = RNGManager.randoms(colors.length, 2, true);
         colOne = colors[cols[0]];
         colTwo = colors[cols[1]];
@@ -296,7 +252,7 @@ class TargetOscilloscope extends Object implements Updateable
 
         targetSwitch = new TargetSwitch(checkSolution, this);
         
-        targetWaveform = targets[0];
+        targetWaveform = levels[0];
         targetWaveformGraphics = new WaveformGraphics(params.targetWaveformGraphicsWidth, params.targetWaveformGraphicsHeight, colOne, () -> targetWaveform, this);
         inputWaveformGraphics = new WaveformGraphics(params.inputWaveformGraphicsWidth, params.inputWaveformGraphicsHeight, colTwo, () -> inputWaveform, this);
         combinedWaveformGraphicsOne = new WaveformGraphics(params.combinedWaveformGraphicsWidth, params.combinedWaveformGraphicsHeight, colOne, () -> targetWaveform, this);
@@ -400,9 +356,9 @@ class TargetOscilloscope extends Object implements Updateable
             g.visible = false;
         }
         targetSwitch.reset();
-        if (puzzlesComplete >= targets.length)
+        if (puzzlesComplete >= levels.length)
             puzzlesComplete = 0;
-        targetWaveform = targets[puzzlesComplete];
+        targetWaveform = levels[puzzlesComplete];
         soundOne.reload(targetWaveform);
     }
 

@@ -1,11 +1,7 @@
 package gamelogic;
 
+import box2D.collision.B2AABB;
 import utilities.Vector2D;
-import h2d.filter.Group;
-import h2d.filter.Blur;
-import h2d.filter.Shader;
-import graphics.shaders.PeriodicAlphaFilter;
-import h2d.Graphics;
 import h2d.col.Point;
 import h2d.Scene;
 import hxd.Key;
@@ -97,27 +93,50 @@ class GameScene extends Scene implements MessageListener {
             var params = cast(msg, SpawnComponent);
             var amp = 1/8*(3 + RNGManager.random(3));
             var freq = 1/8*(3 + RNGManager.random(3));
+            var pos = findSpawnLocation();
+            if (pos == null) {
+                trace("unable to find spawn location");
+                return false;
+            }
             if (params.componentName == "Wire")
-                updateables.push(new Cable(new Vector2D(-200, 0), this));
+                updateables.push(new Cable(pos, this));
             if (params.componentName == "Sine")
-                updateables.push(new Oscilloscope(new Vector2D(-200, 0), new Sine(amp, freq), this));
+                updateables.push(new Oscilloscope(pos, new Sine(amp, freq), this));
             if (params.componentName == "Square")
-                updateables.push(new Oscilloscope(new Vector2D(-200, 0), new Square(amp, freq), this));
+                updateables.push(new Oscilloscope(pos, new Square(amp, freq), this));
             if (params.componentName == "Triangle")
-                updateables.push(new Oscilloscope(new Vector2D(-200, 0), new Triangle(amp, freq), this));
+                updateables.push(new Oscilloscope(pos, new Triangle(amp, freq), this));
             if (params.componentName == "And")
-                updateables.push(new Combinator(new Vector2D(-200, 0), true, this));
+                updateables.push(new Combinator(pos, true, this));
             if (params.componentName == "Or")
-                updateables.push(new Combinator(new Vector2D(-200, 0), false, this));
+                updateables.push(new Combinator(pos, false, this));
             if (params.componentName == "Invert")
-                updateables.push(new Inverter(new Vector2D(-200, 0), this));
+                updateables.push(new Inverter(pos, this));
             if (params.componentName == "Split")
-                updateables.push(new Splitter(new Vector2D(-200, 0), this));
+                updateables.push(new Splitter(pos, this));
             if (params.componentName == "Phase")
-                updateables.push(new Phase(new Vector2D(-200, 0), this));
+                updateables.push(new Phase(pos, this));
         }
-        // graphics
         return false;
+    }
+
+    function findSpawnLocation(): Vector2D {
+        // based off largest component size
+        var bounds = new Vector2D(300, 300);
+        var aabb = new B2AABB();
+        var samples = 1000;
+        for (i in 0...samples) {
+            var t = 120*Math.PI*i/samples;
+            var p = new Vector2D(10*t, 0).rotate(t);
+
+            aabb.lowerBound = p - bounds;
+            aabb.upperBound = p + bounds;
+            var clear = true;
+            var f = (fixture: Dynamic) -> {clear = false; return false;};
+            PhysicalWorld.gameWorld.queryAABB(f, aabb);
+            if (clear) return p;
+        }
+        return null;
     }
 
     function cameraControl() {

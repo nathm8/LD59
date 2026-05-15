@@ -1,17 +1,20 @@
 package graphics.ui;
 
-import graphics.ui.BitmapButton.MuteButton;
 import h2d.Object;
 import h2d.Bitmap;
-import graphics.ui.BitmapButton.ComponentButton;
 import hxd.Res;
 import h2d.Flow;
 import h2d.Scene;
 import h2d.Text;
 import hxd.Timer;
+import gamelogic.Updateable;
+import graphics.ui.BitmapButton.MuteButton;
+import graphics.ui.BitmapButton.ComponentButton;
 import utilities.MessageManager;
 
 class UIScene extends Scene implements MessageListener {
+    var updateables = new Array<Updateable>();
+
     var fpsText: Text;
     var victoryFlow: Flow;
     var componentFlow: Flow;
@@ -40,7 +43,7 @@ class UIScene extends Scene implements MessageListener {
         
         victoryFlow = new Flow(this);
         victoryFlow.backgroundTile = Res.img.ui.ScaleGrid.toTile();
-        victoryFlow.borderWidth = 5;
+        victoryFlow.borderWidth = 6;
         victoryFlow.borderHeight = 13;
         victoryFlow.padding = 200;
         victoryFlow.alpha = 0.0;
@@ -52,14 +55,17 @@ class UIScene extends Scene implements MessageListener {
 
         componentFlow = new Flow(this);
         componentFlow.backgroundTile = Res.img.ui.ScaleGrid.toTile();
-        componentFlow.borderWidth = 5;
+        componentFlow.borderWidth = 8;
         componentFlow.borderHeight = 20;
         componentFlow.horizontalSpacing = 10;
         componentFlow.padding = 20; 
 
         var hidden = ["Split", "Square", "Triangle", "And", "Or", "Invert", "UIBreak1", "UIBreak2", "UIBreak3", "Phase"];
+        var names = ["Wire", "Split", "UIBreak", "Sine", "Square", "Triangle", "UIBreak", "Phase", "And", "Or", "Invert", "UIBreak", "Bin"];
+        var tooltips = ["Spawn connector", "Spawn connector\nsplitter\n(for convenience)", "UIBreak", "Spawn sine wave\ngenerator", "Spawn square wave\ngenerator", "Spawn triangle wave\ngenerator", "UIBreak", "Spawn wave phase\nmodifier", "Spawn wave\nmultiplicative\nmodulator", "Spawn wave additive\nmodulator", "Spawn wave\ninverter", "UIBreak", "Bin"];
         var num = 0;
-        for (name in ["Wire", "Split", "UIBreak", "Sine", "Square", "Triangle", "UIBreak", "Phase", "And", "Or", "Invert", "UIBreak", "Bin"]) {
+        for (i in 0...names.length) {
+            var name = names[i];
             var b: Object;
             if (name == "UIBreak") {
                 b = new Bitmap(Res.img.ui.UIBreak.toTile(), componentFlow);
@@ -67,7 +73,9 @@ class UIScene extends Scene implements MessageListener {
                 // b.visible = num == 0;
                 num++;
             } else {
-                b = new ComponentButton(name, componentFlow, () -> MessageManager.send(new SpawnComponent(name)), null);
+                var cb = new ComponentButton(name, componentFlow, tooltips[i], () -> MessageManager.send(new SpawnComponent(name)), null);
+                b = cb;
+                updateables.push(cb);
             }
             // if (hidden.contains(name))
             //     b.visible = false;
@@ -78,6 +86,7 @@ class UIScene extends Scene implements MessageListener {
         var muteButton = new MuteButton(this);
         muteButton.x = width - 80;
         muteButton.y = 10;
+        updateables.push(muteButton);
 
         tutorialText = new h2d.Text(hxd.res.DefaultFont.get(), this);
         tutorialText.textAlign = Center;
@@ -92,6 +101,13 @@ class UIScene extends Scene implements MessageListener {
     }
     
     public function update(dt:Float) {
+        var to_remove = new Array<Updateable>();
+        for (u in updateables)
+            if (u.update(dt))
+                to_remove.push(u);
+        for (u in to_remove)
+            updateables.remove(u);
+
         totalTime += dt;
         // fpsText.text = '${Math.round(Timer.fps())}\n${awake}\\${PhysicalWorld.gameWorld.getBodyCount()-1}' ;
         fpsText.text = '${Math.round(Timer.fps())}';

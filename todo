@@ -9,15 +9,11 @@ handle grab offsets not handling rotation from physics correctly
 Post-jam MVP
 -----------------------------------
 add SFX for cables, dials, switch and lights
-    have each light actually correspond to something (correctish phase/freq/amp, perhaps?)
-        only need two "approx", last is for complete match. Amp range is an easy one. Just do a really loose match for light two
+    have each light actually correspond to something
+    only need two "approx", last is for complete match. Amp range is an easy one. Just do a really loose match for light two
+    https://cyrex-studios.itch.io/universal-ui-soundpack
 
 main menu. level select. global volume slider. disable waveform graphics shaders
-
-physically simulate components. to prevent overlapping
-    have them rotatable by knocking, but slowly "righted" while held
-physically clear a location before spawnin a physical component there
-    test the spawn area, apply a random force to anything found, once the area is clear do the spawn. Will require some messaging between the component button and the physics world, with a timeout if it fails
 
 add trashcan
 
@@ -35,6 +31,10 @@ Done
 
 Post-jam MVP
 -----------------------------------
+physically clear a location before spawning a physical component there
+    test the spawn area, spirally until an empty space is found. 
+physically simulate components. to prevent overlapping
+    have them rotatable by knocking, but slowly "righted" while held
 have global mute button
 animate the target oscillo's input volume slider
 cache square wave calcs
